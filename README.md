@@ -1,8 +1,8 @@
 # 1510-A4-Text-based-adventure-game
 
-### Your names:
+### Your names: Austin He
 
-### Your student numbers:
+### Your student numbers: A00882336
 
 #### ** Add any comments for me below this line **
 
