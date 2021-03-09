@@ -7,7 +7,7 @@ import time
 import doctest
 import itertools
 
-# Constants enclosed in tuples (yes it looks weird)
+# Constants enclosed in tuples (yes, it looks weird)
 MAX_PLAYER_HEALTH = (20,)
 MAX_ENEMY_HEALTH = (10,)
 REGEN_VALUE = (4,)
