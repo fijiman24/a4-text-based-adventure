@@ -295,8 +295,7 @@ def combat_initiative_roll():  # put enemy_name as a parameter maybe; could have
     player_roll = random.randint(1, 100)
     enemy_roll = random.randint(1, 100)
     enemy = "enemy_name"
-    # why use a while loop instead of an if statement?
-    while player_roll == enemy_roll:  # checks for draws
+    if player_roll == enemy_roll:  # checks for draws
         print(f'Draw! You both rolled a {player_roll}. Rerolling....')
         combat_initiative_roll()
     if player_roll > enemy_roll:  # checks if player attacks first
