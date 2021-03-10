@@ -73,8 +73,7 @@ def show_map():
     """
     for row in range(5):
         for column in range(5):
-            print("[" + str(row) + ", " +
-                  str(column) + "]", end=' ')
+            print(f'[{row}, {column}]', end=' ')
         print()
 
 
