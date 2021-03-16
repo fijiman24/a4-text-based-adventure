@@ -342,26 +342,63 @@ def combat_enemy_attack(player_health):
     return player_health
 
 
-def gain_experience_points():
-    """Return player's health value after being attacked by enemy.
+def gain_experience_points(character):
+    """Add experience points for player if not max level.
 
-    :param
-    :precondition:
-    :postcondition:
-    :return:
+    :param character: must be a dictionary
+    :precondition: dictionary must contain keys "experience", "level", "class" and "race"
+    :postcondition: rolls for experience gain then check
+    :return: character if player is not at the max level
+
+    no doctest, this uses random values
     """
+    if character["level"] == 3:
+        print(f"You are already at the max level of 3!\n You did not gain any experience from the battle.")
+    else:
+        experience_gained = random.randint(50, 150)
+        character["experience"] += experience_gained
+        print(f"You won the battle! You gained {experience_gained} experience points.")
+        level_system(character)
+        return character
 
-    """ Your gain_experience function was part of the combat_round function; could you redesign to make it a stand alone 
-        function that returns exp gain? Then we can add it to character[exp]. Maybe even make level_up another function.
-    
-    character["experience"] += 100  # gains 100 experience for each foe killed.
-    print(f'\nYou won the battle! You gained 100 experience.'
-          f' You now have a total of {character["experience"]} experience points.')
-    if character["experience"] % 500 == 0:  # levels up user every 500 experience points
+
+def level_system(character):
+    """Level up the character if they reach a certain amount of experience points.
+
+    :param character: must be a dictionary
+    :precondition: dictionary must contain keys "experience", "level", "class" and "race"
+    :postcondition: calculate if experience requirement met then increases level by 1 and sets experience to 0
+    :return: character
+
+    >>> level_system({"level": 1, "experience": 250, "race": "warrior", "class": "Pawn"})
+    {'level': 1, 'experience': 250, 'race': 'warrior', 'class': 'Pawn'}
+    >>> level_system({"level": 2, "experience": 299, "race": "bandit", "class": "Jester"})
+    {'level': 2, 'experience': 299, 'race': 'bandit', 'class': 'Jester'}
+    >>> level_system({"level": 1, "experience": 320, "race": "mage", "class": "Pawn"})
+    You gained a level! You are now level 2 and ascended to a Rook.
+    {'level': 2, 'experience': 0, 'race': 'mage', 'class': 'Rook'}
+    >>> level_system({"level": 2, "experience": 300, "race": "archer", "class": "Pawn"})
+    You gained a level! You are now level 3 and ascended to a King.
+    {'level': 3, 'experience': 0, "race": 'archer', 'class': 'King'}
+    """
+    if character["experience"] >= 300:
         character["level"] += 1
-        print(f'You have leveled up! You are now level {character["level"]} and can deal an extra 2 damage.')
+        character["experience"] = 0
+        class_upgrade(character)
+        print(f"You gained a level! You are now level {character['level']} and ascended to a {character['class']}.")
     return character
-    """
+
+
+def class_upgrade(character):
+    classes = {'warrior': {1: "Pawn", 2: "Knight", 3: "Queen"},
+               'mage': {1: "Pawn", 2: "Rook", 3: "Bishop"},
+               'archer': {1: "Pawn", 2: "Hunter", 3: "King"},
+               'bandit': {1: "Pawn", 2: "Jester", 3: "Castle"}
+               }
+
+    character["class"] = classes[character["race"]][character["level"]]  # finds class based on race and level
+
+    return character
 
 
 def combat_duel(player_health):
