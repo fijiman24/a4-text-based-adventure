@@ -509,6 +509,7 @@ def game():
     player = make_player()
     achieved_goal = False
     story_introduction()
+    player['name'] = player_name()
 
     while not achieved_goal:  # and user input != "quit"
         # # Make a character; functions, accept and return input
@@ -517,7 +518,6 @@ def game():
 
         print(f"You are currently at ({player['x-coordinate']}, {player['y-coordinate']}).")
         print(f"You have {player['health']} health points remaining.\n")
-        player['name'] = player_name()
         direction = cardinal_direction()
         valid_move = validate_move(direction, player['x-coordinate'], player['y-coordinate'])
         if valid_move:
