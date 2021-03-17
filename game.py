@@ -1,5 +1,5 @@
 """
-Your student number: Austin He, Caleb Verma
+Your names: Austin He, Caleb Verma
 Your student numbers: A00882336, A01257874
 """
 import random
