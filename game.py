@@ -56,7 +56,7 @@ def make_player():
     {'health': 20, 'x-coordinate': 0, 'y-coordinate': 0}
     """
     return {"health": MAX_PLAYER_HEALTH[0], "x-coordinate": STARTING_X_COORDINATE[0], "y-coordinate":
-            STARTING_Y_COORDINATE[0]}
+            STARTING_Y_COORDINATE[0], "name": "John"}
 
 
 def show_map():
@@ -107,6 +107,23 @@ def enemy_death_text():
     postcondition: print text describing enemy death
     """
     pass
+
+
+def player_name():
+    """Return player name.
+
+    :postcondition: convert player's input into title case
+    :return: player name
+
+    no doctests, accepts user input
+    """
+    name_input = str(input("Enter your name: ")).title()
+    if name_input.lower() == "chris" or name_input.lower() == "christopher":
+        print("You can be more adventurous than that.")
+        return player_name()
+    else:
+        print(f"Your name is {name_input}.")
+        return name_input
 
 
 def cardinal_direction():
@@ -493,9 +510,14 @@ def game():
     achieved_goal = False
     story_introduction()
 
-    while not achieved_goal:
+    while not achieved_goal:  # and user input != "quit"
+        # # Make a character; functions, accept and return input
+        # # Provides a list of character classes in a numbered list, function returns class corresponding to input
+        # player[job] = character_job()
+
         print(f"You are currently at ({player['x-coordinate']}, {player['y-coordinate']}).")
         print(f"You have {player['health']} health points remaining.\n")
+        player['name'] = player_name()
         direction = cardinal_direction()
         valid_move = validate_move(direction, player['x-coordinate'], player['y-coordinate'])
         if valid_move:
