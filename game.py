@@ -518,12 +518,12 @@ def combat_choice(player_health):
 
 
 def spawn_enemy():
-    """40 percent chance to return True, else False.
+    """20 percent chance to return True, else False.
 
     :postcondition: generate a random integer between [1, 5]
-    :postcondition: if integer is 1 or 2, return True
-    :postcondition: if integer is not 1 or 2, return false
-    :return: True if integer is 1 or 2, else False
+    :postcondition: if integer is 1 return True
+    :postcondition: if integer is not 1 return false
+    :return: True if integer is 1, else False
 
     no doctest, this uses random values
     """
