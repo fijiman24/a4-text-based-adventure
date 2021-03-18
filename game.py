@@ -99,7 +99,8 @@ def make_player():
     {'health': 20, 'x-coordinate': 0, 'y-coordinate': 0, 'name': ''}
     """
     return {"health": MAX_PLAYER_HEALTH[0], "x-coordinate": STARTING_X_COORDINATE[0], "y-coordinate":
-            STARTING_Y_COORDINATE[0], "name": ""}
+            STARTING_Y_COORDINATE[0], "name": "test", "exp": 0, "player_class": "test",
+            "player_class_special_action": "test", "level": 1}
 
 
 def generate_board():
@@ -170,7 +171,7 @@ def confirm_player_class(class_name):
     choice = input()
     if choice.isdigit():
         if choice == "1":
-            print(f"You are a {class_name}.")
+            print(f"You are a {class_name}. \n")
             return class_name
         elif choice == "2":
             return select_player_class()
@@ -213,8 +214,18 @@ def check_player_statistics(player):
     print(f"You have {player['exp']} experience points. You are {500 - int(player['exp'])} points away from leveling "
           f"up.")
     print(f"You are a {player['player_class']}. A {player['player_class']} has the special ability "
-          f"{player['player_class_special_action']}.")
+          f"{player['player_class_special_action']}. \n")
 
+
+def check_player_location(x_coordinate, y_coordinate, game_board):
+    surface_visualization = list(game_board.values())
+    surface_visualization.insert(0, "")
+    for index in range(1, len(surface_visualization) + 25):
+        if index % 26 == 0:
+            surface_visualization.insert(index, "\n")
+    surface_visualization.pop()
+    print(*surface_visualization, sep=" ")
+    print(f"You are at {x_coordinate}, {y_coordinate}.")
 
 def cardinal_direction():
     """Return player directional input.
@@ -600,12 +611,14 @@ def game():
     achieved_goal = False
     ascii_intro()
     story_introduction()
-
     player['name'] = input_player_name()
     player['class'] = select_player_class()
-    while not achieved_goal:
-        display_main_menu()
 
+    while not achieved_goal:
+        check_player_statistics(player)
+        game_board = generate_board()
+        check_player_location(player['x-coordinate'], player['y-coordinate'], game_board)
+        display_main_menu()
     story_ending()
 
 
