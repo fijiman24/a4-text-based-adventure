@@ -72,21 +72,20 @@ def make_player():
 
 
 def generate_board():
-    """Print out a 4x4 map of the board.
+    """Return dictionary representing game board, with coordinate (0, 0) being occupied.
 
-    :postcondition: generate and prints a board
-    :return: prints a map of the game
+    :postcondition: generate dictionary game board
+    :postcondition: occupy coordinate (0, 0) in game board with yellow asterisk representing player location
+    :return: dictionary representing game board, with coordinate (0, 0) being occupied
     >>> generate_board()
-    [0, 0] [0, 1] [0, 2] [0, 3] [0, 4]
-    [1, 0] [1, 1] [1, 2] [1, 3] [1, 4]
-    [2, 0] [2, 1] [2, 2] [2, 3] [2, 4]
-    [3, 0] [3, 1] [3, 2] [3, 3] [3, 4]
-    [4, 0] [4, 1] [4, 2] [4, 3] [4, 4]
+
+
     """
     board_coordinates = [(x_coordinates, y_coordinates) for x_coordinates in range(0, 25) for
                          y_coordinates in range(0, 25)]
-    board_empty = {coordinate: f"{Colours.blue}*{Colours.end}" for coordinate in board_coordinates}
-    return board_empty
+    game_board = {coordinate: f"{Colours.blue}*{Colours.end}" for coordinate in board_coordinates}
+    game_board[(0, 0)] = f"{Colours.yellow}@{Colours.end}"
+    return game_board
 
 
 def story_introduction():
