@@ -87,11 +87,6 @@ def check_if_goal_attained(boss_health):
     pass
 
 
-def not_valid_choice(function):
-    print("That is not a valid choice! \n")
-    return function
-
-
 def make_player():
     """Return a dictionary representing the player's maximum health health, their starting x-coordinate, their starting
        y-coordinate, and their name.
@@ -161,9 +156,11 @@ def select_player_class():
             # print the backstory of class 1
             return confirm_player_class("Vengeful Barbarian")
         else:
-            not_valid_choice(select_player_class())
+            print("That is not a valid choice! \n")
+            select_player_class()
     else:
-        not_valid_choice(select_player_class())
+        print("That is not a valid choice! \n")
+        select_player_class()
 
 
 def confirm_player_class(class_name):
@@ -178,9 +175,11 @@ def confirm_player_class(class_name):
         elif choice == "2":
             return select_player_class()
         else:
-            not_valid_choice(confirm_player_class(class_name))
+            print("That is not a valid choice! \n")
+            confirm_player_class(class_name)
     else:
-        not_valid_choice(confirm_player_class(class_name))
+        print("That is not a valid choice! \n")
+        confirm_player_class(class_name)
 
 
 def display_main_menu():
@@ -197,9 +196,11 @@ def display_main_menu():
             print("You have quit the game. The dungeons will be waiting for your return...")
             exit()
         else:
-            not_valid_choice(confirm_player_class(display_main_menu()))
+            print("That is not a valid choice! \n")
+            display_main_menu()
     else:
-        not_valid_choice(confirm_player_class(display_main_menu()))
+        print("That is not a valid choice! \n")
+        display_main_menu()
 
 
 def cardinal_direction():
@@ -553,9 +554,11 @@ def combat_choice(player_health):
         elif choice == 2:
             return backstab(player_health)
         else:
-            not_valid_choice(combat_choice(player_health))
+            print("That is not a valid choice!")
+            return combat_choice(player_health)
     else:
-        not_valid_choice(combat_choice(player_health))
+        print("That is not a valid choice!")
+        return combat_choice(player_health)
 
 
 def spawn_enemy():
