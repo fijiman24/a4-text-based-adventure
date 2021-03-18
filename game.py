@@ -129,6 +129,28 @@ def player_name():
         return name_input
 
 
+def display_main_menu():
+    main_menu = list(enumerate(["Move", "Check Stats", "Check Location", "Quit Game"], start=1))
+    print(main_menu)
+    choice = input()
+    if choice.isdigit():
+        choice = int(choice)
+        if choice == 1:
+            pass  # call move function
+        elif choice == 2:
+            pass  # call check stats function
+        elif choice == 3:
+            pass  # call check location function
+        elif choice == 4:
+            exit()
+        else:
+            print("That is not a valid choice!")
+            display_main_menu()
+    else:
+        print("That is not a valid choice!")
+        display_main_menu()
+
+
 def cardinal_direction():
     """Return player directional input.
 
@@ -519,9 +541,7 @@ def game():
         # # Make a character; functions, accept and return input
         # # Provides a list of character classes in a numbered list, function returns class corresponding to input
         # player[job] = character_job()
-
-        print(f"You are currently at ({player['x-coordinate']}, {player['y-coordinate']}).")
-        print(f"You have {player['health']} health points remaining.\n")
+        display_main_menu()
         direction = cardinal_direction()
         valid_move = validate_move(direction, player['x-coordinate'], player['y-coordinate'])
         if valid_move:
