@@ -121,11 +121,11 @@ def player_name():
     no doctests, accepts user input
     """
     name_input = str(input("Enter your name: ")).title()
-    if name_input.lower() == "chris" or name_input.lower() == "christopher":
-        print("You can be more adventurous than that.")
+    if name_input.lower() == "chris" or name_input.lower() == "christopher" or name_input.lower() == "chris thompson":
+        print("You can be more adventurous than that. \n")
         return player_name()
     else:
-        print(f"Your name is {name_input}.")
+        print(f"Your name is {name_input}. \n")
         return name_input
 
 
@@ -142,6 +142,7 @@ def display_main_menu():
         elif choice == 3:
             pass  # call check location function
         elif choice == 4:
+            print("You have quit the game. The dungeons will be waiting for your return...")
             exit()
         else:
             print("That is not a valid choice!")
