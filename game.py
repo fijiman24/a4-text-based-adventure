@@ -282,9 +282,9 @@ def validate_move(direction, x_coordinate, y_coordinate):
     """
     if direction == 1 and y_coordinate != 0:
         return True
-    elif direction == 2 and x_coordinate != 4:
+    elif direction == 2 and x_coordinate != 24:
         return True
-    elif direction == 3 and y_coordinate != 4:
+    elif direction == 3 and y_coordinate != 24:
         return True
     elif direction == 4 and x_coordinate != 0:
         return True
@@ -457,65 +457,6 @@ def combat_enemy_attack(player_health):
     return player_health
 
 
-def gain_experience_points(player):
-    """Add experience points for player if not max level.
-
-    :param player: must be a dictionary
-    :precondition: dictionary must contain keys "experience", "level", "class" and "race"
-    :postcondition: rolls for experience gain then check
-    :return: player if player is not at the max level
-
-    no doctest, this uses random values
-    """
-    if player["level"] == 3:
-        print(f"You are already at the max level of 3!\n You did not gain any experience from the battle.")
-    else:
-        experience_gained = random.randint(50, 150)
-        player["experience"] += experience_gained
-        print(f"You won the battle! You gained {experience_gained} experience points.")
-        level_system(player)
-        return player
-
-
-def level_system(player):
-    """Level up the player if they reach a certain amount of experience points.
-
-    :param player: must be a dictionary
-    :precondition: dictionary must contain keys "experience", "level", "class" and "race"
-    :postcondition: calculate if experience requirement met then increases level by 1 and sets experience to 0
-    :return: player
-
-    >>> level_system({"level": 1, "experience": 250, "race": "warrior", "class": "Pawn"})
-    {'level': 1, 'experience': 250, 'race': 'warrior', 'class': 'Pawn'}
-    >>> level_system({"level": 2, "experience": 299, "race": "bandit", "class": "Jester"})
-    {'level': 2, 'experience': 299, 'race': 'bandit', 'class': 'Jester'}
-    >>> level_system({"level": 1, "experience": 320, "race": "mage", "class": "Pawn"})
-    You gained a level! You are now level 2 and ascended to a Rook.
-    {'level': 2, 'experience': 0, 'race': 'mage', 'class': 'Rook'}
-    >>> level_system({"level": 2, "experience": 300, "race": "archer", "class": "Pawn"})
-    You gained a level! You are now level 3 and ascended to a King.
-    {'level': 3, 'experience': 0, "race": 'archer', 'class': 'King'}
-    """
-    if player["experience"] >= 300:
-        player["level"] += 1
-        player["experience"] = 0
-        class_upgrade(player)
-        print(f"You gained a level! You are now level {player['level']} and ascended to a {player['class']}.")
-    return player
-
-
-def class_upgrade(player):
-    classes = {'warrior': {1: "Pawn", 2: "Knight", 3: "Queen"},
-               'mage': {1: "Pawn", 2: "Rook", 3: "Bishop"},
-               'archer': {1: "Pawn", 2: "Hunter", 3: "King"},
-               'bandit': {1: "Pawn", 2: "Jester", 3: "Castle"}
-               }
-
-    player["class"] = classes[player["race"]][player["level"]]  # finds class based on race and level
-
-    return player
-
-
 def combat_duel(player_health):
     """Return player's health value after enemy_health or player_health reaches 0.
 
@@ -580,6 +521,65 @@ def combat_choice(player_health):
     else:
         print("That is not a valid choice! \n")
         return combat_choice(player_health)
+
+
+def gain_experience_points(player):
+    """Add experience points for player if not max level.
+
+    :param player: must be a dictionary
+    :precondition: dictionary must contain keys "experience", "level", "class" and "race"
+    :postcondition: rolls for experience gain then check
+    :return: player if player is not at the max level
+
+    no doctest, this uses random values
+    """
+    if player["level"] == 3:
+        print(f"You are already at the max level of 3!\n You did not gain any experience from the battle.")
+    else:
+        experience_gained = random.randint(50, 150)
+        player["experience"] += experience_gained
+        print(f"You won the battle! You gained {experience_gained} experience points.")
+        level_system(player)
+        return player
+
+
+def level_system(player):
+    """Level up the player if they reach a certain amount of experience points.
+
+    :param player: must be a dictionary
+    :precondition: dictionary must contain keys "experience", "level", "class" and "race"
+    :postcondition: calculate if experience requirement met then increases level by 1 and sets experience to 0
+    :return: player
+
+    >>> level_system({"level": 1, "experience": 250, "race": "warrior", "class": "Pawn"})
+    {'level': 1, 'experience': 250, 'race': 'warrior', 'class': 'Pawn'}
+    >>> level_system({"level": 2, "experience": 299, "race": "bandit", "class": "Jester"})
+    {'level': 2, 'experience': 299, 'race': 'bandit', 'class': 'Jester'}
+    >>> level_system({"level": 1, "experience": 320, "race": "mage", "class": "Pawn"})
+    You gained a level! You are now level 2 and ascended to a Rook.
+    {'level': 2, 'experience': 0, 'race': 'mage', 'class': 'Rook'}
+    >>> level_system({"level": 2, "experience": 300, "race": "archer", "class": "Pawn"})
+    You gained a level! You are now level 3 and ascended to a King.
+    {'level': 3, 'experience': 0, "race": 'archer', 'class': 'King'}
+    """
+    if player["experience"] >= 300:
+        player["level"] += 1
+        player["experience"] = 0
+        class_upgrade(player)
+        print(f"You gained a level! You are now level {player['level']} and ascended to a {player['class']}.")
+    return player
+
+
+def class_upgrade(player):
+    classes = {'warrior': {1: "Pawn", 2: "Knight", 3: "Queen"},
+               'mage': {1: "Pawn", 2: "Rook", 3: "Bishop"},
+               'archer': {1: "Pawn", 2: "Hunter", 3: "King"},
+               'bandit': {1: "Pawn", 2: "Jester", 3: "Castle"}
+               }
+
+    player["class"] = classes[player["race"]][player["level"]]  # finds class based on race and level
+
+    return player
 
 
 def spawn_enemy():
