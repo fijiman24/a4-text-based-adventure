@@ -73,6 +73,13 @@ def enemy_death_text():
     pass
 
 
+def check_if_player_in_boss_room():
+    """Return True if player x- and y- coordinates are both 24, else return False.
+
+    :return: True if player x- and y- coordinates are both 24, else return False
+    """
+
+
 def check_if_goal_attained(boss_health):
     """Return True if boss_health <= 0, else return False.
 
@@ -136,7 +143,7 @@ def display_main_menu():
     if choice.isdigit():
         choice = int(choice)
         if choice == 1:
-            pass  # call move function
+            cardinal_direction()
         elif choice == 2:
             pass  # call check stats function
         elif choice == 3:
@@ -521,7 +528,7 @@ def spawn_enemy():
     no doctest, this uses random values
     """
     spawn_chance = random.randint(1, 5)
-    if spawn_chance == 1 or spawn_chance == 2:
+    if spawn_chance == 1:
         print("You were spotted by a guard!")
         return True
     else:
@@ -543,20 +550,20 @@ def game():
         # # Provides a list of character classes in a numbered list, function returns class corresponding to input
         # player[job] = character_job()
         display_main_menu()
-        direction = cardinal_direction()
-        valid_move = validate_move(direction, player['x-coordinate'], player['y-coordinate'])
-        if valid_move:
-            player['x-coordinate'] = move_x_axis(direction, player['x-coordinate'])
-            player['y-coordinate'] = move_y_axis(direction, player['y-coordinate'])
-            achieved_goal = check_if_goal_attained(player['x-coordinate'], player['y-coordinate'])
-            if not achieved_goal:
-                enemy_encounter = spawn_enemy()
-                if enemy_encounter:
-                    player['health'] = combat_choice(player['health'])
-                else:
-                    player['health'] = regen_health(player['health'])
-        else:
-            print("That's not a valid move!")
+        # direction = cardinal_direction()
+        # valid_move = validate_move(direction, player['x-coordinate'], player['y-coordinate'])
+        # if valid_move:
+        #     player['x-coordinate'] = move_x_axis(direction, player['x-coordinate'])
+        #     player['y-coordinate'] = move_y_axis(direction, player['y-coordinate'])
+        #     achieved_goal = check_if_goal_attained(player['x-coordinate'], player['y-coordinate'])
+        #     if not achieved_goal:
+        #         enemy_encounter = spawn_enemy()
+        #         if enemy_encounter:
+        #             player['health'] = combat_choice(player['health'])
+        #         else:
+        #             player['health'] = regen_health(player['health'])
+        # else:
+        #     print("That's not a valid move!")
     story_ending()
 
 
