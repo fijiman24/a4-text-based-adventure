@@ -103,13 +103,13 @@ def make_player():
             "player_class_special_action": "placeholder_class_special_action", "level": 1}
 
 
-def generate_board():
+def game_board_coordinates():
     """Return dictionary representing game board, with coordinate (0, 0) being occupied.
 
     :postcondition: generate dictionary game board
     :postcondition: occupy coordinate (0, 0) in game board with yellow asterisk representing player location
     :return: dictionary representing game board, with coordinate (0, 0) being occupied
-    >>> generate_board()
+    >>> game_board_coordinates()
 
 
     """
@@ -164,7 +164,7 @@ def select_player_class():
 
 
 def confirm_player_class(class_name):
-    print(f"Are you a {class_name}?")
+    print(f"Do you want to be a {class_name}?")
     print(list(enumerate(["Yes", "No"], start=1)))
 
     choice = input()
@@ -181,23 +181,23 @@ def confirm_player_class(class_name):
         confirm_player_class(class_name)
 
 
-def display_main_menu():
+def display_main_menu(player):
     print(list(enumerate(["Move", "Check Stats", "Quit Game"], start=1)))
     choice = input()
     if choice.isdigit():
         if choice == "1":
             cardinal_direction()
         elif choice == "2":
-            pass  # call check stats function
+            check_player_statistics(player)
         elif choice == "3":
             print("You have quit the game. The dungeons will be waiting for your return...")
             exit()
         else:
             print("That is not a valid choice! \n")
-            display_main_menu()
+            display_main_menu(player)
     else:
         print("That is not a valid choice! \n")
-        display_main_menu()
+        display_main_menu(player)
 
 
 def check_player_statistics(player):
@@ -604,18 +604,18 @@ def game():
     """
     Drive the main gameplay loop as long as goal_achieved is False
     """
-    player = make_player()
-    achieved_goal = False
     ascii_intro()
     story_introduction()
+
+    player = make_player()
+    game_board = game_board_coordinates()
     player['name'] = input_player_name()
     player['player_class'] = select_player_class()
+    achieved_goal = False
+    display_game_board(player['x-coordinate'], player['y-coordinate'], game_board)
 
     while not achieved_goal:
-        check_player_statistics(player)
-        game_board = generate_board()
-        display_game_board(player['x-coordinate'], player['y-coordinate'], game_board)
-        display_main_menu()
+        display_main_menu(player)
     story_ending()
 
 
