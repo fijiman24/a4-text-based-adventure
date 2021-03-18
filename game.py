@@ -203,6 +203,17 @@ def display_main_menu():
         display_main_menu()
 
 
+def check_player_statistics(name, health, level, exp, player_class, class_special_action):
+    """Print player name, health, level, experience points, class, and class special action.
+
+    """
+    print(f"Your name is {name}.")
+    print(f"You have {health} health points remaining.")
+    print(f"You are level {level}.")
+    print(f"You have {exp} experience points. You are {500 - int(exp)} points away from leveling up.")
+    print(f"You are a {player_class}. A {player_class} has the special ability {class_special_action}")
+
+
 def cardinal_direction():
     """Return player directional input.
 
@@ -380,11 +391,11 @@ def backstab(player_health):
 
 
 def combat_initiative_roll():  # put enemy_name as a parameter maybe; could have different names for diff enemy types
-    """Roll to see if character or foe attacks first.
+    """Roll to see if player or foe attacks first.
 
     :precondition: params must be met
-    :postcondition: rolls to check if foe attacks first then returns character
-    :return: character if foe goes first otherwise nothing
+    :postcondition: rolls to check if foe attacks first then returns player
+    :return: player if foe goes first otherwise nothing
     """
     player_roll = random.randint(1, 100)
     enemy_roll = random.randint(1, 100)
@@ -436,33 +447,33 @@ def combat_enemy_attack(player_health):
     return player_health
 
 
-def gain_experience_points(character):
+def gain_experience_points(player):
     """Add experience points for player if not max level.
 
-    :param character: must be a dictionary
+    :param player: must be a dictionary
     :precondition: dictionary must contain keys "experience", "level", "class" and "race"
     :postcondition: rolls for experience gain then check
-    :return: character if player is not at the max level
+    :return: player if player is not at the max level
 
     no doctest, this uses random values
     """
-    if character["level"] == 3:
+    if player["level"] == 3:
         print(f"You are already at the max level of 3!\n You did not gain any experience from the battle.")
     else:
         experience_gained = random.randint(50, 150)
-        character["experience"] += experience_gained
+        player["experience"] += experience_gained
         print(f"You won the battle! You gained {experience_gained} experience points.")
-        level_system(character)
-        return character
+        level_system(player)
+        return player
 
 
-def level_system(character):
-    """Level up the character if they reach a certain amount of experience points.
+def level_system(player):
+    """Level up the player if they reach a certain amount of experience points.
 
-    :param character: must be a dictionary
+    :param player: must be a dictionary
     :precondition: dictionary must contain keys "experience", "level", "class" and "race"
     :postcondition: calculate if experience requirement met then increases level by 1 and sets experience to 0
-    :return: character
+    :return: player
 
     >>> level_system({"level": 1, "experience": 250, "race": "warrior", "class": "Pawn"})
     {'level': 1, 'experience': 250, 'race': 'warrior', 'class': 'Pawn'}
@@ -475,24 +486,24 @@ def level_system(character):
     You gained a level! You are now level 3 and ascended to a King.
     {'level': 3, 'experience': 0, "race": 'archer', 'class': 'King'}
     """
-    if character["experience"] >= 300:
-        character["level"] += 1
-        character["experience"] = 0
-        class_upgrade(character)
-        print(f"You gained a level! You are now level {character['level']} and ascended to a {character['class']}.")
-    return character
+    if player["experience"] >= 300:
+        player["level"] += 1
+        player["experience"] = 0
+        class_upgrade(player)
+        print(f"You gained a level! You are now level {player['level']} and ascended to a {player['class']}.")
+    return player
 
 
-def class_upgrade(character):
+def class_upgrade(player):
     classes = {'warrior': {1: "Pawn", 2: "Knight", 3: "Queen"},
                'mage': {1: "Pawn", 2: "Rook", 3: "Bishop"},
                'archer': {1: "Pawn", 2: "Hunter", 3: "King"},
                'bandit': {1: "Pawn", 2: "Jester", 3: "Castle"}
                }
 
-    character["class"] = classes[character["race"]][character["level"]]  # finds class based on race and level
+    player["class"] = classes[player["race"]][player["level"]]  # finds class based on race and level
 
-    return character
+    return player
 
 
 def combat_duel(player_health):
@@ -554,10 +565,10 @@ def combat_choice(player_health):
         elif choice == 2:
             return backstab(player_health)
         else:
-            print("That is not a valid choice!")
+            print("That is not a valid choice! \n")
             return combat_choice(player_health)
     else:
-        print("That is not a valid choice!")
+        print("That is not a valid choice! \n")
         return combat_choice(player_health)
 
 
@@ -591,9 +602,6 @@ def game():
     player['name'] = input_player_name()
     player['class'] = select_player_class()
     while not achieved_goal:
-        # # Make a character; functions, accept and return input
-        # # Provides a list of character classes in a numbered list, function returns class corresponding to input
-        # player[job] = character_job()
         display_main_menu()
         # direction = cardinal_direction()
         # valid_move = validate_move(direction, player['x-coordinate'], player['y-coordinate'])
