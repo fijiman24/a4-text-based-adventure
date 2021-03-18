@@ -30,6 +30,17 @@ STARTING_X_COORDINATE = (0,)
 STARTING_Y_COORDINATE = (0,)
 
 
+def ascii_intro():
+    print(f"{Colours.red}  ___  _   _ _____ _____ _____ _   _      ___   _   _______     _____   ___   _      _________"
+          f"__")
+    print(" / _ \| | | /  ___|_   _|_   _| \ | |    / _ \ | \ | |  _  \   /  __ \ / _ \ | |    |  ___| ___ \\")
+    print("/ /_\ \ | | \ `--.  | |   | | |  \| |   / /_\ \|  \| | | | |   | /  \// /_\ \| |    | |__ | |_/ /")
+    print("|  _  | | | |`--. \ | |   | | | . ` |   |  _  || . ` | | | |   | |    |  _  || |    |  __|| ___ \\")
+    print("| | | | |_| /\__/ / | |  _| |_| |\  |   | | | || |\  | |/ /    | \__/\| | | || |____| |___| |_/ /")
+    print(f"\_| |_/\___/\____/  \_/  \___/\_| \_/   \_| |_/\_| \_/___/      \____/\_| |_/\_____/\____/\____/"
+          f"{Colours.end}")
+
+
 def story_introduction():
     """Print the introductory story text.
 
@@ -500,6 +511,7 @@ def game():
     """
     player = make_player()
     achieved_goal = False
+    ascii_intro()
     story_introduction()
     player['name'] = player_name()
 
