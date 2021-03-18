@@ -99,8 +99,8 @@ def make_player():
     {'health': 20, 'x-coordinate': 0, 'y-coordinate': 0, 'name': ''}
     """
     return {"health": MAX_PLAYER_HEALTH[0], "x-coordinate": STARTING_X_COORDINATE[0], "y-coordinate":
-            STARTING_Y_COORDINATE[0], "name": "test", "exp": 0, "player_class": "test",
-            "player_class_special_action": "test", "level": 1}
+            STARTING_Y_COORDINATE[0], "name": "test", "exp": 0, "player_class": "placeholder_class",
+            "player_class_special_action": "placeholder_class_special_action", "level": 1}
 
 
 def generate_board():
@@ -133,7 +133,6 @@ def input_player_name():
         print("You can be more adventurous than that. \n")
         return input_player_name()
     else:
-        print(f"Your name is {name_input}. \n")
         return name_input
 
 
@@ -171,7 +170,6 @@ def confirm_player_class(class_name):
     choice = input()
     if choice.isdigit():
         if choice == "1":
-            print(f"You are a {class_name}. \n")
             return class_name
         elif choice == "2":
             return select_player_class()
@@ -612,7 +610,7 @@ def game():
     ascii_intro()
     story_introduction()
     player['name'] = input_player_name()
-    player['class'] = select_player_class()
+    player['player_class'] = select_player_class()
 
     while not achieved_goal:
         check_player_statistics(player)
