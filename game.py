@@ -178,11 +178,9 @@ def confirm_player_class(class_name):
         elif choice == "2":
             return select_player_class()
         else:
-            print("That is not a valid choice! \n")
-            confirm_player_class(class_name)
+            not_valid_choice(confirm_player_class(class_name))
     else:
-        print("That is not a valid choice! \n")
-        confirm_player_class(class_name)
+        not_valid_choice(confirm_player_class(class_name))
 
 
 def display_main_menu():
@@ -199,11 +197,9 @@ def display_main_menu():
             print("You have quit the game. The dungeons will be waiting for your return...")
             exit()
         else:
-            print("That is not a valid choice! \n")
-            display_main_menu()
+            not_valid_choice(confirm_player_class(display_main_menu()))
     else:
-        print("That is not a valid choice! \n")
-        display_main_menu()
+        not_valid_choice(confirm_player_class(display_main_menu()))
 
 
 def cardinal_direction():
@@ -557,11 +553,9 @@ def combat_choice(player_health):
         elif choice == 2:
             return backstab(player_health)
         else:
-            print("That is not a valid choice!")
-            return combat_choice(player_health)
+            not_valid_choice(combat_choice(player_health))
     else:
-        print("That is not a valid choice!")
-        return combat_choice(player_health)
+        not_valid_choice(combat_choice(player_health))
 
 
 def spawn_enemy():
