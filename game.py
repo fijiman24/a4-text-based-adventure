@@ -87,6 +87,11 @@ def check_if_goal_attained(boss_health):
     pass
 
 
+def not_valid_choice(function):
+    print("That is not a valid choice! \n")
+    return function
+
+
 def make_player():
     """Return a dictionary representing the player's maximum health health, their starting x-coordinate, their starting
        y-coordinate, and their name.
@@ -156,11 +161,9 @@ def select_player_class():
             # print the backstory of class 1
             return confirm_player_class("Vengeful Barbarian")
         else:
-            print("That is not a valid choice! \n")
-            select_player_class()
+            not_valid_choice(select_player_class())
     else:
-        print("That is not a valid choice! \n")
-        select_player_class()
+        not_valid_choice(select_player_class())
 
 
 def confirm_player_class(class_name):
