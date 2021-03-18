@@ -7,6 +7,18 @@ import time
 import doctest
 import itertools
 
+
+# Print colors
+class Colours:
+    end = '\033[0m'
+    red = '\033[91m'
+    green = '\033[92m'
+    yellow = '\033[93m'
+    blue = '\033[94m'
+    magenta = '\033[95m'
+    cyan = '\033[96m'
+
+
 # Constants enclosed in tuples (yes, it looks weird)
 MAX_PLAYER_HEALTH = (20,)
 MAX_ENEMY_HEALTH = (10,)
@@ -59,22 +71,22 @@ def make_player():
             STARTING_Y_COORDINATE[0], "name": "John"}
 
 
-def show_map():
+def generate_board():
     """Print out a 4x4 map of the board.
 
     :postcondition: generate and prints a board
     :return: prints a map of the game
-    >>> show_map()
+    >>> generate_board()
     [0, 0] [0, 1] [0, 2] [0, 3] [0, 4]
     [1, 0] [1, 1] [1, 2] [1, 3] [1, 4]
     [2, 0] [2, 1] [2, 2] [2, 3] [2, 4]
     [3, 0] [3, 1] [3, 2] [3, 3] [3, 4]
     [4, 0] [4, 1] [4, 2] [4, 3] [4, 4]
     """
-    for row in range(5):
-        for column in range(5):
-            print(f'[{row}, {column}]', end=' ')
-        print()
+    board_coordinates = [(x_coordinates, y_coordinates) for x_coordinates in range(0, 25) for
+                         y_coordinates in range(0, 25)]
+    board_empty = {coordinate: f"{Colours.blue}*{Colours.end}" for coordinate in board_coordinates}
+    return board_empty
 
 
 def story_introduction():
