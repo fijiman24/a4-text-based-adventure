@@ -30,6 +30,38 @@ STARTING_X_COORDINATE = (0,)
 STARTING_Y_COORDINATE = (0,)
 
 
+def story_introduction():
+    """Print the introductory story text.
+
+    :postcondition: print the introductory story text and the map
+    """
+    pass
+
+
+def story_ending():
+    """Print the ending story text.
+
+    :postcondition: print the ending story text
+    """
+    pass
+
+
+def player_death_text():
+    """Print text describing player death.
+
+    postcondition: print text describing player death
+    """
+    pass
+
+
+def enemy_death_text():
+    """Print text describing enemy death.
+
+    postcondition: print text describing enemy death
+    """
+    pass
+
+
 def check_if_goal_attained(boss_health):
     """Return True if boss_health <= 0, else return False.
 
@@ -67,38 +99,6 @@ def generate_board():
     game_board = {coordinate: f"{Colours.blue}*{Colours.end}" for coordinate in board_coordinates}
     game_board[(0, 0)] = f"{Colours.yellow}@{Colours.end}"
     return game_board
-
-
-def story_introduction():
-    """Print the introductory story text.
-
-    :postcondition: print the introductory story text and the map
-    """
-    pass
-
-
-def story_ending():
-    """Print the ending story text.
-
-    :postcondition: print the ending story text
-    """
-    pass
-
-
-def player_death_text():
-    """Print text describing player death.
-
-    postcondition: print text describing player death
-    """
-    pass
-
-
-def enemy_death_text():
-    """Print text describing enemy death.
-
-    postcondition: print text describing enemy death
-    """
-    pass
 
 
 def player_name():
