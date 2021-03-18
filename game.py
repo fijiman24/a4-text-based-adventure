@@ -119,7 +119,7 @@ def generate_board():
     return game_board
 
 
-def player_name():
+def input_player_name():
     """Return player name.
 
     :postcondition: convert player's input into title case
@@ -130,10 +130,40 @@ def player_name():
     name_input = str(input("Enter your name: ")).title()
     if name_input.lower() == "chris" or name_input.lower() == "christopher" or name_input.lower() == "chris thompson":
         print("You can be more adventurous than that. \n")
-        return player_name()
+        return input_player_name()
     else:
         print(f"Your name is {name_input}. \n")
         return name_input
+
+
+def select_player_class():
+    class_choices = list(enumerate(["Careless Adventurer", "Corrupt Official", "Petty Thief", "Vengeful Barbarian"],
+                                   start=1))
+    print(class_choices)
+    choice = input()
+    if choice.isdigit():
+        choice = int(choice)
+        if choice == 1:
+            # print the backstory of class 1
+            print("Is this the class you want?")
+
+        elif choice == 2:
+            pass  # call check stats function
+        elif choice == 3:
+            pass  # call check location function
+        elif choice == 4:
+            print("You have quit the game. The dungeons will be waiting for your return...")
+            exit()
+        else:
+            print("That is not a valid choice!")
+            display_main_menu()
+    else:
+        print("That is not a valid choice!")
+        display_main_menu()
+
+
+def confirm_player_class():
+    pass
 
 
 def display_main_menu():
@@ -543,9 +573,10 @@ def game():
     achieved_goal = False
     ascii_intro()
     story_introduction()
-    player['name'] = player_name()
 
-    while not achieved_goal:  # and user input != "quit"
+    player['name'] = input_player_name()
+    player['class'] = select_player_class()
+    while not achieved_goal:
         # # Make a character; functions, accept and return input
         # # Provides a list of character classes in a numbered list, function returns class corresponding to input
         # player[job] = character_job()
