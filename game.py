@@ -73,11 +73,15 @@ def enemy_death_text():
     pass
 
 
-def check_if_player_in_boss_room():
+def check_if_player_in_boss_room(x_coordinate, y_coordinate):
     """Return True if player x- and y- coordinates are both 24, else return False.
 
     :return: True if player x- and y- coordinates are both 24, else return False
     """
+    if x_coordinate == 24 and y_coordinate == 24:
+        return True
+    else:
+        return False
 
 
 def check_if_goal_attained(boss_health):
@@ -616,6 +620,20 @@ def game():
 
     while not achieved_goal:
         display_main_menu(player)
+        direction = cardinal_direction()
+        valid_move = validate_move(direction, player['x-coordinate'], player['y-coordinate'])
+        if valid_move:
+            player['x-coordinate'] = move_x_axis(direction, player['x-coordinate'])
+            player['y-coordinate'] = move_y_axis(direction, player['y-coordinate'])
+            in_boss_room = check_if_player_in_boss_room(player['x-coordinate'], player['y-coordinate'])
+            if not in_boss_room:
+                enemy_encounter = spawn_enemy()
+                if enemy_encounter:
+                    player['health'] = combat_choice(player['health'])
+                else:
+                    player['health'] = regen_health(player['health'])
+        else:
+            print("That's not a valid move!")
     story_ending()
 
 
