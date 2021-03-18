@@ -139,31 +139,50 @@ def input_player_name():
 def select_player_class():
     class_choices = list(enumerate(["Careless Adventurer", "Corrupt Official", "Petty Thief", "Vengeful Barbarian"],
                                    start=1))
+    print("Select a class: ")
     print(class_choices)
     choice = input()
     if choice.isdigit():
         choice = int(choice)
         if choice == 1:
             # print the backstory of class 1
-            print("Is this the class you want?")
-
+            return confirm_player_class("Careless Adventurer")
         elif choice == 2:
-            pass  # call check stats function
+            # print the backstory of class 1
+            return confirm_player_class("Corrupt Official")
         elif choice == 3:
-            pass  # call check location function
+            # print the backstory of class 1
+            return confirm_player_class("Petty Thief")
         elif choice == 4:
-            print("You have quit the game. The dungeons will be waiting for your return...")
-            exit()
+            # print the backstory of class 1
+            return confirm_player_class("Vengeful Barbarian")
         else:
             print("That is not a valid choice!")
-            display_main_menu()
+            select_player_class()
     else:
         print("That is not a valid choice!")
-        display_main_menu()
+        select_player_class()
 
 
-def confirm_player_class():
-    pass
+def confirm_player_class(class_name):
+    confirmation = list(enumerate(["Yes", "No"], start=1))
+    print(f"Are you a {class_name}?")
+    print(confirmation)
+
+    choice = input()
+    if choice.isdigit():
+        choice = int(choice)
+        if choice == 1:
+            print(f"You are a {class_name}.")
+            return class_name
+        elif choice == 2:
+            return select_player_class()
+        else:
+            print("That is not a valid choice!")
+            confirm_player_class(class_name)
+    else:
+        print("That is not a valid choice!")
+        confirm_player_class(class_name)
 
 
 def display_main_menu():
