@@ -182,7 +182,7 @@ def confirm_player_class(class_name):
 
 
 def display_main_menu():
-    print(list(enumerate(["Move", "Check Stats", "Check Location", "Quit Game"], start=1)))
+    print(list(enumerate(["Move", "Check Stats", "Quit Game"], start=1)))
     choice = input()
     if choice.isdigit():
         if choice == "1":
@@ -190,8 +190,6 @@ def display_main_menu():
         elif choice == "2":
             pass  # call check stats function
         elif choice == "3":
-            pass  # call check location function
-        elif choice == "4":
             print("You have quit the game. The dungeons will be waiting for your return...")
             exit()
         else:
@@ -207,15 +205,15 @@ def check_player_statistics(player):
 
     """
     print(f"Your name is {player['name']}.")
-    print(f"You have {player['health']} health points remaining.")
-    print(f"You are level {player['level']}.")
-    print(f"You have {player['exp']} experience points. You are {500 - int(player['exp'])} points away from leveling "
-          f"up.")
-    print(f"You are a {player['player_class']}. A {player['player_class']} has the special ability "
+    print(f"{player['name']} has {player['health']} health points remaining.")
+    print(f"{player['name']} is level {player['level']}.")
+    print(f"{player['name']} has {player['exp']} experience points, {500 - int(player['exp'])} points away from "
+          f"leveling up.")
+    print(f"{player['name']} is a {player['player_class']}, with the special ability "
           f"{player['player_class_special_action']}. \n")
 
 
-def check_player_location(x_coordinate, y_coordinate, game_board):
+def display_game_board(x_coordinate, y_coordinate, game_board):
     surface_visualization = list(game_board.values())
     surface_visualization.insert(0, "")
     for index in range(1, len(surface_visualization) + 25):
@@ -224,6 +222,7 @@ def check_player_location(x_coordinate, y_coordinate, game_board):
     surface_visualization.pop()
     print(*surface_visualization, sep=" ")
     print(f"You are at {x_coordinate}, {y_coordinate}.")
+
 
 def cardinal_direction():
     """Return player directional input.
@@ -615,7 +614,7 @@ def game():
     while not achieved_goal:
         check_player_statistics(player)
         game_board = generate_board()
-        check_player_location(player['x-coordinate'], player['y-coordinate'], game_board)
+        display_game_board(player['x-coordinate'], player['y-coordinate'], game_board)
         display_main_menu()
     story_ending()
 
