@@ -603,20 +603,7 @@ def game():
     player['class'] = select_player_class()
     while not achieved_goal:
         display_main_menu()
-        # direction = cardinal_direction()
-        # valid_move = validate_move(direction, player['x-coordinate'], player['y-coordinate'])
-        # if valid_move:
-        #     player['x-coordinate'] = move_x_axis(direction, player['x-coordinate'])
-        #     player['y-coordinate'] = move_y_axis(direction, player['y-coordinate'])
-        #     achieved_goal = check_if_goal_attained(player['x-coordinate'], player['y-coordinate'])
-        #     if not achieved_goal:
-        #         enemy_encounter = spawn_enemy()
-        #         if enemy_encounter:
-        #             player['health'] = combat_choice(player['health'])
-        #         else:
-        #             player['health'] = regen_health(player['health'])
-        # else:
-        #     print("That's not a valid move!")
+
     story_ending()
 
 
