@@ -203,15 +203,17 @@ def display_main_menu():
         display_main_menu()
 
 
-def check_player_statistics(name, health, level, exp, player_class, class_special_action):
+def check_player_statistics(player):
     """Print player name, health, level, experience points, class, and class special action.
 
     """
-    print(f"Your name is {name}.")
-    print(f"You have {health} health points remaining.")
-    print(f"You are level {level}.")
-    print(f"You have {exp} experience points. You are {500 - int(exp)} points away from leveling up.")
-    print(f"You are a {player_class}. A {player_class} has the special ability {class_special_action}")
+    print(f"Your name is {player['name']}.")
+    print(f"You have {player['health']} health points remaining.")
+    print(f"You are level {player['level']}.")
+    print(f"You have {player['exp']} experience points. You are {500 - int(player['exp'])} points away from leveling "
+          f"up.")
+    print(f"You are a {player['player_class']}. A {player['player_class']} has the special ability "
+          f"{player['player_class_special_action']}.")
 
 
 def cardinal_direction():
