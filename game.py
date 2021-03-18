@@ -30,45 +30,26 @@ STARTING_X_COORDINATE = (0,)
 STARTING_Y_COORDINATE = (0,)
 
 
-def check_if_goal_attained(x_coordinate, y_coordinate):
-    """Return True if x_coordinate and y_coordinate are both 4, else return False.
+def check_if_goal_attained(boss_health):
+    """Return True if boss_health <= 0, else return False.
 
-    :param x_coordinate: any integer
-    :param y_coordinate: any integer
-    :precondition: x_coordinate is any integer
-    :precondition: y_coordinate is any integer
-    :postcondition: return True if x_coordinate and y_coordinate are both 4
-    :postcondition: return False if x_coordinate or y_coordinate is not 4
-    :return: True if x_coordinate and y_coordinate are both 4, else False
-
-    >>> check_if_goal_attained(4, 4)
-    True
-    >>> check_if_goal_attained(2, 3)
-    False
-    >>> check_if_goal_attained(4, 0)
-    False
-    >>> check_if_goal_attained(0, 4)
-    False
     """
-    if x_coordinate == 4 and y_coordinate == 4:
-        return True
-    else:
-        return False
+    pass
 
 
 def make_player():
-    """Return a dictionary representing the player's maximum health health, their starting x-coordinate, and
-       their starting y-coordinate.
+    """Return a dictionary representing the player's maximum health health, their starting x-coordinate, their starting
+       y-coordinate, and their name.
 
-    :postcondition: Return a dictionary representing the player's maximum health, their starting x-coordinate, and
-                    their starting y-coordinate
-    :return: a dictionary representing the player's current health, x-coordinate, and y-coordinate
+    :postcondition: Return a dictionary representing the player's maximum health, their starting x-coordinate, their
+                    starting y-coordinate, and their name
+    :return: a dictionary representing the player's current health, starting x-coordinate and y-coordinate, and name
 
     >>> make_player()
-    {'health': 20, 'x-coordinate': 0, 'y-coordinate': 0}
+    {'health': 20, 'x-coordinate': 0, 'y-coordinate': 0, 'name': ''}
     """
     return {"health": MAX_PLAYER_HEALTH[0], "x-coordinate": STARTING_X_COORDINATE[0], "y-coordinate":
-            STARTING_Y_COORDINATE[0], "name": "John"}
+            STARTING_Y_COORDINATE[0], "name": ""}
 
 
 def generate_board():
