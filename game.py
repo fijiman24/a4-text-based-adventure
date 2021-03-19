@@ -146,22 +146,18 @@ def select_player_class():
     print("Select a class: ")
     print(class_choices)
     choice = input()
-    if choice.isdigit():
-        if choice == "1":
-            # print the backstory of class 1
-            return confirm_player_class("Careless Adventurer")
-        elif choice == "2":
-            # print the backstory of class 1
-            return confirm_player_class("Corrupt Official")
-        elif choice == "3":
-            # print the backstory of class 1
-            return confirm_player_class("Petty Thief")
-        elif choice == "4":
-            # print the backstory of class 1
-            return confirm_player_class("Vengeful Barbarian")
-        else:
-            print("That is not a valid choice! \n")
-            select_player_class()
+    if choice == "1":
+        # print the backstory of class 1
+        return confirm_player_class("Careless Adventurer")
+    elif choice == "2":
+        # print the backstory of class 1
+        return confirm_player_class("Corrupt Official")
+    elif choice == "3":
+        # print the backstory of class 1
+        return confirm_player_class("Petty Thief")
+    elif choice == "4":
+        # print the backstory of class 1
+        return confirm_player_class("Vengeful Barbarian")
     else:
         print("That is not a valid choice! \n")
         select_player_class()
@@ -172,14 +168,10 @@ def confirm_player_class(class_name):
     print(list(enumerate(["Yes", "No"], start=1)))
 
     choice = input()
-    if choice.isdigit():
-        if choice == "1":
-            return class_name
-        elif choice == "2":
-            return select_player_class()
-        else:
-            print("That is not a valid choice! \n")
-            confirm_player_class(class_name)
+    if choice == "1":
+        return class_name
+    elif choice == "2":
+        return select_player_class()
     else:
         print("That is not a valid choice! \n")
         confirm_player_class(class_name)
@@ -188,17 +180,13 @@ def confirm_player_class(class_name):
 def display_main_menu(player):
     print(list(enumerate(["Move", "Check Stats", "Quit Game"], start=1)))
     choice = input()
-    if choice.isdigit():
-        if choice == "1":
-            cardinal_direction()
-        elif choice == "2":
-            check_player_statistics(player)
-        elif choice == "3":
-            print("You have quit the game. The dungeons will be waiting for your return...")
-            exit()
-        else:
-            print("That is not a valid choice! \n")
-            display_main_menu(player)
+    if choice == "1":
+        cardinal_direction()
+    elif choice == "2":
+        check_player_statistics(player)
+    elif choice == "3":
+        print("You have quit the game. The dungeons will be waiting for your return...")
+        exit()
     else:
         print("That is not a valid choice! \n")
         display_main_menu(player)
@@ -513,15 +501,10 @@ def combat_choice(player_health):
     options = list(enumerate(["Fight", "Flee"], start=1))
     print("Enter 1 to engage in combat, or enter 2 if you try to flee.\n", options)
     choice = input()
-    if choice.isdigit():
-        choice = int(choice)
-        if choice == 1:
-            return combat_duel(player_health)
-        elif choice == 2:
-            return backstab(player_health)
-        else:
-            print("That is not a valid choice! \n")
-            return combat_choice(player_health)
+    if choice == "1":
+        return combat_duel(player_health)
+    elif choice == "2":
+        return backstab(player_health)
     else:
         print("That is not a valid choice! \n")
         return combat_choice(player_health)
@@ -564,7 +547,7 @@ def level_system(player):
     {'level': 2, 'experience': 0, 'race': 'mage', 'class': 'Rook'}
     >>> level_system({"level": 2, "experience": 300, "race": "archer", "class": "Pawn"})
     You gained a level! You are now level 3 and ascended to a King.
-    {'level': 3, 'experience': 0, "race": 'archer', 'class': 'King'}
+    {'level': 3, 'experience': 0, 'race': 'archer', 'class': 'King'}
     """
     if player["experience"] >= 300:
         player["level"] += 1
