@@ -465,7 +465,7 @@ def combat_duel(player_health):
     elif not initiative:
         while player_health > 0 and enemy_health > 0:
             player_health = combat_enemy_attack(player_health)
-            if enemy_health > 0:
+            if player_health > 0:
                 enemy_health = combat_player_attack(enemy_health)
 
     if enemy_health <= 0:
@@ -603,8 +603,8 @@ def game():
             if valid_move:
                 player['x-coordinate'] = move_x_axis(direction, player['x-coordinate'])
                 player['y-coordinate'] = move_y_axis(direction, player['y-coordinate'])
-                # achieved_goal = check_if_goal_attained(player['x-coordinate'], player['y-coordinate'])
-                if not achieved_goal:
+                in_boss_room = check_if_player_in_boss_room(player['x-coordinate'], player['y-coordinate'])
+                if not in_boss_room:
                     enemy_encounter = spawn_enemy()
                     if enemy_encounter:
                         player['health'] = combat_choice(player['health'])
