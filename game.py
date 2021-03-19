@@ -134,23 +134,23 @@ def input_player_name():
 
 
 def select_player_class():
-    class_choices = list(enumerate(["Careless Adventurer", "Corrupt Official", "Petty Thief", "Vengeful Barbarian"],
-                                   start=1))
+    class_choices = list(enumerate(["Ruthless Corsair", "Militia Turncoat", "Scrappy Scoundrel",
+                                    "Disgraced Quadrillionaire"], start=1))
     print("Select a class: ")
     print(class_choices)
     choice = input()
     if choice == "1":
         # print the backstory of class 1
-        return confirm_player_class("Careless Adventurer")
+        return confirm_player_class("Ruthless Corsair")
     elif choice == "2":
         # print the backstory of class 1
-        return confirm_player_class("Corrupt Official")
+        return confirm_player_class("Militia Turncoat")
     elif choice == "3":
         # print the backstory of class 1
-        return confirm_player_class("Petty Thief")
+        return confirm_player_class("Scrappy Scoundrel")
     elif choice == "4":
         # print the backstory of class 1
-        return confirm_player_class("Vengeful Barbarian")
+        return confirm_player_class("Disgraced Quadrillionaire")
     else:
         print("That is not a valid choice! \n")
         select_player_class()
