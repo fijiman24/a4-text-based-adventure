@@ -177,19 +177,9 @@ def confirm_player_class(class_name):
         confirm_player_class(class_name)
 
 
-def display_main_menu(player):
+def display_main_menu():
     print(list(enumerate(["Move", "Check Stats", "Quit Game"], start=1)))
-    choice = input()
-    if choice == "1":
-        cardinal_direction()
-    elif choice == "2":
-        check_player_statistics(player)
-    elif choice == "3":
-        print("You have quit the game. The dungeons will be waiting for your return...")
-        exit()
-    else:
-        print("That is not a valid choice! \n")
-        display_main_menu(player)
+    return input()
 
 
 def check_player_statistics(player):
@@ -602,22 +592,29 @@ def game():
     display_game_board(player['x-coordinate'], player['y-coordinate'], game_board)
 
     while not achieved_goal:
-        display_main_menu(player)
-        direction = cardinal_direction()
-        valid_move = validate_move(direction, player['x-coordinate'], player['y-coordinate'])
-        if valid_move:
-            player['x-coordinate'] = move_x_axis(direction, player['x-coordinate'])
-            player['y-coordinate'] = move_y_axis(direction, player['y-coordinate'])
-            in_boss_room = check_if_player_in_boss_room(player['x-coordinate'], player['y-coordinate'])
-            if not in_boss_room:
-                enemy_encounter = spawn_enemy()
-                if enemy_encounter:
-                    player['health'] = combat_choice(player['health'])
-                else:
-                    player['health'] = regen_health(player['health'])
+        main_menu_selection = display_main_menu()
+        if main_menu_selection == "1":
+            direction = cardinal_direction()
+            valid_move = validate_move(direction, player['x-coordinate'], player['y-coordinate'])
+            if valid_move:
+                player['x-coordinate'] = move_x_axis(direction, player['x-coordinate'])
+                player['y-coordinate'] = move_y_axis(direction, player['y-coordinate'])
+                # achieved_goal = check_if_goal_attained(player['x-coordinate'], player['y-coordinate'])
+                if not achieved_goal:
+                    enemy_encounter = spawn_enemy()
+                    if enemy_encounter:
+                        player['health'] = combat_choice(player['health'])
+                    else:
+                        player['health'] = regen_health(player['health'])
+            else:
+                print("That's not a valid move!")
+        elif main_menu_selection == "2":
+            check_player_statistics(player)
+        elif main_menu_selection == "3":
+            print("You have quit the game. The dungeons will be waiting for your return...")
+            exit()
         else:
-            print("That's not a valid move!")
-    story_ending()
+            print("That is not a valid choice! \n")
 
 
 def main():
