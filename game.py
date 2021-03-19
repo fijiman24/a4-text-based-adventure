@@ -136,6 +136,9 @@ def input_player_name():
     if name_input.lower() == "chris" or name_input.lower() == "christopher" or name_input.lower() == "chris thompson":
         print("You can be more adventurous than that. \n")
         return input_player_name()
+    elif name_input.strip() == "":
+        print("Every adventurer needs a name.")
+        return input_player_name()
     else:
         return name_input
 
@@ -606,6 +609,7 @@ def game():
                         player['health'] = combat_choice(player['health'])
                     else:
                         player['health'] = regen_health(player['health'])
+                display_game_board(player['x-coordinate'], player['y-coordinate'], game_board)
             else:
                 print("That's not a valid move!")
         elif main_menu_selection == "2":
