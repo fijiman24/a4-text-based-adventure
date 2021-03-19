@@ -176,7 +176,12 @@ def game_board_coordinates():
     board_coordinates = [(x_coordinates, y_coordinates) for x_coordinates in range(0, 25) for
                          y_coordinates in range(0, 25)]
     game_board = {coordinate: f"{Colours.blue}*{Colours.end}" for coordinate in board_coordinates}
-    game_board[(0, 0)] = f"{Colours.yellow}@{Colours.end}"
+    return game_board
+
+
+def update_game_board(game_board, player_x_coordinate, player_y_coordinate):
+    game_board = {coordinate: f"{Colours.blue}*{Colours.end}" for coordinate in game_board}
+    game_board[(player_x_coordinate, player_y_coordinate)] = f"{Colours.yellow}@{Colours.end}"
     return game_board
 
 
