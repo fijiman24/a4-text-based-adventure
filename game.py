@@ -492,12 +492,15 @@ def combat_choice(player_health):
 
     no doctest, this accepts user input
     """
-    options = list(enumerate(["Fight", "Flee"], start=1))
-    print("Enter 1 to engage in combat, or enter 2 if you try to flee.\n", options)
+    options = list(enumerate(["Fight", "Special Ability", "Flee"], start=1))
+    print("You are engaged in combat. What will you do next? \n", options)
     choice = input()
     if choice == "1":
         return combat_duel(player_health)
     elif choice == "2":
+        print("Work in progress. Try this again later!")
+        return combat_choice(player_health)
+    elif choice == "3":
         return backstab(player_health)
     else:
         print("That is not a valid choice! \n")
