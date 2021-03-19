@@ -163,8 +163,9 @@ def confirm_player_class(class_name):
         confirm_player_class(class_name)
 
 
-def game_board_coordinates():
-    """Return dictionary representing game board, with coordinate (0, 0) being occupied.
+def game_board_coordinates(player_x_coordinate, player_y_coordinate):
+    """Return dictionary representing game board, with unoccupied coordinates containing blue asterisk, and occupied
+       coordinates containing a yellow at symbol.
 
     :postcondition: generate dictionary game board
     :postcondition: occupy coordinate (0, 0) in game board with yellow asterisk representing player location
@@ -176,12 +177,7 @@ def game_board_coordinates():
     board_coordinates = [(x_coordinates, y_coordinates) for x_coordinates in range(0, 25) for
                          y_coordinates in range(0, 25)]
     game_board = {coordinate: f"{Colours.blue}*{Colours.end}" for coordinate in board_coordinates}
-    return game_board
-
-
-def update_game_board(game_board, player_x_coordinate, player_y_coordinate):
-    game_board = {coordinate: f"{Colours.blue}*{Colours.end}" for coordinate in game_board}
-    game_board[(player_x_coordinate, player_y_coordinate)] = f"{Colours.yellow}@{Colours.end}"
+    game_board[(player_y_coordinate, player_x_coordinate)] = f"{Colours.yellow}@{Colours.end}"
     return game_board
 
 
@@ -593,7 +589,7 @@ def game():
     story_introduction()
 
     player = make_player()
-    game_board = game_board_coordinates()
+    game_board = game_board_coordinates(player['x-coordinate'], player['y-coordinate'])
     player['name'] = input_player_name()
     while player['player_class'] is None:
         player['player_class'] = select_player_class()
@@ -615,6 +611,7 @@ def game():
                         player['health'] = combat_choice(player['health'])
                     else:
                         player['health'] = regen_health(player['health'])
+                game_board = game_board_coordinates(player['x-coordinate'], player['y-coordinate'])
                 display_game_board(player['x-coordinate'], player['y-coordinate'], game_board)
             else:
                 print("That's not a valid move!")
