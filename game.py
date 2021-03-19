@@ -31,14 +31,14 @@ STARTING_Y_COORDINATE = (0,)
 
 
 def ascii_intro():
-    print(f"{Colours.red}______               _     _                  __      _____            _                    ")
-    print("| ___ \             | |   | |                / _|    |  _  |          | |                   ")
-    print("| |_/ /_ _ _ __ __ _| |__ | | ___       ___ | |_     | | | |_ __ _ __ | |__   ___ _   _ ___ ")
-    print("|  __/ _` | '__/ _` | '_ \| |/ _ \     / _ \|  _|    | | | | '__| '_ \| '_ \ / _ \ | | / __|")
-    print("| | | (_| | | | (_| | |_) | |  __/    | (_) | |      \ \_/ / |  | |_) | | | |  __/ |_| \__ \\")
-    print(f"\_|  \__,_|_|  \__,_|_.__/|_|\___|     \___/|_|       \___/|_|  | .__/|_| |_|\___|\__,_|___/")
-    print(f"                                                                | |                         ")
-    print(f"                                                                |_|                         {Colours.end}")
+    print(f"{Colours.blue}  /$$$$$$                        /$$                                /$$$$$$  /$$          ")
+    print(" /$$__  $$                      | $$                               /$$__  $$|__/          ")
+    print("| $$  \__/  /$$$$$$   /$$$$$$$ /$$$$$$    /$$$$$$   /$$$$$$       | $$  \__/ /$$ /$$   /$$")
+    print("|  $$$$$$  /$$__  $$ /$$_____/|_  $$_/   /$$__  $$ /$$__  $$      |  $$$$$$ | $$|  $$ /$$/")
+    print(" \____  $$| $$$$$$$$| $$        | $$    | $$  \ $$| $$  \__/       \____  $$| $$ \  $$$$/ ")
+    print(f" /$$  \ $$| $$_____/| $$        | $$ /$$| $$  | $$| $$             /$$  \ $$| $$  >$$  $$ ")
+    print(f"|  $$$$$$/|  $$$$$$$|  $$$$$$$  |  $$$$/|  $$$$$$/| $$            |  $$$$$$/| $$ /$$/\  $$")
+    print(f" \______/  \_______/ \_______/   \___/   \______/ |__/             \______/ |__/|__/  \__/{Colours.end}")
 
 
 def story_introduction():
@@ -46,7 +46,14 @@ def story_introduction():
 
     :postcondition: print the introductory story text and the map
     """
-    pass
+    print("In the distant future, humankind has colonized the vast, cold reaches of space. From suburban planets "
+          "to entire solar systems dedicated to vice, there isn't a sector in the\nMilky Way Galaxy that's been "
+          "left untouched by our ever-expanding race. One such sector is devoted to storing all of humanity's wealth "
+          "and fortune. Many a space pirate has\ntried their hand at laying siege to this sector in hopes of "
+          "plundering some riches for themselves, and all have been gunned down by the local security militias. \n")
+    print("All except you. You put together the perfect crew, formulated the perfect plan, and somehow managed to fill "
+          "your ship with as much loot as she could carry. Now all you have to\ndo is escape to the nearest wormhole,"
+          " treasure in tow, and you'll be christened the first ever space pirate to have successfully stolen from...")
 
 
 def story_ending():
@@ -588,6 +595,7 @@ def game():
     """
     Drive the main gameplay loop as long as goal_achieved is False
     """
+    story_introduction()
     ascii_intro()
     story_introduction()
 
