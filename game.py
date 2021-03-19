@@ -62,7 +62,7 @@ def player_death_text():
 
     postcondition: print text describing player death
     """
-    pass
+    print("You died.")
 
 
 def enemy_death_text():
@@ -70,7 +70,7 @@ def enemy_death_text():
 
     postcondition: print text describing enemy death
     """
-    pass
+    print("The enemy died.")
 
 
 def check_if_player_in_boss_room(x_coordinate, y_coordinate):
