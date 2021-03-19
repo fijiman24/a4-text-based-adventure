@@ -597,7 +597,6 @@ def game():
     """
     story_introduction()
     ascii_intro()
-    story_introduction()
 
     player = make_player()
     game_board = game_board_coordinates(player['x-coordinate'], player['y-coordinate'])
