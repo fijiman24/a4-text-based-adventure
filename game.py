@@ -107,23 +107,6 @@ def make_player():
             "player_class_special_action": None, "level": 1}
 
 
-def game_board_coordinates():
-    """Return dictionary representing game board, with coordinate (0, 0) being occupied.
-
-    :postcondition: generate dictionary game board
-    :postcondition: occupy coordinate (0, 0) in game board with yellow asterisk representing player location
-    :return: dictionary representing game board, with coordinate (0, 0) being occupied
-    >>> game_board_coordinates()
-
-
-    """
-    board_coordinates = [(x_coordinates, y_coordinates) for x_coordinates in range(0, 25) for
-                         y_coordinates in range(0, 25)]
-    game_board = {coordinate: f"{Colours.blue}*{Colours.end}" for coordinate in board_coordinates}
-    game_board[(0, 0)] = f"{Colours.yellow}@{Colours.end}"
-    return game_board
-
-
 def input_player_name():
     """Return player name.
 
@@ -180,6 +163,34 @@ def confirm_player_class(class_name):
         confirm_player_class(class_name)
 
 
+def game_board_coordinates():
+    """Return dictionary representing game board, with coordinate (0, 0) being occupied.
+
+    :postcondition: generate dictionary game board
+    :postcondition: occupy coordinate (0, 0) in game board with yellow asterisk representing player location
+    :return: dictionary representing game board, with coordinate (0, 0) being occupied
+    >>> game_board_coordinates()
+
+
+    """
+    board_coordinates = [(x_coordinates, y_coordinates) for x_coordinates in range(0, 25) for
+                         y_coordinates in range(0, 25)]
+    game_board = {coordinate: f"{Colours.blue}*{Colours.end}" for coordinate in board_coordinates}
+    game_board[(0, 0)] = f"{Colours.yellow}@{Colours.end}"
+    return game_board
+
+
+def display_game_board(x_coordinate, y_coordinate, game_board):
+    surface_visualization = list(game_board.values())
+    surface_visualization.insert(0, "")
+    for index in range(1, len(surface_visualization) + 25):
+        if index % 26 == 0:
+            surface_visualization.insert(index, "\n")
+    surface_visualization.pop()
+    print(*surface_visualization, sep=" ")
+    print(f"You are at {x_coordinate}, {y_coordinate}.")
+
+
 def display_main_menu():
     print(list(enumerate(["Move", "Check Stats", "Quit Game"], start=1)))
     return input()
@@ -196,17 +207,6 @@ def check_player_statistics(player):
           f"leveling up.")
     print(f"{player['name']} is a {player['player_class']}, with the special ability "
           f"{player['player_class_special_action']}. \n")
-
-
-def display_game_board(x_coordinate, y_coordinate, game_board):
-    surface_visualization = list(game_board.values())
-    surface_visualization.insert(0, "")
-    for index in range(1, len(surface_visualization) + 25):
-        if index % 26 == 0:
-            surface_visualization.insert(index, "\n")
-    surface_visualization.pop()
-    print(*surface_visualization, sep=" ")
-    print(f"You are at {x_coordinate}, {y_coordinate}.")
 
 
 def cardinal_direction():
