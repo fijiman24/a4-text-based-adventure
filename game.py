@@ -38,7 +38,7 @@ def ascii_intro():
     print(" \____  $$| $$$$$$$$| $$        | $$    | $$  \ $$| $$  \__/       \____  $$| $$ \  $$$$/ ")
     print(f" /$$  \ $$| $$_____/| $$        | $$ /$$| $$  | $$| $$             /$$  \ $$| $$  >$$  $$ ")
     print(f"|  $$$$$$/|  $$$$$$$|  $$$$$$$  |  $$$$/|  $$$$$$/| $$            |  $$$$$$/| $$ /$$/\  $$")
-    print(f" \______/  \_______/ \_______/   \___/   \______/ |__/             \______/ |__/|__/  \__/{Colours.end}")
+    print(f" \______/  \_______/ \_______/   \___/   \______/ |__/             \______/ |__/|__/  \__/\n{Colours.end}")
 
 
 def story_introduction():
@@ -52,8 +52,9 @@ def story_introduction():
           "and fortune. Many a space pirate has\ntried their hand at laying siege to this sector in hopes of "
           "plundering some riches for themselves, and all have been gunned down by the local security militias. \n")
     print("All except you. You put together the perfect crew, formulated the perfect plan, and somehow managed to fill "
-          "your ship with as much loot as she could carry. Now all you have to\ndo is escape to the nearest wormhole,"
-          " treasure in tow, and you'll be christened the first ever space pirate to have successfully stolen from...")
+          "your ship with as much stolen loot as she could carry. Now all you have to\ndo is escape to the nearest "
+          "wormhole, treasure in tow, and you'll be christened the first ever space captain to have successfully stolen"
+          " from...\n")
 
 
 def story_ending():
