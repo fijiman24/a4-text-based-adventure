@@ -103,8 +103,8 @@ def make_player():
     {'health': 20, 'x-coordinate': 0, 'y-coordinate': 0, 'name': ''}
     """
     return {"health": MAX_PLAYER_HEALTH[0], "x-coordinate": STARTING_X_COORDINATE[0], "y-coordinate":
-            STARTING_Y_COORDINATE[0], "name": "test", "exp": 0, "player_class": "placeholder_class",
-            "player_class_special_action": "placeholder_class_special_action", "level": 1}
+            STARTING_Y_COORDINATE[0], "name": None, "exp": 0, "player_class": None,
+            "player_class_special_action": None, "level": 1}
 
 
 def game_board_coordinates():
@@ -137,7 +137,7 @@ def input_player_name():
         print("You can be more adventurous than that. \n")
         return input_player_name()
     elif name_input.strip() == "":
-        print("Every adventurer needs a name.")
+        print("Every adventurer needs a name. \n")
         return input_player_name()
     else:
         return name_input
@@ -590,7 +590,8 @@ def game():
     player = make_player()
     game_board = game_board_coordinates()
     player['name'] = input_player_name()
-    player['player_class'] = select_player_class()
+    while player['player_class'] is None:
+        player['player_class'] = select_player_class()
     achieved_goal = False
     display_game_board(player['x-coordinate'], player['y-coordinate'], game_board)
 
