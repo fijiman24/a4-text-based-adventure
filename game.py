@@ -212,12 +212,11 @@ def check_player_statistics(player):
 
     """
     print(f"You are Captain {player['name']}.")
-    print(f"{player['name']} has {player['health']} health points remaining.")
-    print(f"{player['name']} is level {player['level']}.")
-    print(f"{player['name']} has {player['exp']} experience points, {500 - int(player['exp'])} points away from "
-          f"leveling up.")
     print(f"{player['name']} pilots a {player['player_class']}, which has the special ability "
           f"{player['player_class_special_action']}. \n")
+    print(f"Your ship can take {player['health']} more points of damage.")
+    print(f"Your ship is level {player['level']}.")
+    print(f"You have {player['exp']} scrap, {500 - int(player['exp'])} away from a ship upgrade.")
 
 
 def cardinal_direction():
