@@ -150,7 +150,7 @@ def select_player_class():
         print("Destroy enemy ships to steal their energy and charge up your Quasar Cannon™ for a devastating attack.")
         return confirm_player_class("Sapper")
     elif choice == "3":
-        print("A stealthy ship covered in PacTek™ camouflage technology for easier evasion from enemies.")
+        print("A stealthy ship covered in SlipStream™ camouflage technology for easier evasion from enemies.")
         return confirm_player_class("Ghost")
     elif choice == "4":
         print("QuickFix™ Protocols allows this ship to repair itself during combat.")
