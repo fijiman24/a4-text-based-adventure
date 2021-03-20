@@ -127,35 +127,33 @@ def input_player_name():
 
     no doctests, accepts user input
     """
-    name_input = str(input("Enter your name: ")).title()
+    name_input = str(input("Enter your name, captain: ")).title()
     if name_input.lower() == "chris" or name_input.lower() == "christopher" or name_input.lower() == "chris thompson":
-        print("You can be more adventurous than that. \n")
+        print("You can be more adventurous than that! \n")
         return input_player_name()
     elif name_input.strip() == "":
-        print("Every adventurer needs a name. \n")
+        print("Every space captain needs a name! \n")
         return input_player_name()
     else:
         return name_input
 
 
 def select_player_class():
-    class_choices = list(enumerate(["Ruthless Corsair", "Militia Turncoat", "Scrappy Scoundrel",
-                                    "Disgraced Quadrillionaire"], start=1))
-    print("Select a class: ")
-    print(class_choices)
+    class_choices = list(enumerate(["M-Class Dreadnought", "Sapper", "Ghost", "Cherub"], start=1))
+    print("Select a class: \n", class_choices)
     choice = input()
     if choice == "1":
         # print the backstory of class 1
-        return confirm_player_class("Ruthless Corsair")
+        return confirm_player_class("M-Class Dreadnought")
     elif choice == "2":
         # print the backstory of class 1
-        return confirm_player_class("Militia Turncoat")
+        return confirm_player_class("Sapper")
     elif choice == "3":
         # print the backstory of class 1
-        return confirm_player_class("Scrappy Scoundrel")
+        return confirm_player_class("Ghost")
     elif choice == "4":
         # print the backstory of class 1
-        return confirm_player_class("Disgraced Quadrillionaire")
+        return confirm_player_class("Cherub")
     else:
         print("That is not a valid choice! \n")
         select_player_class()
