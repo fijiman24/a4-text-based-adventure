@@ -143,16 +143,17 @@ def select_player_class():
     print("Select a spaceship: \n", class_choices)
     choice = input()
     if choice == "1":
-        # print the backstory of class 1
+        print("A Phoenix Engine™ allows for this ship to repair itself after its hull integrity has been completely "
+              "breached for the first time.")
         return confirm_player_class("Dreadnought")
     elif choice == "2":
-        # print the backstory of class 1
+        print("Destroy enemy ships to steal their energy and charge up your Quasar Cannon™ for a devastating attack.")
         return confirm_player_class("Sapper")
     elif choice == "3":
-        # print the backstory of class 1
+        print("A stealthy ship covered in PacTek™ camouflage technology for easier evasion from enemies.")
         return confirm_player_class("Ghost")
     elif choice == "4":
-        # print the backstory of class 1
+        print("QuickFix™ Protocols allows this ship to repair itself during combat.")
         return confirm_player_class("Cherub")
     else:
         print("That is not a valid choice! \n")
@@ -617,7 +618,7 @@ def game():
         elif main_menu_selection == "2":
             check_player_statistics(player)
         elif main_menu_selection == "3":
-            print("You have abandoned ship! Sector Six has claimed another group of would-be thieves...")
+            print("You have abandoned ship! Sector Six has stopped another group of would-be thieves...")
             exit()
         else:
             print("That is not a valid choice! \n")
