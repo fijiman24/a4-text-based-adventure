@@ -140,9 +140,13 @@ def make_player():
             "y-coordinate": STARTING_Y_COORDINATE[0],
             "name": None,
             "exp": 0,
+            "ship": None,
             "player_class": None,
             "player_class_special_action": None,
-            "level": 1}
+            "level": 1,
+            "damage_multiplier": 1,
+            "flee_chance_multiplier": 1
+            }
 
 
 def input_player_name():
@@ -219,6 +223,7 @@ def confirm_player_class(class_name):
     else:
         print("That is not a valid choice! \n")
         confirm_player_class(class_name)
+
 
 def warrior_ship(player):
     player["ship"] = "Warrior"
