@@ -139,12 +139,12 @@ def input_player_name():
 
 
 def select_player_class():
-    class_choices = list(enumerate(["M-Class Dreadnought", "Sapper", "Ghost", "Cherub"], start=1))
+    class_choices = list(enumerate(["Dreadnought", "Sapper", "Ghost", "Cherub"], start=1))
     print("Select a spaceship: \n", class_choices)
     choice = input()
     if choice == "1":
         # print the backstory of class 1
-        return confirm_player_class("M-Class Dreadnought")
+        return confirm_player_class("Dreadnought")
     elif choice == "2":
         # print the backstory of class 1
         return confirm_player_class("Sapper")
@@ -216,7 +216,7 @@ def check_player_statistics(player):
           f"{player['player_class_special_action']}.")
     print(f"Your ship can take {player['health']} more points of damage.")
     print(f"Your ship is level {player['level']}.")
-    print(f"You have {player['exp']} scrap, {500 - int(player['exp'])} away from a ship upgrade. \n")
+    print(f"You have {player['exp']} scrap, {500 - int(player['exp'])} scrap away from a ship upgrade. \n")
 
 
 def cardinal_direction():
