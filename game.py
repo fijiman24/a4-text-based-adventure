@@ -214,8 +214,8 @@ def check_player_statistics(player):
     print(f"You are Captain {player['name']}.")
     print(f"{player['name']} pilots a {player['player_class']}, which has the special ability "
           f"{player['player_class_special_action']}.")
-    print(f"Your ship can take {player['health']} more points of damage.")
-    print(f"Your ship is level {player['level']}.")
+    print(f"Your {player['player_class']} can take {player['health']} more points of damage.")
+    print(f"Your {player['player_class']} is level {player['level']}.")
     print(f"You have {player['exp']} scrap, {500 - int(player['exp'])} scrap away from a ship upgrade. \n")
 
 
@@ -617,7 +617,7 @@ def game():
         elif main_menu_selection == "2":
             check_player_statistics(player)
         elif main_menu_selection == "3":
-            print("You have quit the game. The dungeons will be waiting for your return...")
+            print("You have abandoned ship! Sector Six has claimed another group of would-be thieves...")
             exit()
         else:
             print("That is not a valid choice! \n")
