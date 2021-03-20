@@ -140,7 +140,7 @@ def input_player_name():
 
 def select_player_class():
     class_choices = list(enumerate(["M-Class Dreadnought", "Sapper", "Ghost", "Cherub"], start=1))
-    print("Select a class: \n", class_choices)
+    print("Select a spaceship: \n", class_choices)
     choice = input()
     if choice == "1":
         # print the backstory of class 1
@@ -160,7 +160,7 @@ def select_player_class():
 
 
 def confirm_player_class(class_name):
-    print(f"Do you want to be a {class_name}?")
+    print(f"Do you pilot a {class_name}?")
     print(list(enumerate(["Yes", "No"], start=1)))
 
     choice = input()
