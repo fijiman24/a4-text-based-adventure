@@ -91,14 +91,13 @@ def player_death():
     exit()
 
 
-def enemy_death(player_health):
+def enemy_death():
     """Print text describing enemy death.
 
     postcondition: print text describing enemy death
     """
     time.sleep(1)
     print("The enemy died.")
-    return player_health
 
 
 def check_if_player_in_boss_room(x_coordinate, y_coordinate):
@@ -619,15 +618,15 @@ def combat_enemy_attack(player_health):
     return player_health
 
 
-def combat_duel(player_health):
+def combat_duel(player):
     """Return player's health value after enemy_health or player_health reaches 0.
 
-    :param player_health: a positive integer
-    :precondition: player_health is any positive integer
+    :param player: a dictionary
+    :precondition: player must contain keys "level", "health", and "exp"
     :postcondition: take turns subtracting a random integer between [1, MAX_PLAYER_DAMAGE] from enemy_health and a
-                    random integer [1, MAX_ENEMY_DAMAGE] from player_health until player_health or enemy_health == 0
-    :postcondition: return player_health value after enemy_health or player_health == 0
-    :return: player_health after enemy_health or player_health reaches 0
+                    random integer [1, MAX_ENEMY_DAMAGE] from player_health until player["health"] or enemy_health == 0
+    :postcondition: return player["health"] value after enemy_health or player["health"] == 0
+    :return: player["health"] after enemy_health or player["health"] reaches 0
 
     no doctest, this uses random values
     """
@@ -635,32 +634,33 @@ def combat_duel(player_health):
     initiative = combat_initiative_roll()
 
     if not initiative:
-        player_health = combat_enemy_attack(player_health)
+        player["health"] = combat_enemy_attack(player["health"])
 
-    while player_health > 0 and enemy_health > 0:
-        print(f"Your ship can take {player_health} more points of damage.")
-        combat_round_player_choice = combat_choice(player_health)
+    while player["health"] > 0 and enemy_health > 0:
+        print(f"Your ship can take {player['health']} more points of damage.")
+        combat_round_player_choice = combat_choice(player["health"])
         if combat_round_player_choice == "1":
             enemy_health = combat_player_attack(enemy_health)
         elif combat_round_player_choice == "2":
             print("Special abilities are not available yet, check back later!\n")
             continue
         elif combat_round_player_choice == "3":
-            player_health = backstab(player_health)
+            player["health"] = backstab(player["health"])
             break
         elif combat_round_player_choice != "1" or combat_round_player_choice != "2" or combat_round_player_choice != \
                 "3":
             print("That is not a valid choice!")
             continue
         if enemy_health > 0:
-            player_health = combat_enemy_attack(player_health)
+            player["health"] = combat_enemy_attack(player["health"])
 
     if enemy_health <= 0:
-        return enemy_death(player_health)
-    elif player_health <= 0:
+        enemy_death()
+        gain_experience_points(player)
+    elif player["health"] <= 0:
         player_death()
     else:
-        return player_health
+        return player["health"]
 
 
 def combat_choice(player_health):
@@ -676,7 +676,7 @@ def gain_experience_points(player):
     """Add experience points for player if not max level.
 
     :param player: must be a dictionary
-    :precondition: dictionary must contain keys "experience", "level", "class" and "race"
+    :precondition: dictionary must contain keys "exp", "level", "class" and "race"
     :postcondition: rolls for experience gain then check
     :return: player if player is not at the max level
 
@@ -686,7 +686,7 @@ def gain_experience_points(player):
         print(f"You are already at the max level of 3!\n You did not gain any experience from the battle.")
     else:
         experience_gained = random.randint(50, 150)
-        player["experience"] += experience_gained
+        player["exp"] += experience_gained
         print(f"You won the battle! You gained {experience_gained} experience points.")
         level_system(player)
         return player
@@ -696,7 +696,7 @@ def level_system(player):
     """Level up the player if they reach a certain amount of experience points.
 
     :param player: must be a dictionary
-    :precondition: dictionary must contain keys "experience", "level", "class" and "race"
+    :precondition: dictionary must contain keys "exp", "level", "class" and "race"
     :postcondition: calculate if experience requirement met then increases level by 1 and sets experience to 0
     :return: player
 
@@ -711,22 +711,23 @@ def level_system(player):
     You gained a level! You are now level 3 and ascended to a King.
     {'level': 3, 'experience': 0, 'race': 'archer', 'class': 'King'}
     """
-    if player["experience"] >= 300:
+    if player["exp"] >= 300:
         player["level"] += 1
-        player["experience"] = 0
+        player["exp"] = 0
         class_upgrade(player)
-        print(f"You gained a level! You are now level {player['level']} and ascended to a {player['class']}.")
+        print(f"You gained a level! You are now level {player['level']} and your ship has been upgrade to a"
+              f" {player['class']}.")
     return player
 
 
 def class_upgrade(player):
-    classes = {'warrior': {1: "Pawn", 2: "Knight", 3: "Queen"},
-               'mage': {1: "Pawn", 2: "Rook", 3: "Bishop"},
-               'archer': {1: "Pawn", 2: "Hunter", 3: "King"},
-               'bandit': {1: "Pawn", 2: "Jester", 3: "Castle"}
+    classes = {'Warrior': {1: "Pawn", 2: "Knight", 3: "Queen"},
+               'Magician': {1: "Pawn", 2: "Rook", 3: "Bishop"},
+               'Thief': {1: "Pawn", 2: "Hunter", 3: "King"},
+               'Priest': {1: "Pawn", 2: "Jester", 3: "Castle"}
                }
 
-    player["class"] = classes[player["race"]][player["level"]]  # finds class based on race and level
+    player["class"] = classes[player["ship"]][player["level"]]  # finds class based on ship and level
 
     return player
 
@@ -775,7 +776,7 @@ def game():
                 if not in_boss_room:
                     enemy_encounter = spawn_enemy()
                     if enemy_encounter:
-                        player['health'] = combat_duel(player['health'])
+                        combat_duel(player)
                     else:
                         player['health'] = regen_health(player['health'])
                 game_board = game_board_coordinates(player['x-coordinate'], player['y-coordinate'])
