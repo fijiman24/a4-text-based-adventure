@@ -203,7 +203,7 @@ def display_game_board(x_coordinate, y_coordinate, game_board):
 
 
 def display_main_menu():
-    print(list(enumerate(["Move", "Check Stats", "Quit Game"], start=1)))
+    print(list(enumerate(["Move", "Status Report", "Quit Game"], start=1)))
     return input()
 
 
@@ -385,12 +385,12 @@ def backstab(player_health):
     if backstab_chance == 1:
         player_health -= backstab_damage
         if player_health > 0:
-            print(f"The guard stabs you in the back for {backstab_damage} damage as you flee!")
+            print(f"The enemy shot you for {backstab_damage} damage as you fled!")
             return player_health
         else:
             player_death()
     else:
-        print("You successfully escape back into the shadows.")
+        print("You successfully escape back into darkness of space.")
         return player_health
 
 
@@ -427,7 +427,7 @@ def combat_player_attack(enemy_health):
         no doctest, this uses random values
         """
     player_damage = random.randint(1, MAX_PLAYER_DAMAGE[0])
-    print(f"You did {player_damage} damage to the guard!\n")
+    print(f"You did {player_damage} damage to the enemy ship!\n")
     enemy_health -= player_damage
     return enemy_health
 
@@ -446,7 +446,7 @@ def combat_enemy_attack(player_health):
     time.sleep(1)
     enemy_damage = random.randint(1, MAX_ENEMY_DAMAGE[0])
     player_health -= enemy_damage
-    print(f"The guard did {enemy_damage} damage to you!\n")
+    print(f"The enemy ship did {enemy_damage} damage to you!\n")
     return player_health
 
 
@@ -469,6 +469,7 @@ def combat_duel(player_health):
         player_health = combat_enemy_attack(player_health)
 
     while player_health > 0 and enemy_health > 0:
+        print(f"Your ship can take {player_health} more points of damage.")
         combat_round_player_choice = combat_choice(player_health)
         if combat_round_player_choice == "1":
             enemy_health = combat_player_attack(enemy_health)
@@ -497,8 +498,8 @@ def combat_choice(player_health):
     """Present menu of combat options.
 
     """
-    options = list(enumerate(["Fight", "Special Ability", "Flee"], start=1))
-    print("You are engaged in combat. What will you do next?\n", options)
+    options = list(enumerate(["Normal Attack", "Special Ability", "Flee"], start=1))
+    print("You are engaged in a space battle. What will you do next?\n", options)
     return input()
 
 
@@ -573,7 +574,7 @@ def spawn_enemy():
     """
     spawn_chance = random.randint(1, 2)
     if spawn_chance == 1:
-        print("You were spotted by a guard!")
+        print("You were spotted by a militia ship!")
         return True
     else:
         return False
