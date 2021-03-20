@@ -65,20 +65,24 @@ def story_ending():
     pass
 
 
-def player_death_text():
+def player_death():
     """Print text describing player death.
 
     postcondition: print text describing player death
     """
+    time.sleep(1)
     print("You died.")
+    exit()
 
 
-def enemy_death_text():
+def enemy_death(player_health):
     """Print text describing enemy death.
 
     postcondition: print text describing enemy death
     """
+    time.sleep(1)
     print("The enemy died.")
+    return player_health
 
 
 def check_if_player_in_boss_room(x_coordinate, y_coordinate):
@@ -387,8 +391,7 @@ def backstab(player_health):
             print(f"The guard stabs you in the back for {backstab_damage} damage as you flee!")
             return player_health
         else:
-            player_death_text()
-            exit()
+            player_death()
     else:
         print("You successfully escape back into the shadows.")
         return player_health
@@ -486,13 +489,9 @@ def combat_duel(player_health):
             player_health = combat_enemy_attack(player_health)
 
     if enemy_health <= 0:
-        time.sleep(1)
-        enemy_death_text()
-        return player_health
+        return enemy_death(player_health)
     elif player_health <= 0:
-        time.sleep(1)
-        player_death_text()
-        exit()
+        player_death()
     else:
         return player_health
 
