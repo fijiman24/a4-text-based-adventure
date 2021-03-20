@@ -405,13 +405,13 @@ def combat_initiative_roll():  # put enemy_name as a parameter maybe; could have
     enemy_roll = random.randint(1, 100)
     enemy = "enemy_name"
     if player_roll == enemy_roll:  # checks for draws
-        print(f'Draw! You both rolled a {player_roll}. Rerolling....')
+        print(f'Draw! You both rolled a {player_roll}. Rerolling....\n')
         combat_initiative_roll()
     if player_roll > enemy_roll:  # checks if player attacks first
-        print(f'You rolled a {player_roll} and {enemy} rolled a {enemy_roll}. You will attack first.')
+        print(f'You rolled a {player_roll} and {enemy} rolled a {enemy_roll}. You will attack first.\n')
         return True
     elif player_roll < enemy_roll:  # checks if foe attacks first
-        print(f'You rolled a {player_roll} and {enemy} rolled {enemy_roll}. {enemy} will attack first.')
+        print(f'You rolled a {player_roll} and {enemy} rolled {enemy_roll}. {enemy} will attack first.\n')
         return False
 
 
@@ -426,9 +426,8 @@ def combat_player_attack(enemy_health):
 
         no doctest, this uses random values
         """
-    time.sleep(1)
     player_damage = random.randint(1, MAX_PLAYER_DAMAGE[0])
-    print(f"You did {player_damage} damage to the guard!")
+    print(f"You did {player_damage} damage to the guard!\n")
     enemy_health -= player_damage
     return enemy_health
 
@@ -447,7 +446,7 @@ def combat_enemy_attack(player_health):
     time.sleep(1)
     enemy_damage = random.randint(1, MAX_ENEMY_DAMAGE[0])
     player_health -= enemy_damage
-    print(f"The guard did {enemy_damage} damage to you!")
+    print(f"The guard did {enemy_damage} damage to you!\n")
     return player_health
 
 
@@ -470,46 +469,35 @@ def combat_duel(player_health):
         player_health = combat_enemy_attack(player_health)
 
     while player_health > 0 and enemy_health > 0:
-        enemy_health = combat_player_attack(enemy_health)
+        combat_round_player_choice = combat_choice(player_health)
+        if combat_round_player_choice == "1":
+            enemy_health = combat_player_attack(enemy_health)
+        elif combat_round_player_choice == "2":
+            print("Special abilities are not available yet, check back later!\n")
+            continue
+        elif combat_round_player_choice == "3":
+            player_health = backstab(player_health)
+            break
         if enemy_health > 0:
             player_health = combat_enemy_attack(player_health)
 
     if enemy_health <= 0:
         enemy_death_text()
         return player_health
-    else:
+    elif player_health <= 0:
         player_death_text()
         exit()
+    else:
+        print("You escaped!")
 
 
 def combat_choice(player_health):
-    """Call combat_duel() or backstab(), or recall combat_choice, depending on player choice.
+    """Present menu of combat options.
 
-    :param player_health: any integer
-    :precondition: player_health is any integer
-    :postcondition: display a list of combat choices
-    :postcondition: convert input to integer
-    :postcondition: if input is 1, call combat_duel(player_health)
-    :postcondition: if input is 2, call backstab(player_health)
-    :postcondition: if input is neither 1 or 2, recall combat_choice()
-    :return: combat_duel(player_health) if input == 1; backstab(player_health) if input == 2; combat_choice() is input
-             != 1 or input != 2
-
-    no doctest, this accepts user input
     """
     options = list(enumerate(["Fight", "Special Ability", "Flee"], start=1))
-    print("You are engaged in combat. What will you do next? \n", options)
-    choice = input()
-    if choice == "1":
-        return combat_duel(player_health)
-    elif choice == "2":
-        print("Work in progress. Try this again later!")
-        return combat_choice(player_health)
-    elif choice == "3":
-        return backstab(player_health)
-    else:
-        print("That is not a valid choice! \n")
-        return combat_choice(player_health)
+    print("You are engaged in combat. What will you do next?\n", options)
+    return input()
 
 
 def gain_experience_points(player):
@@ -616,7 +604,7 @@ def game():
                 if not in_boss_room:
                     enemy_encounter = spawn_enemy()
                     if enemy_encounter:
-                        player['health'] = combat_choice(player['health'])
+                        player['health'] = combat_duel(player['health'])
                     else:
                         player['health'] = regen_health(player['health'])
                 game_board = game_board_coordinates(player['x-coordinate'], player['y-coordinate'])
