@@ -276,6 +276,14 @@ def resurrect(player):
         print("Your passive have already been used. You will not revive if your hp hits 0.")
 
 
+def magic_blast(player):
+    if player["special_action_counter"] == 1:
+        player["special_action_counter"] = 0
+        return player["damage"] * player["level"] * 2
+    else:
+        print("You have already used your special move!")
+
+
 def game_board_coordinates(player_x_coordinate, player_y_coordinate):
     """Return dictionary representing game board, with unoccupied coordinates containing a blue asterisk, and occupied
        coordinates containing a yellow at symbol.
