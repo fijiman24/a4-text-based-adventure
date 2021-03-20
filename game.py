@@ -284,6 +284,11 @@ def magic_blast(player):
         print("You have already used your special move!")
 
 
+def multi_attack(player):
+    split_attack = int(round(player["damage"] / 5))
+    return split_attack * 5 * player["level"] * 1.2
+
+
 def game_board_coordinates(player_x_coordinate, player_y_coordinate):
     """Return dictionary representing game board, with unoccupied coordinates containing a blue asterisk, and occupied
        coordinates containing a yellow at symbol.
