@@ -263,6 +263,19 @@ def priest_ship(player):
     return player
 
 
+def resurrect(player):
+    if player["special_action_counter"] == 1:
+        if player["hp"] >= 0:
+            player["special_action_counter"] = 0
+            print("Your undying will allowed you to survive the attack and restored your health to 50!")
+            player["hp"] = 50
+            return player
+        else:
+            print("Your passive will allow you to survive a critical attack.")
+    else:
+        print("Your passive have already been used. You will not revive if your hp hits 0.")
+
+
 def game_board_coordinates(player_x_coordinate, player_y_coordinate):
     """Return dictionary representing game board, with unoccupied coordinates containing a blue asterisk, and occupied
        coordinates containing a yellow at symbol.
