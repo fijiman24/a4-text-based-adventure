@@ -143,7 +143,9 @@ def make_player():
             "ship": None,
             "player_class": None,
             "player_class_special_action": None,
+            "special_action_counter": 0,
             "level": 1,
+            "damage": 20,
             "damage_multiplier": 1,
             "flee_chance_multiplier": 1
             }
@@ -300,7 +302,7 @@ def multi_attack(player):
 
 def heal_spell(player):
     amount_healed = player["level"] * 10
-    player["hp"] += amount_healed
+    player["health"] += amount_healed
     return player
 
 
