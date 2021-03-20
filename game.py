@@ -220,6 +220,16 @@ def confirm_player_class(class_name):
         print("That is not a valid choice! \n")
         confirm_player_class(class_name)
 
+def warrior_ship(player):
+    player["ship"] = "Warrior"
+    player["class"] = "Dreadnought"
+    player["player_class_special_action"] = resurrect(player)
+    player["special_action_counter"] = 1
+    player["damage"] = 20
+    player["damage_multiplier"] = 1.3
+    player["flee_chance_multiplier"] = 1
+    return player
+
 
 def game_board_coordinates(player_x_coordinate, player_y_coordinate):
     """Return dictionary representing game board, with unoccupied coordinates containing a blue asterisk, and occupied
