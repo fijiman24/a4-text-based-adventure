@@ -168,7 +168,7 @@ def input_player_name():
         return name_input
 
 
-def select_player_class():
+def select_player_class(player):
     """Print class description and return class after being passed to confirm_player_class().
 
     :precondition: user enters input when prompted
@@ -184,22 +184,26 @@ def select_player_class():
     if choice == "1":
         print("A Phoenix Engine™ allows for this ship to repair itself after its hull integrity has been completely "
               "breached for the first time.")
-        return confirm_player_class("Dreadnought")
+        if confirm_player_class("Dreadnought", player):
+            warrior_ship(player)
     elif choice == "2":
         print("Destroy enemy ships to steal their energy and charge up your Quasar Cannon™ for a devastating attack.")
-        return confirm_player_class("Sapper")
+        if confirm_player_class("Sapper", player):
+            magician_ship(player)
     elif choice == "3":
         print("A stealthy ship covered in SlipStream™ camouflage technology for easier evasion from enemies.")
-        return confirm_player_class("Ghost")
+        if confirm_player_class("Ghost", player):
+            thief_ship(player)
     elif choice == "4":
         print("QuickFix™ Protocols allows this ship to repair itself during combat.")
-        return confirm_player_class("Cherub")
+        if confirm_player_class("Cherub", player):
+            priest_ship(player)
     else:
         print("That is not a valid choice! \n")
-        select_player_class()
+        select_player_class(player)
+    return player
 
-
-def confirm_player_class(class_name):
+def confirm_player_class(class_name, player):
     """Return class_name or call select_player_class, depending on user input.
 
     :param class_name: any string
@@ -217,12 +221,12 @@ def confirm_player_class(class_name):
 
     choice = input()
     if choice == "1":
-        return class_name
+        return True
     elif choice == "2":
-        return select_player_class()
+        return select_player_class(player)
     else:
         print("That is not a valid choice! \n")
-        confirm_player_class(class_name)
+        confirm_player_class(class_name, player)
 
 
 def warrior_ship(player):
@@ -753,8 +757,7 @@ def game():
     player = make_player()
     game_board = game_board_coordinates(player['x-coordinate'], player['y-coordinate'])
     player['name'] = input_player_name()
-    while player['player_class'] is None:
-        player['player_class'] = select_player_class()
+    select_player_class(player)
     achieved_goal = False
     display_game_board(player['x-coordinate'], player['y-coordinate'], game_board)
 
