@@ -231,6 +231,17 @@ def warrior_ship(player):
     return player
 
 
+def magician_ship(player):
+    player["ship"] = "Magician"
+    player["class"] = "Sapper"
+    player["player_class_special_action"] = magic_blast(player)
+    player["special_action_counter"] = 1
+    player["damage"] = 20
+    player["damage_multiplier"] = .7
+    player["flee_chance_multiplier"] = 1
+    return player
+
+
 def game_board_coordinates(player_x_coordinate, player_y_coordinate):
     """Return dictionary representing game board, with unoccupied coordinates containing a blue asterisk, and occupied
        coordinates containing a yellow at symbol.
