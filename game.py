@@ -478,17 +478,23 @@ def combat_duel(player_health):
         elif combat_round_player_choice == "3":
             player_health = backstab(player_health)
             break
+        elif combat_round_player_choice != "1" or combat_round_player_choice != "2" or combat_round_player_choice != \
+                "3":
+            print("That is not a valid choice!")
+            continue
         if enemy_health > 0:
             player_health = combat_enemy_attack(player_health)
 
     if enemy_health <= 0:
+        time.sleep(1)
         enemy_death_text()
         return player_health
     elif player_health <= 0:
+        time.sleep(1)
         player_death_text()
         exit()
     else:
-        print("You escaped!")
+        return player_health
 
 
 def combat_choice(player_health):
