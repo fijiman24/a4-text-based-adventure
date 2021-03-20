@@ -252,6 +252,17 @@ def thief_ship(player):
     return player
 
 
+def priest_ship(player):
+    player["ship"] = "Priest"
+    player["class"] = "Cherub"
+    player["player_class_special_action"] = heal_spell(player)
+    player["damage"] = 20
+    player["damage_multiplier"] = 1
+    player["flee_chance_multiplier"] = 1
+    player["health_restored"] = 1.3
+    return player
+
+
 def game_board_coordinates(player_x_coordinate, player_y_coordinate):
     """Return dictionary representing game board, with unoccupied coordinates containing a blue asterisk, and occupied
        coordinates containing a yellow at symbol.
