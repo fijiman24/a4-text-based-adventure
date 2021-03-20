@@ -31,7 +31,14 @@ STARTING_Y_COORDINATE = (0,)
 
 
 def ascii_intro():
-    print(f"{Colours.blue}  /$$$$$$                        /$$                                /$$$$$$  /$$          ")
+    """Print ascii art of game title.
+
+    :postcondition: print ascii art of game title
+
+    >>> ascii_intro()
+
+    """
+    print(f"{Colours.yellow}  /$$$$$$                        /$$                                /$$$$$$  /$$          ")
     print(" /$$__  $$                      | $$                               /$$__  $$|__/          ")
     print("| $$  \__/  /$$$$$$   /$$$$$$$ /$$$$$$    /$$$$$$   /$$$$$$       | $$  \__/ /$$ /$$   /$$")
     print("|  $$$$$$  /$$__  $$ /$$_____/|_  $$_/   /$$__  $$ /$$__  $$      |  $$$$$$ | $$|  $$ /$$/")
@@ -44,7 +51,16 @@ def ascii_intro():
 def story_introduction():
     """Print the introductory story text.
 
-    :postcondition: print the introductory story text and the map
+    :postcondition: print the introductory story text
+
+    >>> story_introduction()
+    In the distant future, humankind has colonized the vast, cold reaches of space. From suburban planets to entire solar systems dedicated to vice, there isn't a sector in the
+    Milky Way Galaxy that's been left untouched by our ever-expanding race. One such sector is devoted to storing all of humanity's physical wealth and fortune. Many a space
+    pirate has tried their hand at laying siege to this sector in hopes of plundering some riches for themselves, and all have been gunned down by the local security militias.
+    <BLANKLINE>
+    All except you. You put together a ragtag crew, formulated the perfect plan, and somehow managed to fill your ship with as much stolen loot as she could carry. Now all you
+    have to do is escape to the nearest wormhole, treasure in tow, and you'll be christened the first ever space captain to have successfully pilfered from...
+    <BLANKLINE>
     """
     print("In the distant future, humankind has colonized the vast, cold reaches of space. From suburban planets "
           "to entire solar systems dedicated to vice, there isn't a sector in the\nMilky Way Galaxy that's been "
@@ -89,6 +105,11 @@ def check_if_player_in_boss_room(x_coordinate, y_coordinate):
     """Return True if player x- and y- coordinates are both 24, else return False.
 
     :return: True if player x- and y- coordinates are both 24, else return False
+
+    >>> check_if_player_in_boss_room(0, 5)
+    False
+    >>> check_if_player_in_boss_room(24, 24)
+    True
     """
     if x_coordinate == 24 and y_coordinate == 24:
         return True
@@ -104,7 +125,7 @@ def check_if_goal_attained(boss_health):
 
 
 def make_player():
-    """Return a dictionary representing the player's maximum health health, their starting x-coordinate, their starting
+    """Return a dictionary representing the player's maximum health, their starting x-coordinate, their starting
        y-coordinate, and their name.
 
     :postcondition: Return a dictionary representing the player's maximum health, their starting x-coordinate, their
@@ -114,9 +135,14 @@ def make_player():
     >>> make_player()
     {'health': 20, 'x-coordinate': 0, 'y-coordinate': 0, 'name': ''}
     """
-    return {"health": MAX_PLAYER_HEALTH[0], "x-coordinate": STARTING_X_COORDINATE[0], "y-coordinate":
-            STARTING_Y_COORDINATE[0], "name": None, "exp": 0, "player_class": None,
-            "player_class_special_action": None, "level": 1}
+    return {"health": MAX_PLAYER_HEALTH[0],
+            "x-coordinate": STARTING_X_COORDINATE[0],
+            "y-coordinate": STARTING_Y_COORDINATE[0],
+            "name": None,
+            "exp": 0,
+            "player_class": None,
+            "player_class_special_action": None,
+            "level": 1}
 
 
 def input_player_name():
@@ -139,6 +165,15 @@ def input_player_name():
 
 
 def select_player_class():
+    """Print class description and return class after being passed to confirm_player_class().
+
+    :precondition: user enters input when prompted
+    :postcondition: print numbered list of class options [(1, 'Dreadnought'), (2, 'Sapper'), (3, 'Ghost'),
+                    (4, 'Cherub')]
+    :postcondition: print class description
+    :postcondition: pass user input to confirm_player_class()
+    :return: class after being passed to confirm_player_class()
+    """
     class_choices = list(enumerate(["Dreadnought", "Sapper", "Ghost", "Cherub"], start=1))
     print("Select a spaceship: \n", class_choices)
     choice = input()
@@ -161,6 +196,18 @@ def select_player_class():
 
 
 def confirm_player_class(class_name):
+    """Return class_name or call select_player_class, depending on user input.
+
+    :param class_name: any string
+    :precondition: class_name is any string representing the selected player class
+    :precondition: user enters input when prompted
+    :postcondition: print f"Do you pilot a {class_name}?"
+    :postcondition: print a numbered list of options [(1, 'Yes'), (2, 'No')]
+    :postcondition: return class_name if input is "1"
+    :postcondition: call select_player_class() if input is "2"
+    :postcondition: print "That is not a valid choice" if input is neither "1" or "2" and recall confirm_player_class()
+    :return: class_name if input is "1", select_player_class() if input is "2"
+    """
     print(f"Do you pilot a {class_name}?")
     print(list(enumerate(["Yes", "No"], start=1)))
 
@@ -175,14 +222,19 @@ def confirm_player_class(class_name):
 
 
 def game_board_coordinates(player_x_coordinate, player_y_coordinate):
-    """Return dictionary representing game board, with unoccupied coordinates containing blue asterisk, and occupied
+    """Return dictionary representing game board, with unoccupied coordinates containing a blue asterisk, and occupied
        coordinates containing a yellow at symbol.
 
-    :postcondition: generate dictionary game board
-    :postcondition: occupy coordinate (0, 0) in game board with yellow asterisk representing player location
-    :return: dictionary representing game board, with coordinate (0, 0) being occupied
-    >>> game_board_coordinates()
-
+    :param player_x_coordinate: any positive integer between [0, 24]
+    :param player_y_coordinate: any positive integer between [0, 24]
+    precondition: player_x_coordinate is any positive integer between [0, 24] representing current player x-coordinate
+    precondition: player_x_coordinate is any positive integer between [0, 24] representing current player y-coordinate
+    :postcondition: generate dictionary of game board
+    :postcondition: assign every key the value of a blue asterisk
+    :postcondition: reassign key corresponding to current player coordinates value of a yellow at symbol
+    :return: dictionary representing game board, with unoccupied coordinates containing the value of a blue asterisk,
+             and key corresonding to current player location containing the value of a yellow at symbol
+    >>> game_board_coordinates(0, 0)
 
     """
     board_coordinates = [(x_coordinates, y_coordinates) for x_coordinates in range(0, 25) for
@@ -193,6 +245,22 @@ def game_board_coordinates(player_x_coordinate, player_y_coordinate):
 
 
 def display_game_board(x_coordinate, y_coordinate, game_board):
+    """Return the values in game_board visualized in a 25 by 25 size grid.
+
+    :param x_coordinate: any positive integer between [0, 24]
+    :param y_coordinate: any positive integer between [0, 24]
+    :param game_board: a dictionary
+    :precondition: player_x_coordinate is any positive integer between [0, 24] representing current player x-coordinate
+    :precondition: player_x_coordinate is any positive integer between [0, 24] representing current player y-coordinate
+    :precondition: game_board is a dictionary whose keys are tuples of length 2
+    :precondition: the tuples in game_board are permutations of all integers between [0, 24]
+    :precondition: the values in game_board are either blue asterisks or yellow at symbols
+    :postcondition: return the values in game_board visualized in a 25 by 25 size grid
+    :return: the values in game_board visualized in a 25 by 25 size grid
+
+    >>> display_game_board(0, 0, game_board_coordinates(0, 0))
+
+    """
     surface_visualization = list(game_board.values())
     surface_visualization.insert(0, "")
     for index in range(1, len(surface_visualization) + 25):
@@ -204,12 +272,27 @@ def display_game_board(x_coordinate, y_coordinate, game_board):
 
 
 def display_main_menu():
+    """Return user input after printing a numbered list.
+
+    :postcondition: print a numbered list [(1, 'Move'), (2, 'Status Report'), (3, 'Quit Game')]
+    :postcondition: return user input
+    :return: user input
+
+    no doctest, accepts user input
+    """
     print(list(enumerate(["Move", "Status Report", "Quit Game"], start=1)))
     return input()
 
 
 def check_player_statistics(player):
-    """Print player name, health, level, experience points, class, and class special action.
+    """Print values of player name, health, level, experience points, class, and class special action.
+
+    :param player: a dictionary
+    :precondition: player is a dictionary containing values related to player
+    :postcondition: print values of player name, health, level, experience points, class, and class special action
+
+    >>> player_dictionary = make_player()
+    >>> check_player_statistics(player_dictionary)
 
     """
     print(f"You are Captain {player['name']}.")
@@ -217,7 +300,7 @@ def check_player_statistics(player):
           f"{player['player_class_special_action']}.")
     print(f"Your {player['player_class']} can take {player['health']} more points of damage.")
     print(f"Your {player['player_class']} is level {player['level']}.")
-    print(f"You have {player['exp']} scrap, {500 - int(player['exp'])} scrap away from a ship upgrade. \n")
+    print(f"You have {player['exp']} scrap, {500 - int(player['exp'])} scrap away from a ship upgrade.\n")
 
 
 def cardinal_direction():
@@ -253,8 +336,8 @@ def validate_move(direction, x_coordinate, y_coordinate):
     :precondition: x_coordinate is any integer
     :precondition: y_coordinate is any integer
     :postcondition: return True if direction is 1 and current y_coordinate is not 0
-    :postcondition: return True if direction is 2 and current x_coordinate is not 4
-    :postcondition: return True if direction is 3 and current y_coordinate is not 4
+    :postcondition: return True if direction is 2 and current x_coordinate is not 24
+    :postcondition: return True if direction is 3 and current y_coordinate is not 24
     :postcondition: return True if direction is 4 and current x_coordinate is not 0
     :postcondition: return False if any of the above postconditions were not satisfied
     :return: True if direction was a valid move, else False
@@ -265,15 +348,15 @@ def validate_move(direction, x_coordinate, y_coordinate):
     True
     >>> validate_move(2, 3, 0)
     True
-    >>> validate_move(2, 4, 0)
+    >>> validate_move(2, 24, 0)
     False
     >>> validate_move(3, 2, 0)
     True
-    >>> validate_move(3, 2, 4)
+    >>> validate_move(3, 2, 24)
     False
-    >>> validate_move(4, 1, 4)
+    >>> validate_move(4, 1, 24)
     True
-    >>> validate_move(4, 0, 4)
+    >>> validate_move(4, 0, 24)
     False
     """
     if direction == 1 and y_coordinate != 0:
@@ -621,7 +704,7 @@ def game():
             print("You have abandoned ship! Sector Six has stopped another group of would-be thieves...")
             exit()
         else:
-            print("That is not a valid choice! \n")
+            print("That is not a valid choice!\n")
 
 
 def main():
