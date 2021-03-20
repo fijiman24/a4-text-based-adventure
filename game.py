@@ -53,8 +53,8 @@ def story_introduction():
           "plundering some riches for themselves, and all have been gunned down by the local security militias. \n")
     print("All except you. You put together a ragtag crew, formulated the perfect plan, and somehow managed to fill "
           "your ship with as much stolen loot as she could carry. Now all you\nhave to do is escape to the nearest "
-          "wormhole, treasure in tow, and you'll be christened the first ever space captain to have successfully stolen"
-          " from...\n")
+          "wormhole, treasure in tow, and you'll be christened the first ever space captain to have successfully "
+          "pilfered from...\n")
 
 
 def story_ending():
@@ -211,12 +211,12 @@ def check_player_statistics(player):
     """Print player name, health, level, experience points, class, and class special action.
 
     """
-    print(f"Your name is {player['name']}.")
+    print(f"You are Captain {player['name']}.")
     print(f"{player['name']} has {player['health']} health points remaining.")
     print(f"{player['name']} is level {player['level']}.")
     print(f"{player['name']} has {player['exp']} experience points, {500 - int(player['exp'])} points away from "
           f"leveling up.")
-    print(f"{player['name']} is a {player['player_class']}, with the special ability "
+    print(f"{player['name']} pilots a {player['player_class']}, which has the special ability "
           f"{player['player_class_special_action']}. \n")
 
 
