@@ -48,11 +48,11 @@ def story_introduction():
     """
     print("In the distant future, humankind has colonized the vast, cold reaches of space. From suburban planets "
           "to entire solar systems dedicated to vice, there isn't a sector in the\nMilky Way Galaxy that's been "
-          "left untouched by our ever-expanding race. One such sector is devoted to storing all of humanity's wealth "
-          "and fortune. Many a space pirate has\ntried their hand at laying siege to this sector in hopes of "
+          "left untouched by our ever-expanding race. One such sector is devoted to storing all of humanity's physical "
+          "wealth and fortune. Many a space\npirate has tried their hand at laying siege to this sector in hopes of "
           "plundering some riches for themselves, and all have been gunned down by the local security militias. \n")
-    print("All except you. You put together the perfect crew, formulated the perfect plan, and somehow managed to fill "
-          "your ship with as much stolen loot as she could carry. Now all you have to\ndo is escape to the nearest "
+    print("All except you. You put together a ragtag crew, formulated the perfect plan, and somehow managed to fill "
+          "your ship with as much stolen loot as she could carry. Now all you\nhave to do is escape to the nearest "
           "wormhole, treasure in tow, and you'll be christened the first ever space captain to have successfully stolen"
           " from...\n")
 
@@ -466,16 +466,13 @@ def combat_duel(player_health):
     enemy_health = MAX_ENEMY_HEALTH[0]
     initiative = combat_initiative_roll()
 
-    if initiative:
-        while player_health > 0 and enemy_health > 0:
-            enemy_health = combat_player_attack(enemy_health)
-            if enemy_health > 0:
-                player_health = combat_enemy_attack(player_health)
-    elif not initiative:
-        while player_health > 0 and enemy_health > 0:
+    if not initiative:
+        player_health = combat_enemy_attack(player_health)
+
+    while player_health > 0 and enemy_health > 0:
+        enemy_health = combat_player_attack(enemy_health)
+        if enemy_health > 0:
             player_health = combat_enemy_attack(player_health)
-            if player_health > 0:
-                enemy_health = combat_player_attack(enemy_health)
 
     if enemy_health <= 0:
         enemy_death_text()
@@ -584,7 +581,7 @@ def spawn_enemy():
 
     no doctest, this uses random values
     """
-    spawn_chance = random.randint(1, 5)
+    spawn_chance = random.randint(1, 2)
     if spawn_chance == 1:
         print("You were spotted by a guard!")
         return True
