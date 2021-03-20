@@ -289,6 +289,12 @@ def multi_attack(player):
     return split_attack * 5 * player["level"] * 1.2
 
 
+def heal_spell(player):
+    amount_healed = player["level"] * 10
+    player["hp"] += amount_healed
+    return player
+
+
 def game_board_coordinates(player_x_coordinate, player_y_coordinate):
     """Return dictionary representing game board, with unoccupied coordinates containing a blue asterisk, and occupied
        coordinates containing a yellow at symbol.
