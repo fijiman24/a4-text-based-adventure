@@ -31,14 +31,14 @@ STARTING_Y_COORDINATE = (0,)
 
 
 def ascii_intro():
-    print(f"{Colours.red}  ___  _   _ _____ _____ _____ _   _      ___   _   _______     _____   ___   _      _________"
-          f"__")
-    print(" / _ \| | | /  ___|_   _|_   _| \ | |    / _ \ | \ | |  _  \   /  __ \ / _ \ | |    |  ___| ___ \\")
-    print("/ /_\ \ | | \ `--.  | |   | | |  \| |   / /_\ \|  \| | | | |   | /  \// /_\ \| |    | |__ | |_/ /")
-    print("|  _  | | | |`--. \ | |   | | | . ` |   |  _  || . ` | | | |   | |    |  _  || |    |  __|| ___ \\")
-    print("| | | | |_| /\__/ / | |  _| |_| |\  |   | | | || |\  | |/ /    | \__/\| | | || |____| |___| |_/ /")
-    print(f"\_| |_/\___/\____/  \_/  \___/\_| \_/   \_| |_/\_| \_/___/      \____/\_| |_/\_____/\____/\____/"
-          f"{Colours.end}")
+    print(f"{Colours.blue}  /$$$$$$                        /$$                                /$$$$$$  /$$          ")
+    print(" /$$__  $$                      | $$                               /$$__  $$|__/          ")
+    print("| $$  \__/  /$$$$$$   /$$$$$$$ /$$$$$$    /$$$$$$   /$$$$$$       | $$  \__/ /$$ /$$   /$$")
+    print("|  $$$$$$  /$$__  $$ /$$_____/|_  $$_/   /$$__  $$ /$$__  $$      |  $$$$$$ | $$|  $$ /$$/")
+    print(" \____  $$| $$$$$$$$| $$        | $$    | $$  \ $$| $$  \__/       \____  $$| $$ \  $$$$/ ")
+    print(f" /$$  \ $$| $$_____/| $$        | $$ /$$| $$  | $$| $$             /$$  \ $$| $$  >$$  $$ ")
+    print(f"|  $$$$$$/|  $$$$$$$|  $$$$$$$  |  $$$$/|  $$$$$$/| $$            |  $$$$$$/| $$ /$$/\  $$")
+    print(f" \______/  \_______/ \_______/   \___/   \______/ |__/             \______/ |__/|__/  \__/\n{Colours.end}")
 
 
 def story_introduction():
@@ -46,7 +46,15 @@ def story_introduction():
 
     :postcondition: print the introductory story text and the map
     """
-    pass
+    print("In the distant future, humankind has colonized the vast, cold reaches of space. From suburban planets "
+          "to entire solar systems dedicated to vice, there isn't a sector in the\nMilky Way Galaxy that's been "
+          "left untouched by our ever-expanding race. One such sector is devoted to storing all of humanity's wealth "
+          "and fortune. Many a space pirate has\ntried their hand at laying siege to this sector in hopes of "
+          "plundering some riches for themselves, and all have been gunned down by the local security militias. \n")
+    print("All except you. You put together the perfect crew, formulated the perfect plan, and somehow managed to fill "
+          "your ship with as much stolen loot as she could carry. Now all you have to\ndo is escape to the nearest "
+          "wormhole, treasure in tow, and you'll be christened the first ever space captain to have successfully stolen"
+          " from...\n")
 
 
 def story_ending():
@@ -62,7 +70,7 @@ def player_death_text():
 
     postcondition: print text describing player death
     """
-    pass
+    print("You died.")
 
 
 def enemy_death_text():
@@ -70,7 +78,7 @@ def enemy_death_text():
 
     postcondition: print text describing enemy death
     """
-    pass
+    print("The enemy died.")
 
 
 def check_if_player_in_boss_room(x_coordinate, y_coordinate):
@@ -103,25 +111,8 @@ def make_player():
     {'health': 20, 'x-coordinate': 0, 'y-coordinate': 0, 'name': ''}
     """
     return {"health": MAX_PLAYER_HEALTH[0], "x-coordinate": STARTING_X_COORDINATE[0], "y-coordinate":
-            STARTING_Y_COORDINATE[0], "name": "test", "exp": 0, "player_class": "placeholder_class",
-            "player_class_special_action": "placeholder_class_special_action", "level": 1}
-
-
-def game_board_coordinates():
-    """Return dictionary representing game board, with coordinate (0, 0) being occupied.
-
-    :postcondition: generate dictionary game board
-    :postcondition: occupy coordinate (0, 0) in game board with yellow asterisk representing player location
-    :return: dictionary representing game board, with coordinate (0, 0) being occupied
-    >>> game_board_coordinates()
-
-
-    """
-    board_coordinates = [(x_coordinates, y_coordinates) for x_coordinates in range(0, 25) for
-                         y_coordinates in range(0, 25)]
-    game_board = {coordinate: f"{Colours.blue}*{Colours.end}" for coordinate in board_coordinates}
-    game_board[(0, 0)] = f"{Colours.yellow}@{Colours.end}"
-    return game_board
+            STARTING_Y_COORDINATE[0], "name": None, "exp": 0, "player_class": None,
+            "player_class_special_action": None, "level": 1}
 
 
 def input_player_name():
@@ -136,28 +127,31 @@ def input_player_name():
     if name_input.lower() == "chris" or name_input.lower() == "christopher" or name_input.lower() == "chris thompson":
         print("You can be more adventurous than that. \n")
         return input_player_name()
+    elif name_input.strip() == "":
+        print("Every adventurer needs a name. \n")
+        return input_player_name()
     else:
         return name_input
 
 
 def select_player_class():
-    class_choices = list(enumerate(["Careless Adventurer", "Corrupt Official", "Petty Thief", "Vengeful Barbarian"],
-                                   start=1))
+    class_choices = list(enumerate(["Ruthless Corsair", "Militia Turncoat", "Scrappy Scoundrel",
+                                    "Disgraced Quadrillionaire"], start=1))
     print("Select a class: ")
     print(class_choices)
     choice = input()
     if choice == "1":
         # print the backstory of class 1
-        return confirm_player_class("Careless Adventurer")
+        return confirm_player_class("Ruthless Corsair")
     elif choice == "2":
         # print the backstory of class 1
-        return confirm_player_class("Corrupt Official")
+        return confirm_player_class("Militia Turncoat")
     elif choice == "3":
         # print the backstory of class 1
-        return confirm_player_class("Petty Thief")
+        return confirm_player_class("Scrappy Scoundrel")
     elif choice == "4":
         # print the backstory of class 1
-        return confirm_player_class("Vengeful Barbarian")
+        return confirm_player_class("Disgraced Quadrillionaire")
     else:
         print("That is not a valid choice! \n")
         select_player_class()
@@ -177,19 +171,38 @@ def confirm_player_class(class_name):
         confirm_player_class(class_name)
 
 
-def display_main_menu(player):
+def game_board_coordinates(player_x_coordinate, player_y_coordinate):
+    """Return dictionary representing game board, with unoccupied coordinates containing blue asterisk, and occupied
+       coordinates containing a yellow at symbol.
+
+    :postcondition: generate dictionary game board
+    :postcondition: occupy coordinate (0, 0) in game board with yellow asterisk representing player location
+    :return: dictionary representing game board, with coordinate (0, 0) being occupied
+    >>> game_board_coordinates()
+
+
+    """
+    board_coordinates = [(x_coordinates, y_coordinates) for x_coordinates in range(0, 25) for
+                         y_coordinates in range(0, 25)]
+    game_board = {coordinate: f"{Colours.blue}*{Colours.end}" for coordinate in board_coordinates}
+    game_board[(player_y_coordinate, player_x_coordinate)] = f"{Colours.yellow}@{Colours.end}"
+    return game_board
+
+
+def display_game_board(x_coordinate, y_coordinate, game_board):
+    surface_visualization = list(game_board.values())
+    surface_visualization.insert(0, "")
+    for index in range(1, len(surface_visualization) + 25):
+        if index % 26 == 0:
+            surface_visualization.insert(index, "\n")
+    surface_visualization.pop()
+    print(*surface_visualization, sep=" ")
+    print(f"You are at {x_coordinate}, {y_coordinate}.")
+
+
+def display_main_menu():
     print(list(enumerate(["Move", "Check Stats", "Quit Game"], start=1)))
-    choice = input()
-    if choice == "1":
-        cardinal_direction()
-    elif choice == "2":
-        check_player_statistics(player)
-    elif choice == "3":
-        print("You have quit the game. The dungeons will be waiting for your return...")
-        exit()
-    else:
-        print("That is not a valid choice! \n")
-        display_main_menu(player)
+    return input()
 
 
 def check_player_statistics(player):
@@ -203,17 +216,6 @@ def check_player_statistics(player):
           f"leveling up.")
     print(f"{player['name']} is a {player['player_class']}, with the special ability "
           f"{player['player_class_special_action']}. \n")
-
-
-def display_game_board(x_coordinate, y_coordinate, game_board):
-    surface_visualization = list(game_board.values())
-    surface_visualization.insert(0, "")
-    for index in range(1, len(surface_visualization) + 25):
-        if index % 26 == 0:
-            surface_visualization.insert(index, "\n")
-    surface_visualization.pop()
-    print(*surface_visualization, sep=" ")
-    print(f"You are at {x_coordinate}, {y_coordinate}.")
 
 
 def cardinal_direction():
@@ -472,7 +474,7 @@ def combat_duel(player_health):
     elif not initiative:
         while player_health > 0 and enemy_health > 0:
             player_health = combat_enemy_attack(player_health)
-            if enemy_health > 0:
+            if player_health > 0:
                 enemy_health = combat_player_attack(enemy_health)
 
     if enemy_health <= 0:
@@ -498,12 +500,15 @@ def combat_choice(player_health):
 
     no doctest, this accepts user input
     """
-    options = list(enumerate(["Fight", "Flee"], start=1))
-    print("Enter 1 to engage in combat, or enter 2 if you try to flee.\n", options)
+    options = list(enumerate(["Fight", "Special Ability", "Flee"], start=1))
+    print("You are engaged in combat. What will you do next? \n", options)
     choice = input()
     if choice == "1":
         return combat_duel(player_health)
     elif choice == "2":
+        print("Work in progress. Try this again later!")
+        return combat_choice(player_health)
+    elif choice == "3":
         return backstab(player_health)
     else:
         print("That is not a valid choice! \n")
@@ -591,33 +596,43 @@ def game():
     """
     Drive the main gameplay loop as long as goal_achieved is False
     """
-    ascii_intro()
     story_introduction()
+    ascii_intro()
 
     player = make_player()
-    game_board = game_board_coordinates()
+    game_board = game_board_coordinates(player['x-coordinate'], player['y-coordinate'])
     player['name'] = input_player_name()
-    player['player_class'] = select_player_class()
+    while player['player_class'] is None:
+        player['player_class'] = select_player_class()
     achieved_goal = False
     display_game_board(player['x-coordinate'], player['y-coordinate'], game_board)
 
     while not achieved_goal:
-        display_main_menu(player)
-        direction = cardinal_direction()
-        valid_move = validate_move(direction, player['x-coordinate'], player['y-coordinate'])
-        if valid_move:
-            player['x-coordinate'] = move_x_axis(direction, player['x-coordinate'])
-            player['y-coordinate'] = move_y_axis(direction, player['y-coordinate'])
-            in_boss_room = check_if_player_in_boss_room(player['x-coordinate'], player['y-coordinate'])
-            if not in_boss_room:
-                enemy_encounter = spawn_enemy()
-                if enemy_encounter:
-                    player['health'] = combat_choice(player['health'])
-                else:
-                    player['health'] = regen_health(player['health'])
+        main_menu_selection = display_main_menu()
+        if main_menu_selection == "1":
+            direction = cardinal_direction()
+            valid_move = validate_move(direction, player['x-coordinate'], player['y-coordinate'])
+            if valid_move:
+                player['x-coordinate'] = move_x_axis(direction, player['x-coordinate'])
+                player['y-coordinate'] = move_y_axis(direction, player['y-coordinate'])
+                in_boss_room = check_if_player_in_boss_room(player['x-coordinate'], player['y-coordinate'])
+                if not in_boss_room:
+                    enemy_encounter = spawn_enemy()
+                    if enemy_encounter:
+                        player['health'] = combat_choice(player['health'])
+                    else:
+                        player['health'] = regen_health(player['health'])
+                game_board = game_board_coordinates(player['x-coordinate'], player['y-coordinate'])
+                display_game_board(player['x-coordinate'], player['y-coordinate'], game_board)
+            else:
+                print("That's not a valid move!")
+        elif main_menu_selection == "2":
+            check_player_statistics(player)
+        elif main_menu_selection == "3":
+            print("You have quit the game. The dungeons will be waiting for your return...")
+            exit()
         else:
-            print("That's not a valid move!")
-    story_ending()
+            print("That is not a valid choice! \n")
 
 
 def main():
