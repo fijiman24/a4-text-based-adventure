@@ -623,7 +623,7 @@ def combat_enemy_flee():
 
     :return:
     """
-    enemy_flee_chance = random.randint(1, 1)
+    enemy_flee_chance = random.randint(1, 5)
     if enemy_flee_chance == 1:
         return True
     else:
@@ -764,7 +764,7 @@ def spawn_enemy():
 
     no doctest, this uses random values
     """
-    spawn_chance = random.randint(1, 2)
+    spawn_chance = random.randint(1, 5)
     if spawn_chance == 1:
         print("You were spotted by a militia ship!")
         return True
