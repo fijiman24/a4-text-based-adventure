@@ -236,7 +236,6 @@ def warrior_ship(player):
     player["player_class_special_action"] = "Resurrect"
     player["special_action_counter"] = 1
     player["damage"] = round(MAX_PLAYER_DAMAGE[0] * 1.25)
-    player["flee_chance_multiplier"] = 1
     return player
 
 
@@ -246,7 +245,6 @@ def magician_ship(player):
     player["player_class_special_action"] = "Magic Blast"
     player["special_action_counter"] = 0
     player["damage"] = round(MAX_PLAYER_DAMAGE[0] * .8)
-    player["flee_chance_multiplier"] = 1
     return player
 
 
@@ -255,7 +253,6 @@ def thief_ship(player):
     player["player_class"] = "Ghost"
     player["player_class_special_action"] = "Multi Strike"
     player["damage"] = MAX_PLAYER_DAMAGE[0]
-    player["flee_chance_multiplier"] = 5
     return player
 
 
@@ -264,7 +261,6 @@ def priest_ship(player):
     player["player_class"] = "Cherub"
     player["player_class_special_action"] = "Healing Spell"
     player["damage"] = MAX_PLAYER_DAMAGE[0]
-    player["flee_chance_multiplier"] = 1
     return player
 
 
@@ -276,11 +272,6 @@ def special_action_selector(player):
         print(f"You charged up your beam to blast the enemy ship with {blast_damage} damage!\n")
         return blast_damage
     elif player["ship"] == "Thief":
-        print(f"You dealt {multi_attack(player)/5} damage to the enemy ship!")
-        print(f"You dealt {multi_attack(player)/5} damage to the enemy ship!")
-        print(f"You dealt {multi_attack(player)/5} damage to the enemy ship!")
-        print(f"You dealt {multi_attack(player)/5} damage to the enemy ship!")
-        print(f"You dealt {multi_attack(player)/5} damage to the enemy ship!\n")
         return multi_attack(player)
     elif player["ship"] == "Priest":
         heal_spell(player)
@@ -307,8 +298,13 @@ def magic_blast(player):
 
 
 def multi_attack(player):
-    split_attack = int(round(player["damage"] / 5))
-    return split_attack * 5 * player["level"] * 1.2
+    split_attack = int(round(player["damage"] * player["level"] * 1.25 / 5))
+    total_attack = 0
+    for attacks in range(0, 5):
+        attack = random.randint(1, split_attack)
+        print(f"You dealt {attack} damage to the enemy ship!")
+        total_attack += attack
+    return total_attack
 
 
 def heal_spell(player):
