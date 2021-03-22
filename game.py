@@ -305,11 +305,10 @@ def resurrect(player):
 
 
 def magic_blast(player):
-    if player["special_action_counter"] == 1:
-        player["special_action_counter"] = 0
-        return player["damage"] * player["level"] * 2
-    else:
-        print("You have already used your special move!")
+    blast_damage = player["special_action_counter"] * 5
+    player["special_action_counter"] = 0
+    print(f"You relinquished your charges to deal {blast_damage} to the enemy ship!")
+    return blast_damage
 
 
 def multi_attack(player):
@@ -786,6 +785,9 @@ def gain_experience_points(player):
         player["exp"] += experience_gained
         print(f"You won the battle! You gained {experience_gained} experience points.")
         level_system(player)
+        if player["ship"] == "Magician":
+            player["special_action_counter"] += 1
+            print(f"You gained a charge on your special attack. You now have a total of {player['special_action_counter']}.")
         return player
 
 
@@ -814,6 +816,9 @@ def level_system(player):
         class_upgrade(player)
         print(f"You gained a level! You are now level {player['level']} and your ship has been upgrade to a"
               f" {player['player_class']}.")
+        if player["ship"] == "Magician":
+            player["special_action_counter"] += 1
+            print(f"You also gained another charge on your special attack! You now have a total of {player['special_action_counter']}.")
     return player
 
 
