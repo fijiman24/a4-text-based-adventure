@@ -86,7 +86,6 @@ def player_death():
 
     postcondition: print text describing player death
     """
-    time.sleep(1)
     print("You died.")
     exit()
 
@@ -96,8 +95,8 @@ def enemy_death():
 
     postcondition: print text describing enemy death
     """
-    time.sleep(1)
     print("The enemy died.")
+    time.sleep(2)
 
 
 def check_if_player_in_boss_room(x_coordinate, y_coordinate):
@@ -597,6 +596,7 @@ def combat_player_attack(enemy_health):
     player_damage = random.randint(1, MAX_PLAYER_DAMAGE[0])
     print(f"You did {player_damage} damage to the enemy ship!\n")
     enemy_health -= player_damage
+    time.sleep(1)
     return enemy_health
 
 
@@ -616,6 +616,18 @@ def combat_enemy_attack(player_health):
     player_health -= enemy_damage
     print(f"The enemy ship did {enemy_damage} damage to you!\n")
     return player_health
+
+
+def combat_enemy_flee():
+    """20 percent chance that enemy will flee from combat.
+
+    :return:
+    """
+    enemy_flee_chance = random.randint(1, 1)
+    if enemy_flee_chance == 1:
+        return True
+    else:
+        return False
 
 
 def combat_duel(player):
@@ -652,13 +664,23 @@ def combat_duel(player):
             print("That is not a valid choice!")
             continue
         if enemy_health > 0:
-            player["health"] = combat_enemy_attack(player["health"])
+            enemy_flee_chance = combat_enemy_flee()
+            if enemy_flee_chance:
+                enemy_health = 99999
+                break
+            elif not enemy_flee_chance:
+                player["health"] = combat_enemy_attack(player["health"])
 
     if enemy_health <= 0:
         enemy_death()
         gain_experience_points(player)
+        time.sleep(1)
     elif player["health"] <= 0:
         player_death()
+    elif enemy_health == 99999:
+        print("The enemy escaped!")
+        time.sleep(1)
+        return player["health"]
     else:
         return player["health"]
 
