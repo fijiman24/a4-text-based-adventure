@@ -615,6 +615,7 @@ def combat_enemy_attack(player_health):
     enemy_damage = random.randint(1, MAX_ENEMY_DAMAGE[0])
     player_health -= enemy_damage
     print(f"The enemy ship did {enemy_damage} damage to you!\n")
+    time.sleep(1)
     return player_health
 
 
