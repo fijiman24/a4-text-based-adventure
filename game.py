@@ -235,8 +235,7 @@ def warrior_ship(player):
     player["player_class"] = "Dreadnought"
     player["player_class_special_action"] = "Resurrect"
     player["special_action_counter"] = 1
-    player["damage"] = MAX_PLAYER_DAMAGE[0]
-    player["damage_multiplier"] = 1.3
+    player["damage"] = round(MAX_PLAYER_DAMAGE[0] * 1.25)
     player["flee_chance_multiplier"] = 1
     return player
 
@@ -246,8 +245,7 @@ def magician_ship(player):
     player["player_class"] = "Sapper"
     player["player_class_special_action"] = "Magic Blast"
     player["special_action_counter"] = 0
-    player["damage"] = MAX_PLAYER_DAMAGE[0]
-    player["damage_multiplier"] = .7
+    player["damage"] = round(MAX_PLAYER_DAMAGE[0] * .8)
     player["flee_chance_multiplier"] = 1
     return player
 
@@ -257,7 +255,6 @@ def thief_ship(player):
     player["player_class"] = "Ghost"
     player["player_class_special_action"] = "Multi Strike"
     player["damage"] = MAX_PLAYER_DAMAGE[0]
-    player["damage_multiplier"] = 1
     player["flee_chance_multiplier"] = 5
     return player
 
@@ -267,9 +264,7 @@ def priest_ship(player):
     player["player_class"] = "Cherub"
     player["player_class_special_action"] = "Healing Spell"
     player["damage"] = MAX_PLAYER_DAMAGE[0]
-    player["damage_multiplier"] = 1
     player["flee_chance_multiplier"] = 1
-    player["health_restored"] = 1.3
     return player
 
 
@@ -651,18 +646,18 @@ def combat_initiative_roll(player):  # put enemy_name as a parameter maybe; coul
         return False
 
 
-def combat_player_attack(enemy_health):
+def combat_player_attack(enemy_health, player):
     """Return enemy's health value after being attacked by player.
 
         :param enemy_health: a positive integer
         :precondition: enemy_health is any positive integer
-        :postcondition: subtract a random integer between [1, MAX_PLAYER_DAMAGE] from enemy_health
+        :postcondition: subtract a random integer between [1, player["damage"]] from enemy_health
         :postcondition: return enemy_health
         :return: enemy_health
 
         no doctest, this uses random values
         """
-    player_damage = random.randint(1, MAX_PLAYER_DAMAGE[0])
+    player_damage = random.randint(1, player["damage"])
     print(f"You did {player_damage} damage to the enemy ship!\n")
     enemy_health -= player_damage
     time.sleep(1)
@@ -714,7 +709,7 @@ def combat_duel(player):
 
     :param player: a dictionary
     :precondition: player must contain keys "level", "health", and "exp"
-    :postcondition: take turns subtracting a random integer between [1, MAX_PLAYER_DAMAGE] from enemy_health and a
+    :postcondition: take turns subtracting a random integer between [1, player["damage"]] from enemy_health and a
                     random integer [1, MAX_ENEMY_DAMAGE] from player_health until player["health"] or enemy_health == 0
     :postcondition: return player["health"] value after enemy_health or player["health"] == 0
     :return: player["health"] after enemy_health or player["health"] reaches 0
@@ -731,7 +726,7 @@ def combat_duel(player):
         print(f"Your ship can take {player['health']} more points of damage.")
         combat_round_player_choice = combat_choice()
         if combat_round_player_choice == "1":
-            enemy_health = combat_player_attack(enemy_health)
+            enemy_health = combat_player_attack(enemy_health, player)
         elif combat_round_player_choice == "2":
             if player["ship"] == "Magician" or player["ship"] == "Thief":
                 enemy_health -= special_action_selector(player)
@@ -813,6 +808,8 @@ def level_system(player):
     if player["exp"] >= 300:
         player["level"] += 1
         player["exp"] = 0
+        player["damage"] += 2
+        player["health"] += 5
         class_upgrade(player)
         print(f"You gained a level! You are now level {player['level']} and your ship has been upgrade to a"
               f" {player['player_class']}.")
