@@ -203,6 +203,7 @@ def select_player_class(player):
         select_player_class(player)
     return player
 
+
 def confirm_player_class(class_name, player):
     """Return class_name or call select_player_class, depending on user input.
 
@@ -320,6 +321,54 @@ def heal_spell(player):
     amount_healed = player["level"] * 10
     player["health"] += amount_healed
     return player
+
+
+def make_enemy_difficulty_one():
+    """
+
+    :return:
+    """
+    return {
+        "health": 10,
+        "experience_points": 100,
+        "maximum_damage": 5
+    }
+
+
+def make_enemy_difficulty_two():
+    """
+
+    :return:
+    """
+    return {
+        "health": 20,
+        "experience_points": 200,
+        "maximum_damage": 10
+    }
+
+
+def make_enemy_difficulty_three():
+    """
+
+    :return:
+    """
+    return {
+        "health": 30,
+        "experience_points": 300,
+        "maximum_damage": 15
+    }
+
+
+def make_enemy_difficulty_four():
+    """
+
+    :return:
+    """
+    return {
+        "health": 40,
+        "experience_points": 400,
+        "maximum_damage": 20
+    }
 
 
 def game_board_coordinates(player_x_coordinate, player_y_coordinate):
@@ -633,6 +682,7 @@ def combat_enemy_attack(player_health):
     enemy_damage = random.randint(1, MAX_ENEMY_DAMAGE[0])
     player_health -= enemy_damage
     print(f"The enemy ship did {enemy_damage} damage to you!\n")
+    time.sleep(1)
     return player_health
 
 
