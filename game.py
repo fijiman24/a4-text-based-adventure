@@ -296,7 +296,7 @@ def resurrect(player):
         if player["health"] <= 0:
             player["special_action_counter"] = 0
             print("Your undying will allowed you to survive the attack and restored your health to 50!")
-            player["health"] = 50
+            player["health"] = 10
             return player
         else:
             print("Your passive will allow you to survive a critical attack.")
@@ -752,6 +752,8 @@ def combat_duel(player):
                 break
             elif not enemy_flee_chance:
                 player["health"] = combat_enemy_attack(player["health"])
+                if player["health"] <= 0 and player["ship"] == "Warrior" and player["special_action_counter"] == 1:
+                    resurrect(player)
 
     if enemy_health <= 0:
         enemy_death()
@@ -821,9 +823,7 @@ def class_upgrade(player):
                'Thief': {1: "Ghost", 2: "Hunter", 3: "King"},
                'Priest': {1: "Cherub", 2: "Jester", 3: "Castle"}
                }
-
     player["player_class"] = classes[player["ship"]][player["level"]]  # finds class based on ship and level
-
     return player
 
 
