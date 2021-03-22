@@ -630,6 +630,15 @@ def combat_enemy_flee():
         return False
 
 
+def combat_choice():
+    """Present menu of combat options.
+
+    """
+    options = list(enumerate(["Normal Attack", "Special Ability", "Flee"], start=1))
+    print("You are engaged in a space battle. What will you do next?\n", options)
+    return input()
+
+
 def combat_duel(player):
     """Return player's health value after enemy_health or player_health reaches 0.
 
@@ -650,7 +659,7 @@ def combat_duel(player):
 
     while player["health"] > 0 and enemy_health > 0:
         print(f"Your ship can take {player['health']} more points of damage.")
-        combat_round_player_choice = combat_choice(player["health"])
+        combat_round_player_choice = combat_choice()
         if combat_round_player_choice == "1":
             enemy_health = combat_player_attack(enemy_health)
         elif combat_round_player_choice == "2":
@@ -683,15 +692,6 @@ def combat_duel(player):
         return player["health"]
     else:
         return player["health"]
-
-
-def combat_choice(player_health):
-    """Present menu of combat options.
-
-    """
-    options = list(enumerate(["Normal Attack", "Special Ability", "Flee"], start=1))
-    print("You are engaged in a space battle. What will you do next?\n", options)
-    return input()
 
 
 def gain_experience_points(player):
