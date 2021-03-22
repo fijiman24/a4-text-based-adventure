@@ -232,9 +232,9 @@ def confirm_player_class(class_name, player):
 def warrior_ship(player):
     player["ship"] = "Warrior"
     player["player_class"] = "Dreadnought"
-    player["player_class_special_action"] = resurrect(player)
+    player["player_class_special_action"] = "Resurrect"
     player["special_action_counter"] = 1
-    player["damage"] = 20
+    player["damage"] = MAX_PLAYER_DAMAGE[0]
     player["damage_multiplier"] = 1.3
     player["flee_chance_multiplier"] = 1
     return player
@@ -243,9 +243,9 @@ def warrior_ship(player):
 def magician_ship(player):
     player["ship"] = "Magician"
     player["player_class"] = "Sapper"
-    player["player_class_special_action"] = magic_blast(player)
-    player["special_action_counter"] = 1
-    player["damage"] = 20
+    player["player_class_special_action"] = "Magic Blast"
+    player["special_action_counter"] = 0
+    player["damage"] = MAX_PLAYER_DAMAGE[0]
     player["damage_multiplier"] = .7
     player["flee_chance_multiplier"] = 1
     return player
@@ -254,8 +254,8 @@ def magician_ship(player):
 def thief_ship(player):
     player["ship"] = "Thief"
     player["player_class"] = "Ghost"
-    player["player_class_special_action"] = multi_attack(player)
-    player["damage"] = 20
+    player["player_class_special_action"] = "Multi Strike"
+    player["damage"] = MAX_PLAYER_DAMAGE[0]
     player["damage_multiplier"] = 1
     player["flee_chance_multiplier"] = 5
     return player
@@ -264,20 +264,38 @@ def thief_ship(player):
 def priest_ship(player):
     player["ship"] = "Priest"
     player["player_class"] = "Cherub"
-    player["player_class_special_action"] = heal_spell(player)
-    player["damage"] = 20
+    player["player_class_special_action"] = "Healing Spell"
+    player["damage"] = MAX_PLAYER_DAMAGE[0]
     player["damage_multiplier"] = 1
     player["flee_chance_multiplier"] = 1
     player["health_restored"] = 1.3
     return player
 
 
+def special_action_selector(player):
+    if player["ship"] == "Warrior":
+        resurrect(player)
+    elif player["ship"] == "Magician":
+        blast_damage = magic_blast(player)
+        print(f"You charged up your beam to blast the enemy ship with {blast_damage} damage!\n")
+        return blast_damage
+    elif player["ship"] == "Thief":
+        print(f"You dealt {multi_attack(player)/5} damage to the enemy ship!")
+        print(f"You dealt {multi_attack(player)/5} damage to the enemy ship!")
+        print(f"You dealt {multi_attack(player)/5} damage to the enemy ship!")
+        print(f"You dealt {multi_attack(player)/5} damage to the enemy ship!")
+        print(f"You dealt {multi_attack(player)/5} damage to the enemy ship!\n")
+        return multi_attack(player)
+    elif player["ship"] == "Priest":
+        heal_spell(player)
+
+
 def resurrect(player):
     if player["special_action_counter"] == 1:
-        if player["hp"] >= 0:
+        if player["health"] <= 0:
             player["special_action_counter"] = 0
             print("Your undying will allowed you to survive the attack and restored your health to 50!")
-            player["hp"] = 50
+            player["health"] = 50
             return player
         else:
             print("Your passive will allow you to survive a critical attack.")
@@ -561,7 +579,7 @@ def backstab(player_health):
         return player_health
 
 
-def combat_initiative_roll():  # put enemy_name as a parameter maybe; could have different names for diff enemy types
+def combat_initiative_roll(player):  # put enemy_name as a parameter maybe; could have different names for diff enemy types
     """Roll to see if player or foe attacks first.
 
     :precondition: params must be met
@@ -573,7 +591,7 @@ def combat_initiative_roll():  # put enemy_name as a parameter maybe; could have
     enemy = "enemy_name"
     if player_roll == enemy_roll:  # checks for draws
         print(f'Draw! You both rolled a {player_roll}. Rerolling....\n')
-        combat_initiative_roll()
+        combat_initiative_roll(player)
     if player_roll > enemy_roll:  # checks if player attacks first
         print(f'You rolled a {player_roll} and {enemy} rolled a {enemy_roll}. You will attack first.\n')
         return True
@@ -663,8 +681,10 @@ def combat_duel(player):
         if combat_round_player_choice == "1":
             enemy_health = combat_player_attack(enemy_health)
         elif combat_round_player_choice == "2":
-            print("Special abilities are not available yet, check back later!\n")
-            continue
+            if player["ship"] == "Magician" or player["ship"] == "Thief":
+                enemy_health -= special_action_selector(player)
+            else:
+                special_action_selector(player)
         elif combat_round_player_choice == "3":
             player["health"] = backstab(player["health"])
             break
