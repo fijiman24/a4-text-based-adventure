@@ -312,8 +312,14 @@ def multi_attack(player):
 
 
 def heal_spell(player):
-    amount_healed = player["level"] * 10
-    player["health"] += amount_healed
+    amount_healed = player["level"] * 6
+    max_health = MAX_PLAYER_HEALTH[0] + player["level"] * 3
+    if amount_healed + player["health"] > MAX_PLAYER_HEALTH[0] + player["level"] * 3:
+        player["health"] = MAX_PLAYER_HEALTH[0] + player["level"] * 3
+        print(f"You repaired your hull for {max_health - MAX_PLAYER_HEALTH[0]} health.")
+    else:
+        player["health"] += amount_healed
+        print(f"You repaired your hull for {amount_healed} health.")
     return player
 
 
