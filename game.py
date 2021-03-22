@@ -638,6 +638,9 @@ def combat_initiative_roll(player):  # put enemy_name as a parameter maybe; coul
     player_roll = random.randint(1, 100)
     enemy_roll = random.randint(1, 100)
     enemy = "enemy_name"
+    if player["ship"] == "Thief":
+        print("Your nimbleness Rogue abilities allows you to attack first.\n")
+        return True
     if player_roll == enemy_roll:  # checks for draws
         print(f'Draw! You both rolled a {player_roll}. Rerolling....\n')
         combat_initiative_roll(player)
@@ -720,7 +723,7 @@ def combat_duel(player):
     no doctest, this uses random values
     """
     enemy_health = MAX_ENEMY_HEALTH[0]
-    initiative = combat_initiative_roll()
+    initiative = combat_initiative_roll(player)
 
     if not initiative:
         player["health"] = combat_enemy_attack(player["health"])
