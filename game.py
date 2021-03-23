@@ -198,7 +198,8 @@ def select_player_class(player):
         if confirm_player_class("Sapper", player):
             magician_ship(player)
     elif choice == "3":
-        print("A stealthy ship covered in SlipStream™ camouflage technology for easier evasion from enemies.")
+        print("A nimble ship covered in aerodynamic SlipStream™ technology allows the pilot to make the first move in "
+              "combat, and attack multiple times in one turn.")
         if confirm_player_class("Ghost", player):
             thief_ship(player)
     elif choice == "4":
@@ -686,7 +687,7 @@ def combat_initiative_roll(player):
     enemy_roll = random.randint(1, 100)
     enemy = make_appropriate_enemy_type(player)
     if player["ship"] == "Thief":
-        print("Your nimbleness Rogue abilities allows you to attack first.\n")
+        print("The nimbleness of your ship allows you to attack first.\n")
         return True
     if player_roll == enemy_roll:  # checks for draws
         print(f'Draw! You both rolled a {Colours.blue}{player_roll}{Colours.end}. Rerolling....\n')
