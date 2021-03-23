@@ -21,7 +21,6 @@ class Colours:
 
 # Constants enclosed in tuples (yes, it looks weird)
 MAX_PLAYER_HEALTH = (20,)
-MAX_ENEMY_HEALTH = (10,)
 REGEN_VALUE = (4,)
 MAX_PLAYER_DAMAGE = (20,)
 MAX_ENEMY_DAMAGE = (10,)
@@ -832,11 +831,11 @@ def gain_experience_points(player):
     """
     enemy = make_appropriate_enemy_type(player)
     if player["level"] == 3:
-        print(f"You are already at the max level of 3!\n You did not gain any experience from the battle.")
+        print(f"You are already at the max level of 3!\n You did not gain any scrap from the battle.")
     else:
         experience_gained = enemy["experience_points"]
         player["exp"] += experience_gained
-        print(f"You won the battle! You gained {experience_gained} experience points.")
+        print(f"You won the battle! You gained {experience_gained} scrap.")
         level_system(player)
         if player["ship"] == "Magician":
             player["special_action_counter"] += 1
