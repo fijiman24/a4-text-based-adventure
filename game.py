@@ -390,9 +390,9 @@ def make_appropriate_enemy_type(player):
         return make_enemy_difficulty_one()
     elif player["x-coordinate"] in range(5, 15) or player["y-coordinate"] in range(5, 15):
         return make_enemy_difficulty_two()
-    elif player["x-coordinate"] in range(15, 20) and player["y-coordinate"] in range(15, 20):
+    elif player["x-coordinate"] in range(15, 20) or player["y-coordinate"] in range(15, 20):
         return make_enemy_difficulty_three()
-    elif player["x-coordinate"] in range(20, 25) and player["y-coordinate"] in range(20, 25) and \
+    elif player["x-coordinate"] in range(20, 25) or player["y-coordinate"] in range(20, 25) and \
             (player["x-coordinate"] != 24 and player["y-coordinate"] != 24):
         return make_enemy_difficulty_four()
 
@@ -535,17 +535,7 @@ def validate_move(direction, x_coordinate, y_coordinate):
     >>> validate_move(4, 0, 24)
     False
     """
-    if direction == 2 and (x_coordinate != 23 and y_coordinate != 24):
-        if confirm_move_to_boss_room():
-            return True
-        elif not confirm_move_to_boss_room():
-            return False
-    elif direction == 3 and (x_coordinate != 24 and y_coordinate != 23):
-        if confirm_move_to_boss_room():
-            return True
-        elif not confirm_move_to_boss_room():
-            return False
-    elif direction == 1 and y_coordinate != 0:
+    if direction == 1 and y_coordinate != 0:
         return True
     elif direction == 2 and x_coordinate != 24:
         return True
@@ -690,7 +680,7 @@ def combat_initiative_roll(player):
     """
     player_roll = random.randint(1, 100)
     enemy_roll = random.randint(1, 100)
-    enemy = "enemy_name"
+    enemy = make_appropriate_enemy_type(player)
     if player["ship"] == "Thief":
         print("Your nimbleness Rogue abilities allows you to attack first.\n")
         return True
@@ -698,10 +688,11 @@ def combat_initiative_roll(player):
         print(f'Draw! You both rolled a {player_roll}. Rerolling....\n')
         combat_initiative_roll(player)
     if player_roll > enemy_roll:  # checks if player attacks first
-        print(f'You rolled a {player_roll} and {enemy} rolled a {enemy_roll}. You will attack first.\n')
+        print(f'You rolled a {player_roll} and {enemy["name"]} rolled a {enemy_roll}. You will attack first.\n')
         return True
     elif player_roll < enemy_roll:  # checks if foe attacks first
-        print(f'You rolled a {player_roll} and {enemy} rolled {enemy_roll}. {enemy} will attack first.\n')
+        print(f'You rolled a {player_roll} and {enemy["name"]} rolled {enemy_roll}. {enemy["name"]} will attack '
+              f'first.\n')
         return False
 
 
@@ -762,69 +753,6 @@ def combat_choice():
     options = list(enumerate(["Normal Attack", "Special Ability", "Flee"], start=1))
     print("You are engaged in a space battle. What will you do next?\n", options)
     return input()
-
-
-def combat_duel(player):
-    """Return player's health value after enemy["health"] or player_health reaches 0.
-
-    :param player: a dictionary
-    :precondition: player must contain keys "level", "health", and "exp"
-    :postcondition: take turns subtracting a random integer between [1, player["damage"]] from enemy["health"] and a
-                    random integer [1, MAX_ENEMY_DAMAGE] from player_health until player["health"] or enemy["health"] == 0
-    :postcondition: return player["health"] value after enemy["health"] or player["health"] == 0
-    :return: player["health"] after enemy["health"] or player["health"] reaches 0
-
-    no doctest, this uses random values
-    """
-    enemy = make_appropriate_enemy_type(player)
-    print(f"You were spotted by an enemy {enemy['name']}!")
-    initiative = combat_initiative_roll(player)
-    time.sleep(1)
-
-    if not initiative:
-        player["health"] = combat_enemy_attack(player["health"])
-
-    while player["health"] > 0 and enemy["health"] > 0:
-        print(f"Your {player['player_class']} can take {player['health']} more points of damage.")
-        print(f"The enemy {enemy['name']} can take {enemy['health']} more points of damage.")
-        combat_round_player_choice = combat_choice()
-        if combat_round_player_choice == "1":
-            enemy["health"] = combat_player_attack(enemy["health"], player)
-        elif combat_round_player_choice == "2":
-            if player["ship"] == "Magician" or player["ship"] == "Thief":
-                enemy["health"] -= special_action_selector(player)
-            else:
-                special_action_selector(player)
-        elif combat_round_player_choice == "3":
-            player["health"] = backstab(player["health"])
-            break
-        elif combat_round_player_choice != "1" or combat_round_player_choice != "2" or combat_round_player_choice != \
-                "3":
-            print("That is not a valid choice!")
-            continue
-        if enemy["health"] > 0:
-            enemy_flee_chance = combat_enemy_flee()
-            if enemy_flee_chance:
-                enemy["health"] = 99999
-                break
-            elif not enemy_flee_chance:
-                player["health"] = combat_enemy_attack(player["health"])
-                if player["health"] <= 0 and player["ship"] == "Warrior" and player["special_action_counter"] == 1:
-                    resurrect(player)
-
-    if enemy["health"] <= 0:
-        enemy_death_text()
-        gain_experience_points(player)
-        time.sleep(1)
-    elif player["health"] <= 0:
-        player_death_text()
-        exit()
-    elif enemy["health"] == 99999:
-        print("The enemy escaped!")
-        time.sleep(1)
-        return player["health"]
-    else:
-        return player["health"]
 
 
 def gain_experience_points(player):
@@ -939,7 +867,56 @@ def game():
                 if not in_boss_room:
                     enemy_encounter = spawn_enemy()
                     if enemy_encounter:
-                        combat_duel(player)
+                        enemy = make_appropriate_enemy_type(player)
+                        print(f"You were spotted by an enemy {enemy['name']}!")
+                        initiative = combat_initiative_roll(player)
+                        time.sleep(1)
+
+                        if not initiative:
+                            player["health"] = combat_enemy_attack(player["health"])
+
+                        while player["health"] > 0 and enemy["health"] > 0:
+                            print(f"Your {player['player_class']} can take {player['health']} more points of damage.")
+                            print(f"The enemy {enemy['name']} can take {enemy['health']} more points of damage.")
+                            combat_round_player_choice = combat_choice()
+                            if combat_round_player_choice == "1":
+                                enemy["health"] = combat_player_attack(enemy["health"], player)
+                            elif combat_round_player_choice == "2":
+                                if player["ship"] == "Magician" or player["ship"] == "Thief":
+                                    enemy["health"] -= special_action_selector(player)
+                                else:
+                                    special_action_selector(player)
+                            elif combat_round_player_choice == "3":
+                                player["health"] = backstab(player["health"])
+                                break
+                            elif combat_round_player_choice != "1" or combat_round_player_choice != "2" or \
+                                    combat_round_player_choice != "3":
+                                print("That is not a valid choice!")
+                                continue
+                            if enemy["health"] > 0:
+                                enemy_flee_chance = combat_enemy_flee()
+                                if enemy_flee_chance:
+                                    enemy["health"] = 99999
+                                    break
+                                elif not enemy_flee_chance:
+                                    player["health"] = combat_enemy_attack(player["health"])
+                                    if player["health"] <= 0 and player["ship"] == "Warrior" and \
+                                            player["special_action_counter"] == 1:
+                                        resurrect(player)
+
+                        if enemy["health"] <= 0:
+                            enemy_death_text()
+                            gain_experience_points(player)
+                            time.sleep(1)
+                        elif player["health"] <= 0:
+                            player_death_text()
+                            exit()
+                        elif enemy["health"] == 99999:
+                            print("The enemy escaped!")
+                            time.sleep(1)
+                            return player["health"]
+                        else:
+                            return player["health"]
                     else:
                         player['health'] = regen_health(player['health'])
                 game_board = game_board_coordinates(player['x-coordinate'], player['y-coordinate'])
