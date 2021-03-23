@@ -20,7 +20,7 @@ class Colours:
 
 
 # Constants enclosed in tuples (yes, it looks weird)
-MAX_PLAYER_HEALTH = (2,)
+MAX_PLAYER_HEALTH = (20,)
 REGEN_VALUE = (4,)
 MAX_PLAYER_DAMAGE = (20,)
 MAX_ENEMY_DAMAGE = (10,)
@@ -164,7 +164,7 @@ def input_player_name():
 
     no doctests, accepts user input
     """
-    name_input = str(input("Enter your name, captain: ")).title()
+    name_input = str(input(f"Enter your {Colours.blue}name{Colours.end}, captain: ")).title()
     if name_input.lower() == "chris" or name_input.lower() == "christopher" or name_input.lower() == "chris thompson":
         print("You can be more adventurous than that! \n")
         return input_player_name()
@@ -186,7 +186,7 @@ def select_player_class(player):
     :return: class after being passed to confirm_player_class()
     """
     class_choices = list(enumerate(["Squire", "Sapper", "Ghost", "Cherub"], start=1))
-    print("Select a spaceship: \n", class_choices)
+    print(f"Select a {Colours.blue}spaceship{Colours.end}: \n", class_choices)
     choice = input()
     if choice == "1":
         print("A Lazarus Engine™ allows for this ship to repair itself after its hull integrity has been completely "
@@ -225,7 +225,7 @@ def confirm_player_class(class_name, player):
     :postcondition: print "That is not a valid choice" if input is neither "1" or "2" and recall confirm_player_class()
     :return: class_name if input is "1", select_player_class() if input is "2"
     """
-    print(f"Do you pilot a {class_name}?")
+    print(f"Do you pilot a {Colours.blue}{class_name}{Colours.end}?")
     print(list(enumerate(["Yes", "No"], start=1)))
 
     choice = input()
@@ -277,7 +277,8 @@ def special_action_selector(player):
         resurrect(player)
     elif player["ship"] == "Magician":
         blast_damage = magic_blast(player)
-        print(f"You charged up your beam to blast the enemy ship with {blast_damage} damage!\n")
+        print(f"You charged up your beam to blast the enemy ship with {Colours.blue}{blast_damage}{Colours.end} "
+              f"damage!\n")
         return blast_damage
     elif player["ship"] == "Thief":
         return multi_attack(player)
@@ -302,7 +303,7 @@ def resurrect(player):
 def magic_blast(player):
     blast_damage = player["special_action_counter"] * 5
     player["special_action_counter"] = 0
-    print(f"You relinquished your charges to deal {blast_damage} to the enemy ship!")
+    print(f"You relinquished your charges to deal {Colours.blue}{blast_damage}{Colours.end} to the enemy ship!")
     return blast_damage
 
 
@@ -311,7 +312,7 @@ def multi_attack(player):
     total_attack = 0
     for attacks in range(0, 5):
         attack = random.randint(1, split_attack)
-        print(f"You dealt {attack} damage to the enemy ship!")
+        print(f"You dealt {Colours.blue}{attack}{Colours.end} damage to the enemy ship!")
         total_attack += attack
     return total_attack
 
@@ -321,10 +322,10 @@ def heal_spell(player):
     max_health = MAX_PLAYER_HEALTH[0] + player["level"] * 3
     if amount_healed + player["health"] > MAX_PLAYER_HEALTH[0] + player["level"] * 3:
         player["health"] = MAX_PLAYER_HEALTH[0] + player["level"] * 3
-        print(f"You repaired your hull for {max_health - MAX_PLAYER_HEALTH[0]} health.")
+        print(f"You repaired your hull for {Colours.blue}{max_health - MAX_PLAYER_HEALTH[0]}{Colours.end} health.")
     else:
         player["health"] += amount_healed
-        print(f"You repaired your hull for {amount_healed} health.")
+        print(f"You repaired your hull for {Colours.blue}{amount_healed}{Colours.end} health.")
     return player
 
 
@@ -471,12 +472,15 @@ def check_player_statistics(player):
     >>> check_player_statistics(player_dictionary)
 
     """
-    print(f"You are Captain {player['name']}.")
-    print(f"{player['name']} pilots a {player['player_class']}, which has the special ability "
-          f"{player['player_class_special_action']}.")
-    print(f"Your {player['player_class']} can take {player['health']} more points of damage.")
-    print(f"Your {player['player_class']} is level {player['level']}.")
-    print(f"You have {player['exp']} scrap, {500 - int(player['exp'])} scrap away from a ship upgrade.\n")
+    print(f"You are Captain {Colours.blue}{player['name']}{Colours.end}.")
+    print(f"Captain {player['name']} pilots a {Colours.blue}{player['player_class']}{Colours.end}, which has the "
+          f"special ability {Colours.blue}{player['player_class_special_action']}{Colours.end}.")
+    print(f"Your {player['player_class']} can take {Colours.blue}{player['health']}{Colours.end} more points of "
+          f"damage.")
+    print(f"Your {player['player_class']} is level {Colours.blue}{player['level']}{Colours.end}.")
+    print(f"You have {Colours.blue}{player['exp']}{Colours.end} scrap, "
+          f"{Colours.blue}{300 - int(player['exp'])}{Colours.end} scrap away from a "
+          f"{Colours.blue}ship upgrade{Colours.end}.\n")
 
 
 def cardinal_direction():
@@ -636,10 +640,10 @@ def regen_health(player_health):
     20
     """
     if player_health <= (MAX_PLAYER_HEALTH[0] - REGEN_VALUE[0]):
-        print(f"You regained {REGEN_VALUE[0]} health points!")
+        print(f"You regained {Colours.blue}{REGEN_VALUE[0]}{Colours.end} health points!")
         return player_health + REGEN_VALUE[0]
     elif MAX_PLAYER_HEALTH[0] > player_health > (MAX_PLAYER_HEALTH[0] - REGEN_VALUE[0]):
-        print("You regained all of your health!")
+        print(f"You regained {Colours.blue}all of your health{Colours.end}!")
         return MAX_PLAYER_HEALTH[0]
     else:
         return player_health
@@ -662,7 +666,7 @@ def backstab(player_health):
     if backstab_chance == 1:
         player_health -= backstab_damage
         if player_health > 0:
-            print(f"The enemy shot you for {backstab_damage} damage as you fled!")
+            print(f"The enemy shot you for {Colours.red}{backstab_damage}{Colours.end} damage as you fled!")
             return player_health
         else:
             player_death_text()
@@ -685,14 +689,17 @@ def combat_initiative_roll(player):
         print("Your nimbleness Rogue abilities allows you to attack first.\n")
         return True
     if player_roll == enemy_roll:  # checks for draws
-        print(f'Draw! You both rolled a {player_roll}. Rerolling....\n')
+        print(f'Draw! You both rolled a {Colours.blue}{player_roll}{Colours.end}. Rerolling....\n')
         combat_initiative_roll(player)
-    if player_roll > enemy_roll:  # checks if player attacks first
-        print(f'You rolled a {player_roll} and {enemy["name"]} rolled a {enemy_roll}. You will attack first.\n')
+    if player_roll > enemy_roll:  # checks if player attacks first1
+        print(f'You rolled a {Colours.blue}{player_roll}{Colours.end} and the enemy '
+              f'{Colours.red}{enemy["name"]}{Colours.end} rolled a {Colours.red}{enemy_roll}{Colours.end}. '
+              f'You will attack first.\n')
         return True
     elif player_roll < enemy_roll:  # checks if foe attacks first
-        print(f'You rolled a {player_roll} and {enemy["name"]} rolled {enemy_roll}. {enemy["name"]} will attack '
-              f'first.\n')
+        print(f'You rolled a {Colours.blue}{player_roll}{Colours.end} and the enemy '
+              f'{Colours.red}{enemy["name"]}{Colours.end} rolled {Colours.red}{enemy_roll}{Colours.end}. '
+              f'The enemy {Colours.red}{enemy["name"]}{Colours.end} will attack first.\n')
         return False
 
 
@@ -709,7 +716,9 @@ def combat_player_attack(enemy_health, player):
         no doctest, this uses random values
         """
     player_damage = random.randint(1, player["damage"])
-    print(f"You did {player_damage} damage to the enemy ship!\n")
+    enemy = make_appropriate_enemy_type(player)
+    print(f"You did {Colours.blue}{player_damage}{Colours.end} damage to the enemy "
+          f"{Colours.red}{enemy['name']}{Colours.end}!\n")
     enemy_health -= player_damage
     time.sleep(1)
     return enemy_health
@@ -730,7 +739,8 @@ def combat_enemy_attack(player):
     enemy = make_appropriate_enemy_type(player)
     enemy_damage = random.randint(1, enemy['maximum_damage'])
     player['health'] -= enemy_damage
-    print(f"The enemy ship did {enemy_damage} damage to you!\n")
+    print(f"The enemy {Colours.red}{enemy['name']}{Colours.end} did {Colours.red}{enemy_damage}{Colours.end} damage to "
+          f"you!\n")
     time.sleep(1)
     return player['health']
 
@@ -752,7 +762,7 @@ def combat_choice():
 
     """
     options = list(enumerate(["Normal Attack", "Special Ability", "Flee"], start=1))
-    print("You are engaged in a space battle. What will you do next?\n", options)
+    print(f"You are engaged in a space battle. What will you do next?\n", options)
     return input()
 
 
@@ -769,7 +779,7 @@ def combat_duel(player):
     no doctest, this uses random values
     """
     enemy = make_appropriate_enemy_type(player)
-    print(f"You were spotted by an enemy {enemy['name']}!")
+    print(f"You were spotted by an enemy {Colours.red}{enemy['name']}{Colours.end}!")
     initiative = combat_initiative_roll(player)
     time.sleep(1)
 
@@ -777,8 +787,10 @@ def combat_duel(player):
         player["health"] = combat_enemy_attack(player)
 
     while player["health"] > 0 and enemy["health"] > 0:
-        print(f"Your {player['player_class']} can take {player['health']} more points of damage.")
-        print(f"The enemy {enemy['name']} can take {enemy['health']} more points of damage.")
+        print(f"Your {Colours.blue}{player['player_class']}{Colours.end} can take "
+              f"{Colours.blue}{player['health']}{Colours.end} more points of damage.")
+        print(f"The enemy {Colours.red}{enemy['name']}{Colours.end} can take "
+              f"{Colours.red}{enemy['health']}{Colours.end} more points of damage.\n")
         combat_round_player_choice = combat_choice()
         if combat_round_player_choice == "1":
             enemy["health"] = combat_player_attack(enemy["health"], player)
@@ -815,7 +827,7 @@ def combat_duel(player):
         player_death_text()
         exit()
     elif enemy["health"] == 99999:
-        print("The enemy escaped!")
+        print(f"The enemy {Colours.red}{enemy['name']}{Colours.end} escaped!")
         time.sleep(1)
         return player["health"]
     else:
@@ -834,16 +846,17 @@ def gain_experience_points(player):
     """
     enemy = make_appropriate_enemy_type(player)
     if player["level"] == 3:
-        print(f"You are already at the max level of 3!\n You did not gain any scrap from the battle.")
+        print(f"You are already at the max level of {Colours.blue}3{Colours.end}!\n You did not gain any scrap from the "
+              f"battle.")
     else:
         experience_gained = enemy["experience_points"]
         player["exp"] += experience_gained
-        print(f"You won the battle! You gained {experience_gained} scrap.")
+        print(f"You won the battle! You gained {Colours.blue}{experience_gained}{Colours.end} scrap.")
         level_system(player)
         if player["ship"] == "Magician":
             player["special_action_counter"] += 1
             print(f"You gained a charge on your special attack. You now have a total of "
-                  f"{player['special_action_counter']} charge(s).")
+                  f"{Colours.blue}{player['special_action_counter']}{Colours.end} charge(s).")
         return player
 
 
@@ -878,12 +891,12 @@ def level_system(player):
         player["damage"] += 2
         player["health"] += 5
         class_upgrade(player)
-        print(f"You gained a level! You are now level {player['level']} and your ship has been upgrade to a"
-              f" {player['player_class']}.")
+        print(f"You gained a level! You are now level {Colours.blue}{player['level']}{Colours.end} and your ship has "
+              f"been upgrade to a {Colours.blue}{player['player_class']}{Colours.end}.")
         if player["ship"] == "Magician":
             player["special_action_counter"] += 1
             print(f"You also gained another charge on your special attack! You now have a total of "
-                  f"{player['special_action_counter']}.")
+                  f"{Colours.blue}{player['special_action_counter']}{Colours.end}.")
     return player
 
 
