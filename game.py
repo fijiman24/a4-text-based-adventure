@@ -336,7 +336,7 @@ def make_enemy_difficulty_one():
     return {
         "name": "Dinghy",
         "health": 10,
-        "experience_points": 100,
+        "experience_points": 25,
         "maximum_damage": 5
     }
 
@@ -349,7 +349,7 @@ def make_enemy_difficulty_two():
     return {
         "name": "Gunner",
         "health": 20,
-        "experience_points": 200,
+        "experience_points": 50,
         "maximum_damage": 10
     }
 
@@ -362,7 +362,7 @@ def make_enemy_difficulty_three():
     return {
         "name": "Disruptor",
         "health": 30,
-        "experience_points": 300,
+        "experience_points": 100,
         "maximum_damage": 15
     }
 
@@ -375,7 +375,7 @@ def make_enemy_difficulty_four():
     return {
         "name": "Shredder",
         "health": 40,
-        "experience_points": 400,
+        "experience_points": 150,
         "maximum_damage": 20
     }
 
@@ -738,32 +738,34 @@ def combat_choice():
 
 
 def combat_duel(player):
-    """Return player's health value after enemy_health or player_health reaches 0.
+    """Return player's health value after enemy["health"] or player_health reaches 0.
 
     :param player: a dictionary
     :precondition: player must contain keys "level", "health", and "exp"
-    :postcondition: take turns subtracting a random integer between [1, player["damage"]] from enemy_health and a
-                    random integer [1, MAX_ENEMY_DAMAGE] from player_health until player["health"] or enemy_health == 0
-    :postcondition: return player["health"] value after enemy_health or player["health"] == 0
-    :return: player["health"] after enemy_health or player["health"] reaches 0
+    :postcondition: take turns subtracting a random integer between [1, player["damage"]] from enemy["health"] and a
+                    random integer [1, MAX_ENEMY_DAMAGE] from player_health until player["health"] or enemy["health"] == 0
+    :postcondition: return player["health"] value after enemy["health"] or player["health"] == 0
+    :return: player["health"] after enemy["health"] or player["health"] reaches 0
 
     no doctest, this uses random values
     """
-    enemy_health = MAX_ENEMY_HEALTH[0]
+    enemy = make_appropriate_enemy_type(player)
+    print(f"You were spotted by an enemy {enemy['name']}!")
     initiative = combat_initiative_roll(player)
+    time.sleep(1)
 
     if not initiative:
         player["health"] = combat_enemy_attack(player["health"])
 
-    while player["health"] > 0 and enemy_health > 0:
-        print(f"Your ship can take {player['health']} more points of damage.")
-        print(f"The enemy can take {enemy_health} more points of damage.")
+    while player["health"] > 0 and enemy["health"] > 0:
+        print(f"Your {player['player_class']} can take {player['health']} more points of damage.")
+        print(f"The enemy {enemy['name']} can take {enemy['health']} more points of damage.")
         combat_round_player_choice = combat_choice()
         if combat_round_player_choice == "1":
-            enemy_health = combat_player_attack(enemy_health, player)
+            enemy["health"] = combat_player_attack(enemy["health"], player)
         elif combat_round_player_choice == "2":
             if player["ship"] == "Magician" or player["ship"] == "Thief":
-                enemy_health -= special_action_selector(player)
+                enemy["health"] -= special_action_selector(player)
             else:
                 special_action_selector(player)
         elif combat_round_player_choice == "3":
@@ -773,23 +775,23 @@ def combat_duel(player):
                 "3":
             print("That is not a valid choice!")
             continue
-        if enemy_health > 0:
+        if enemy["health"] > 0:
             enemy_flee_chance = combat_enemy_flee()
             if enemy_flee_chance:
-                enemy_health = 99999
+                enemy["health"] = 99999
                 break
             elif not enemy_flee_chance:
                 player["health"] = combat_enemy_attack(player["health"])
                 if player["health"] <= 0 and player["ship"] == "Warrior" and player["special_action_counter"] == 1:
                     resurrect(player)
 
-    if enemy_health <= 0:
+    if enemy["health"] <= 0:
         enemy_death_text()
         gain_experience_points(player)
         time.sleep(1)
     elif player["health"] <= 0:
         player_death_text()
-    elif enemy_health == 99999:
+    elif enemy["health"] == 99999:
         print("The enemy escaped!")
         time.sleep(1)
         return player["health"]
@@ -807,10 +809,11 @@ def gain_experience_points(player):
 
     no doctest, this uses random values
     """
+    enemy = make_appropriate_enemy_type(player)
     if player["level"] == 3:
         print(f"You are already at the max level of 3!\n You did not gain any experience from the battle.")
     else:
-        experience_gained = random.randint(50, 150)
+        experience_gained = enemy["experience_points"]
         player["exp"] += experience_gained
         print(f"You won the battle! You gained {experience_gained} experience points.")
         level_system(player)
@@ -877,7 +880,6 @@ def spawn_enemy():
     """
     spawn_chance = random.randint(1, 5)
     if spawn_chance == 1:
-        print("You were spotted by a militia ship!")
         return True
     else:
         return False
