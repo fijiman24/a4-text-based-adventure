@@ -216,6 +216,7 @@ def confirm_player_class(class_name, player):
     """Return class_name or call select_player_class, depending on user input.
 
     :param class_name: any string
+    :param player: a dictionary
     :precondition: class_name is any string representing the selected player class
     :precondition: user enters input when prompted
     :postcondition: print f"Do you pilot a {class_name}?"
@@ -377,6 +378,23 @@ def make_enemy_difficulty_four():
         "experience_points": 400,
         "maximum_damage": 20
     }
+
+
+def make_appropriate_enemy_type(player):
+    """
+
+    :param player:
+    :return:
+    """
+    if player["x-coordinate"] in range(0, 5) and player["y-coordinate"] in range(0, 5):
+        return make_enemy_difficulty_one()
+    elif player["x-coordinate"] in range(5, 15) or player["y-coordinate"] in range(5, 15):
+        return make_enemy_difficulty_two()
+    elif player["x-coordinate"] in range(15, 20) and player["y-coordinate"] in range(15, 20):
+        return make_enemy_difficulty_three()
+    elif player["x-coordinate"] in range(20, 25) and player["y-coordinate"] in range(20, 25) and \
+            (player["x-coordinate"] != 24 and player["y-coordinate"]) != 24:
+        return make_enemy_difficulty_four()
 
 
 def game_board_coordinates(player_x_coordinate, player_y_coordinate):
@@ -636,7 +654,7 @@ def backstab(player_health):
         return player_health
 
 
-def combat_initiative_roll(player):  # put enemy_name as a parameter maybe; could have different names for diff enemy types
+def combat_initiative_roll(player):
     """Roll to see if player or foe attacks first.
 
     :precondition: params must be met
@@ -664,6 +682,7 @@ def combat_player_attack(enemy_health, player):
     """Return enemy's health value after being attacked by player.
 
         :param enemy_health: a positive integer
+        :param player: a dictionary
         :precondition: enemy_health is any positive integer
         :postcondition: subtract a random integer between [1, player["damage"]] from enemy_health
         :postcondition: return enemy_health
@@ -797,7 +816,8 @@ def gain_experience_points(player):
         level_system(player)
         if player["ship"] == "Magician":
             player["special_action_counter"] += 1
-            print(f"You gained a charge on your special attack. You now have a total of {player['special_action_counter']} charge(s).")
+            print(f"You gained a charge on your special attack. You now have a total of "
+                  f"{player['special_action_counter']} charge(s).")
         return player
 
 
@@ -830,7 +850,8 @@ def level_system(player):
               f" {player['player_class']}.")
         if player["ship"] == "Magician":
             player["special_action_counter"] += 1
-            print(f"You also gained another charge on your special attack! You now have a total of {player['special_action_counter']}.")
+            print(f"You also gained another charge on your special attack! You now have a total of "
+                  f"{player['special_action_counter']}.")
     return player
 
 
