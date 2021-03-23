@@ -48,12 +48,12 @@ def ascii_intro():
     print(f" \______/  \_______/ \_______/   \___/   \______/ |__/             \______/ |__/|__/  \__/\n{Colours.end}")
 
 
-def story_introduction():
+def story_introduction_text():
     """Print the introductory story text.
 
     :postcondition: print the introductory story text
 
-    >>> story_introduction()
+    >>> story_introduction_text()
     In the distant future, humankind has colonized the vast, cold reaches of space. From suburban planets to entire solar systems dedicated to vice, there isn't a sector in the
     Milky Way Galaxy that's been left untouched by our ever-expanding race. One such sector is devoted to storing all of humanity's physical wealth and fortune. Many a space
     pirate has tried their hand at laying siege to this sector in hopes of plundering some riches for themselves, and all have been gunned down by the local security militias.
@@ -73,7 +73,15 @@ def story_introduction():
           "pilfered from...\n")
 
 
-def story_ending():
+def boss_fight_start_text():
+    """Print text introducing the end game boss.
+
+    :return:
+    """
+    pass
+
+
+def story_ending_text():
     """Print the ending story text.
 
     :postcondition: print the ending story text
@@ -81,7 +89,7 @@ def story_ending():
     pass
 
 
-def player_death():
+def player_death_text():
     """Print text describing player death.
 
     postcondition: print text describing player death
@@ -90,13 +98,13 @@ def player_death():
     exit()
 
 
-def enemy_death():
+def enemy_death_text():
     """Print text describing enemy death.
 
     postcondition: print text describing enemy death
     """
     print("The enemy died.")
-    time.sleep(2)
+    time.sleep(1)
 
 
 def check_if_player_in_boss_room(x_coordinate, y_coordinate):
@@ -618,7 +626,7 @@ def backstab(player_health):
             print(f"The enemy shot you for {backstab_damage} damage as you fled!")
             return player_health
         else:
-            player_death()
+            player_death_text()
     else:
         print("You successfully escape back into darkness of space.")
         return player_health
@@ -726,6 +734,7 @@ def combat_duel(player):
 
     while player["health"] > 0 and enemy_health > 0:
         print(f"Your ship can take {player['health']} more points of damage.")
+        print(f"The enemy can take {enemy_health} more points of damage.")
         combat_round_player_choice = combat_choice()
         if combat_round_player_choice == "1":
             enemy_health = combat_player_attack(enemy_health, player)
@@ -752,11 +761,11 @@ def combat_duel(player):
                     resurrect(player)
 
     if enemy_health <= 0:
-        enemy_death()
+        enemy_death_text()
         gain_experience_points(player)
         time.sleep(1)
     elif player["health"] <= 0:
-        player_death()
+        player_death_text()
     elif enemy_health == 99999:
         print("The enemy escaped!")
         time.sleep(1)
@@ -784,7 +793,7 @@ def gain_experience_points(player):
         level_system(player)
         if player["ship"] == "Magician":
             player["special_action_counter"] += 1
-            print(f"You gained a charge on your special attack. You now have a total of {player['special_action_counter']}.")
+            print(f"You gained a charge on your special attack. You now have a total of {player['special_action_counter']} charge(s).")
         return player
 
 
@@ -853,7 +862,7 @@ def game():
     """
     Drive the main gameplay loop as long as goal_achieved is False
     """
-    story_introduction()
+    story_introduction_text()
     ascii_intro()
 
     player = make_player()
