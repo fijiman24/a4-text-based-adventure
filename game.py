@@ -333,6 +333,7 @@ def make_enemy_difficulty_one():
     :return:
     """
     return {
+        "name": "Dinghy",
         "health": 10,
         "experience_points": 100,
         "maximum_damage": 5
@@ -345,6 +346,7 @@ def make_enemy_difficulty_two():
     :return:
     """
     return {
+        "name": "Gunner",
         "health": 20,
         "experience_points": 200,
         "maximum_damage": 10
@@ -357,6 +359,7 @@ def make_enemy_difficulty_three():
     :return:
     """
     return {
+        "name": "Disruptor",
         "health": 30,
         "experience_points": 300,
         "maximum_damage": 15
@@ -369,6 +372,7 @@ def make_enemy_difficulty_four():
     :return:
     """
     return {
+        "name": "Shredder",
         "health": 40,
         "experience_points": 400,
         "maximum_damage": 20
