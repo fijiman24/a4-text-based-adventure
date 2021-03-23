@@ -393,7 +393,7 @@ def make_appropriate_enemy_type(player):
     elif player["x-coordinate"] in range(15, 20) and player["y-coordinate"] in range(15, 20):
         return make_enemy_difficulty_three()
     elif player["x-coordinate"] in range(20, 25) and player["y-coordinate"] in range(20, 25) and \
-            (player["x-coordinate"] != 24 and player["y-coordinate"]) != 24:
+            (player["x-coordinate"] != 24 and player["y-coordinate"] != 24):
         return make_enemy_difficulty_four()
 
 
@@ -535,7 +535,17 @@ def validate_move(direction, x_coordinate, y_coordinate):
     >>> validate_move(4, 0, 24)
     False
     """
-    if direction == 1 and y_coordinate != 0:
+    if direction == 2 and (x_coordinate != 23 and y_coordinate != 24):
+        if confirm_move_to_boss_room():
+            return True
+        elif not confirm_move_to_boss_room():
+            return False
+    elif direction == 3 and (x_coordinate != 24 and y_coordinate != 23):
+        if confirm_move_to_boss_room():
+            return True
+        elif not confirm_move_to_boss_room():
+            return False
+    elif direction == 1 and y_coordinate != 0:
         return True
     elif direction == 2 and x_coordinate != 24:
         return True
@@ -544,6 +554,23 @@ def validate_move(direction, x_coordinate, y_coordinate):
     elif direction == 4 and x_coordinate != 0:
         return True
     else:
+        return False
+
+
+def confirm_move_to_boss_room():
+    """
+
+    :return:
+    """
+    print("You're about to enter the gravitational pull of the wormhole. This is a point of no return. You've almost "
+          "escaped Sector Six with your treasure, but you have a feeling you may face some final resistance. "
+          "Are you sure you wish to proceed?")
+    print(list(enumerate(["Yes", "No"], start=1)))
+
+    choice = input()
+    if choice == "1":
+        return True
+    if choice == "2":
         return False
 
 
@@ -791,6 +818,7 @@ def combat_duel(player):
         time.sleep(1)
     elif player["health"] <= 0:
         player_death_text()
+        exit()
     elif enemy["health"] == 99999:
         print("The enemy escaped!")
         time.sleep(1)
