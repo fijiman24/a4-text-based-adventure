@@ -295,6 +295,7 @@ def resurrect(player):
             return player
         else:
             print("Your passive will allow you to survive a critical attack.")
+            # As it is, when the player clicks "2" during combat, this will use their turn.
     else:
         print("Your passive have already been used. You will not revive if your hp hits 0.")
 
