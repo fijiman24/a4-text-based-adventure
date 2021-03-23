@@ -20,7 +20,7 @@ class Colours:
 
 
 # Constants enclosed in tuples (yes, it looks weird)
-MAX_PLAYER_HEALTH = (20,)
+MAX_PLAYER_HEALTH = (2,)
 REGEN_VALUE = (4,)
 MAX_PLAYER_DAMAGE = (20,)
 MAX_ENEMY_DAMAGE = (10,)
@@ -289,14 +289,14 @@ def resurrect(player):
     if player["special_action_counter"] == 1:
         if player["health"] <= 0:
             player["special_action_counter"] = 0
-            print("Your undying will allowed you to survive the attack and restored your health to 50!")
-            player["health"] = 10
+            new_hp = 5 + player["level"] * 5
+            player["health"] = new_hp
+            print(f"Your undying will allowed you to survive the attack and restored your health to {new_hp}!\n")
             return player
         else:
-            print("Your passive will allow you to survive a critical attack.")
-            # As it is, when the player clicks "2" during combat, this will use their turn.
+            print("Your passive will allow you to survive a critical attack.\n")
     else:
-        print("Your passive have already been used. You will not revive if your hp hits 0.")
+        print("Your passive have already been used. You will not revive if your hp hits 0.\n")
 
 
 def magic_blast(player):
@@ -785,8 +785,11 @@ def combat_duel(player):
         elif combat_round_player_choice == "2":
             if player["ship"] == "Magician" or player["ship"] == "Thief":
                 enemy["health"] -= special_action_selector(player)
-            else:
+            elif player["ship"] == "Priest":
                 special_action_selector(player)
+            elif player["ship"] == "Warrior":
+                special_action_selector(player)
+                continue
         elif combat_round_player_choice == "3":
             player["health"] = backstab(player["health"])
             break
