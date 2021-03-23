@@ -172,19 +172,19 @@ def select_player_class(player):
     """Print class description and return class after being passed to confirm_player_class().
 
     :precondition: user enters input when prompted
-    :postcondition: print numbered list of class options [(1, 'Dreadnought'), (2, 'Sapper'), (3, 'Ghost'),
+    :postcondition: print numbered list of class options [(1, 'Squire'), (2, 'Sapper'), (3, 'Ghost'),
                     (4, 'Cherub')]
     :postcondition: print class description
     :postcondition: pass user input to confirm_player_class()
     :return: class after being passed to confirm_player_class()
     """
-    class_choices = list(enumerate(["Dreadnought", "Sapper", "Ghost", "Cherub"], start=1))
+    class_choices = list(enumerate(["Squire", "Sapper", "Ghost", "Cherub"], start=1))
     print("Select a spaceship: \n", class_choices)
     choice = input()
     if choice == "1":
-        print("A Phoenix Engine™ allows for this ship to repair itself after its hull integrity has been completely "
+        print("A Lazarus Engine™ allows for this ship to repair itself after its hull integrity has been completely "
               "breached for the first time.")
-        if confirm_player_class("Dreadnought", player):
+        if confirm_player_class("Squire", player):
             warrior_ship(player)
     elif choice == "2":
         print("Destroy enemy ships to steal their energy and charge up your Quasar Cannon™ for a devastating attack.")
@@ -232,7 +232,7 @@ def confirm_player_class(class_name, player):
 
 def warrior_ship(player):
     player["ship"] = "Warrior"
-    player["player_class"] = "Dreadnought"
+    player["player_class"] = "Squire"
     player["player_class_special_action"] = "Resurrect"
     player["special_action_counter"] = 1
     player["damage"] = round(MAX_PLAYER_DAMAGE[0] * 1.25)
@@ -796,16 +796,16 @@ def level_system(player):
     :postcondition: calculate if experience requirement met then increases level by 1 and sets experience to 0
     :return: player
 
-    >>> level_system({"level": 1, "experience": 250, "race": "warrior", "player_class": "Pawn"})
-    {'level': 1, 'experience': 250, 'race': 'warrior', 'class': 'Pawn'}
-    >>> level_system({"level": 2, "experience": 299, "race": "bandit", "player_class": "Jester"})
-    {'level': 2, 'experience': 299, 'race': 'bandit', 'class': 'Jester'}
-    >>> level_system({"level": 1, "experience": 320, "race": "mage", "player_class": "Pawn"})
-    You gained a level! You are now level 2 and ascended to a Rook.
-    {'level': 2, 'experience': 0, 'race': 'mage', 'class': 'Rook'}
-    >>> level_system({"level": 2, "experience": 300, "race": "archer", "player_class": "Pawn"})
-    You gained a level! You are now level 3 and ascended to a King.
-    {'level': 3, 'experience': 0, 'race': 'archer', 'class': 'King'}
+    >>> level_system({"level": 1, "experience": 250, "race": "warrior", "player_class": "Squire"})
+    {'level': 1, 'experience': 250, 'race': 'warrior', 'class': 'Squire'}
+    >>> level_system({"level": 2, "experience": 299, "race": "bandit", "player_class": "Banshee"})
+    {'level': 2, 'experience': 299, 'race': 'bandit', 'class': 'Banshee'}
+    >>> level_system({"level": 1, "experience": 320, "race": "mage", "player_class": "Sapper"})
+    You gained a level! You are now level 2 and ascended to a Drainer.
+    {'level': 2, 'experience': 0, 'race': 'mage', 'class': 'Drainer'}
+    >>> level_system({"level": 2, "experience": 300, "race": "archer", "player_class": "Archangel"})
+    You gained a level! You are now level 3 and ascended to a Seraphim.
+    {'level': 3, 'experience': 0, 'race': 'archer', 'class': 'Seraphim'}
     """
     if player["exp"] >= 300:
         player["level"] += 1
@@ -822,10 +822,10 @@ def level_system(player):
 
 
 def class_upgrade(player):
-    classes = {'Warrior': {1: "Dreadnought", 2: "Knight", 3: "Queen"},
-               'Magician': {1: "Sapper", 2: "Rook", 3: "Bishop"},
-               'Thief': {1: "Ghost", 2: "Hunter", 3: "King"},
-               'Priest': {1: "Cherub", 2: "Jester", 3: "Castle"}
+    classes = {'Warrior': {1: "Squire", 2: "Knight", 3: "Phoenix"},
+               'Magician': {1: "Sapper", 2: "Drainer", 3: "Charybdis"},
+               'Thief': {1: "Ghost", 2: "Banshee", 3: "Revenant"},
+               'Priest': {1: "Cherub", 2: "Archangel", 3: "Seraphim"}
                }
     player["player_class"] = classes[player["ship"]][player["level"]]  # finds class based on ship and level
     return player
