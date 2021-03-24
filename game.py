@@ -261,6 +261,11 @@ def confirm_player_class(class_name, player):
 
 
 def warrior_ship(player):
+    """
+
+    :param player:
+    :return:
+    """
     player["ship"] = "Warrior"
     player["player_class"] = "Squire"
     player["player_class_special_action"] = "Resurrect"
@@ -270,6 +275,11 @@ def warrior_ship(player):
 
 
 def magician_ship(player):
+    """
+
+    :param player:
+    :return:
+    """
     player["ship"] = "Magician"
     player["player_class"] = "Sapper"
     player["player_class_special_action"] = "Magic Blast"
@@ -279,6 +289,11 @@ def magician_ship(player):
 
 
 def thief_ship(player):
+    """
+
+    :param player:
+    :return:
+    """
     player["ship"] = "Thief"
     player["player_class"] = "Ghost"
     player["player_class_special_action"] = "Multi Strike"
@@ -287,6 +302,11 @@ def thief_ship(player):
 
 
 def priest_ship(player):
+    """
+
+    :param player:
+    :return:
+    """
     player["ship"] = "Priest"
     player["player_class"] = "Cherub"
     player["player_class_special_action"] = "Healing Spell"
@@ -295,6 +315,11 @@ def priest_ship(player):
 
 
 def special_action_selector(player):
+    """
+
+    :param player:
+    :return:
+    """
     if player["ship"] == "Warrior":
         resurrect(player)
     elif player["ship"] == "Magician":
@@ -309,6 +334,11 @@ def special_action_selector(player):
 
 
 def resurrect(player):
+    """
+
+    :param player:
+    :return:
+    """
     if player["special_action_counter"] == 1:
         if player["health"] <= 0:
             player["special_action_counter"] = 0
@@ -323,6 +353,11 @@ def resurrect(player):
 
 
 def magic_blast(player):
+    """
+
+    :param player:
+    :return:
+    """
     blast_damage = player["special_action_counter"] * 5
     player["special_action_counter"] = 0
     print(f"You relinquished your charges to deal {Colours.blue}{blast_damage}{Colours.end} to the enemy ship!")
@@ -330,6 +365,11 @@ def magic_blast(player):
 
 
 def multi_attack(player):
+    """
+
+    :param player:
+    :return:
+    """
     split_attack = int(round(player["damage"] * player["level"] * 1.25 / 5))
     total_attack = 0
     for attacks in range(0, 5):
@@ -340,6 +380,11 @@ def multi_attack(player):
 
 
 def heal_spell(player):
+    """
+
+    :param player:
+    :return:
+    """
     amount_healed = player["level"] * 6
     max_health = MAX_PLAYER_HEALTH[0] + player["level"] * 3
     if amount_healed + player["health"] > MAX_PLAYER_HEALTH[0] + player["level"] * 3:
@@ -728,15 +773,15 @@ def combat_initiative_roll(player):
 def combat_player_attack(enemy_health, player):
     """Return enemy's health value after being attacked by player.
 
-        :param enemy_health: a positive integer
-        :param player: a dictionary
-        :precondition: enemy_health is any positive integer
-        :postcondition: subtract a random integer between [1, player["damage"]] from enemy_health
-        :postcondition: return enemy_health
-        :return: enemy_health
+    :param enemy_health: a positive integer
+    :param player: a dictionary
+    :precondition: enemy_health is any positive integer
+    :postcondition: subtract a random integer between [1, player["damage"]] from enemy_health
+    :postcondition: return enemy_health
+    :return: enemy_health
 
-        no doctest, this uses random values
-        """
+    no doctest, this uses random values
+    """
     player_damage = random.randint(1, player["damage"])
     enemy = make_appropriate_enemy_type(player)
     print(f"You did {Colours.blue}{player_damage}{Colours.end} damage to the enemy "
@@ -749,14 +794,14 @@ def combat_player_attack(enemy_health, player):
 def combat_enemy_attack(player):
     """Return player's health value after being attacked by enemy.
 
-        :param player: a positive integer
-        :precondition: player_health is any positive integer
-        :postcondition: subtract a random integer between [1, MAX_ENEMY_DAMAGE] from player_health
-        :postcondition: return player_health
-        :return: player_health
+    :param player: a positive integer
+    :precondition: player_health is any positive integer
+    :postcondition: subtract a random integer between [1, MAX_ENEMY_DAMAGE] from player_health
+    :postcondition: return player_health
+    :return: player_health
 
-        no doctest, this uses random values
-        """
+    no doctest, this uses random values
+    """
     time.sleep(1)
     enemy = make_appropriate_enemy_type(player)
     enemy_damage = random.randint(1, enemy['maximum_damage'])
