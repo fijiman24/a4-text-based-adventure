@@ -838,6 +838,18 @@ def combat_choice():
     return input()
 
 
+def print_combat_health_values(player, enemy):
+    """
+
+    :return:
+    """
+    time.sleep(1)
+    print(f"Your {Colours.blue}{player['player_class']}{Colours.end} can take "
+          f"{Colours.blue}{player['health']}{Colours.end} more points of damage.")
+    print(f"The enemy {Colours.red}{enemy['name']}{Colours.end} can take "
+          f"{Colours.red}{enemy['health']}{Colours.end} more points of damage.\n")
+
+
 def combat_duel(player):
     """Return player's health value after enemy["health"] or player_health reaches 0.
 
@@ -853,16 +865,12 @@ def combat_duel(player):
     enemy = make_appropriate_enemy_type(player)
     print(f"You were spotted by an enemy {Colours.red}{enemy['name']}{Colours.end}!")
     initiative = combat_initiative_roll(player)
-    time.sleep(1)
 
     if not initiative:
         player["health"] = combat_enemy_attack(player)
 
     while player["health"] > 0 and enemy["health"] > 0:
-        print(f"Your {Colours.blue}{player['player_class']}{Colours.end} can take "
-              f"{Colours.blue}{player['health']}{Colours.end} more points of damage.")
-        print(f"The enemy {Colours.red}{enemy['name']}{Colours.end} can take "
-              f"{Colours.red}{enemy['health']}{Colours.end} more points of damage.\n")
+        print_combat_health_values(player, enemy)
         combat_round_player_choice = combat_choice()
         if combat_round_player_choice == "1":
             enemy["health"] = combat_player_attack(enemy["health"], player)
