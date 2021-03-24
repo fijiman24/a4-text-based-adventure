@@ -272,11 +272,13 @@ def warrior_ship(player):
     :param player:
     :return:
     """
+    player["health"] -= 2
     player["ship"] = "Warrior"
     player["player_class"] = "Squire"
     player["player_class_special_action"] = "Resurrect"
     player["special_action_counter"] = 1
     player["damage"] = round(MAX_PLAYER_DAMAGE[0] * 1.25)
+    print(player)
     return player
 
 
@@ -313,6 +315,7 @@ def priest_ship(player):
     :param player:
     :return:
     """
+    player["health"] -= 4
     player["ship"] = "Priest"
     player["player_class"] = "Cherub"
     player["player_class_special_action"] = "Healing Spell"
