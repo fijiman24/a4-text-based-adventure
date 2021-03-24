@@ -431,7 +431,8 @@ def make_enemy_difficulty_three():
         "name": "Disruptor",
         "health": 30,
         "experience_points": 100,
-        "maximum_damage": 15
+        "maximum_damage": 15,
+        "special_ability_counter": 2
     }
 
 
@@ -444,7 +445,8 @@ def make_enemy_difficulty_four():
         "name": "Shredder",
         "health": 40,
         "experience_points": 150,
-        "maximum_damage": 20
+        "maximum_damage": 20,
+        "special_ability_counter": 3
     }
 
 
