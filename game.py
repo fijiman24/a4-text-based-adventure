@@ -608,7 +608,10 @@ def validate_move(direction, x_coordinate, y_coordinate):
     >>> validate_move(4, 0, 24)
     False
     """
-    if direction == 1 and y_coordinate != 0:
+    if (direction == 2 and (x_coordinate == 23 and y_coordinate == 24)) or (direction == 3 and (x_coordinate == 24 and
+                                                                                                y_coordinate == 23)):
+        return confirm_move_to_boss_room()
+    elif direction == 1 and y_coordinate != 0:
         return True
     elif direction == 2 and x_coordinate != 24:
         return True
