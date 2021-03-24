@@ -321,10 +321,18 @@ def magician_ship(player):
 
 
 def thief_ship(player):
-    """
+    """Modify dictionary to change values to attributes of the thief ship.
 
-    :param player:
-    :return:
+    :param player: must be a dictionary
+    :precondition: must have key "ship"
+    :precondition: must have key "player_class"
+    :precondition: must have key "player_class_special_action"
+    :precondition: must have key "damage"
+    :postcondition: modify dictionary to include new attributes of the thief ship
+    :return: updated player dictionary
+
+    >>> thief_ship({"ship": None, "player_class": None, "player_class_special_action": None, "damage": 20})
+    {'ship': 'Thief', 'player_class': 'Ghost', 'player_class_special_action': 'Multi Strike', 'damage': 20}
     """
     player["ship"] = "Thief"
     player["player_class"] = "Ghost"
