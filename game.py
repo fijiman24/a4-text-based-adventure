@@ -342,10 +342,22 @@ def thief_ship(player):
 
 
 def priest_ship(player):
-    """
+    """Modify dictionary to change values to attributes of the priest ship.
 
-    :param player:
-    :return:
+    :param player: must be a dictionary
+    :precondition: must have key "health"
+    :precondition: must have key "maximum_health"
+    :precondition: must have key "ship"
+    :precondition: must have key "player_class"
+    :precondition: must have key "player_class_special_action"
+    :precondition: must have key "damage"
+    :postcondition: modify dictionary to include new attributes of the priest ship
+    :return: updated player dictionary
+
+    >>> priest_ship({"health": 20, "maximum_health":20, "ship": None, "player_class": None, \
+    "player_class_special_action": None, "damage": 20}) # doctest: +NORMALIZE_WHITESPACE
+    {'health': 16, 'maximum_health': 16, 'ship': 'Priest', 'player_class': 'Cherub',
+    'player_class_special_action': 'Healing Spell', 'damage': 20}
     """
     player["health"] -= 4
     player["maximum_health"] -= 4
