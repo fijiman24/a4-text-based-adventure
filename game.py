@@ -152,7 +152,8 @@ def make_player():
             "level": 1,
             "damage": 20,
             "damage_multiplier": 1,
-            "flee_chance_multiplier": 1
+            "flee_chance_multiplier": 1,
+            "boss_phase_counter": 3
             }
 
 
@@ -509,7 +510,7 @@ def make_enemy_boss_phase_two():
     return {
         "name": "Two-Headed Intergalactic Space Worm",
         "health": 40,
-        "maximum_damage": 5
+        "maximum_damage": 4
     }
 
 
@@ -1076,6 +1077,44 @@ def game():
                             time.sleep(1)
                     else:
                         player['health'] = regen_health(player['health'])
+                elif in_boss_room:
+                    while player["boss_phase_counter"] > 0:
+                        boss = make_appropriate_boss_phase(player)
+                        # introduce boss print statement
+                        while player["health"] > 0 and boss["health"] > 0:
+                            combat_print_health_values(player, boss)
+                            combat_round_player_choice = combat_choice()
+                            if combat_round_player_choice == "1":
+                                boss["health"] = combat_player_attack(boss["health"], player)
+                            elif combat_round_player_choice == "2":
+                                if player["ship"] == "Magician" or player["ship"] == "Thief":
+                                    boss["health"] -= special_action_selector(player)
+                                elif player["ship"] == "Priest":
+                                    special_action_selector(player)
+                                elif player["ship"] == "Warrior":
+                                    special_action_selector(player)
+                                    continue
+                            elif combat_round_player_choice == "3":
+                                print(f"There is no escaping the space worm.")
+                                continue
+                            elif combat_round_player_choice != "1" or combat_round_player_choice != "2" or \
+                                    combat_round_player_choice != "3":
+                                print(f"That is not a valid choice!")
+                                continue
+                            if boss["health"] > 0:
+                                player["health"] = combat_boss_attack(enemy, player)
+                                if player["health"] <= 0 and player["ship"] == "Warrior" and \
+                                        player["special_action_counter"] == 1:
+                                    resurrect(player)
+                        if boss["health"] <= 0:
+                            print_boss_death_text(player)
+                            player["boss_phase_counter"] -= 1
+                            time.sleep(1)
+                        elif player["health"] <= 0:
+                            player_death_text()
+                            exit()
+                    #print_end_game_text
+                    exit()
                 game_board = game_board_coordinates(player['x-coordinate'], player['y-coordinate'])
                 display_game_board(player['x-coordinate'], player['y-coordinate'], game_board)
             else:
