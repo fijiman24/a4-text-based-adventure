@@ -164,8 +164,6 @@ def make_player():
             "special_action_counter": 0,
             "level": 1,
             "damage": 20,
-            "damage_multiplier": 1,
-            "flee_chance_multiplier": 1,
             "boss_phase_counter": 3
             }
 
