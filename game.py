@@ -53,13 +53,7 @@ def story_introduction_text():
     :postcondition: print the introductory story text
 
     >>> story_introduction_text()
-    In the distant future, humankind has colonized the vast, cold reaches of space. From suburban planets to entire solar systems dedicated to vice, there isn't a sector in the
-    Milky Way Galaxy that's been left untouched by our ever-expanding race. One such sector is devoted to storing all of humanity's physical wealth and fortune. Many a space
-    pirate has tried their hand at laying siege to this sector in hopes of plundering some riches for themselves, and all have been gunned down by the local security militias.
-    <BLANKLINE>
-    All except you. You put together a ragtag crew, formulated the perfect plan, and somehow managed to fill your ship with as much stolen loot as she could carry. Now all you
-    have to do is escape to the nearest wormhole, treasure in tow, and you'll be christened the first ever space captain to have successfully pilfered from...
-    <BLANKLINE>
+
     """
     print(f"In the distant future, humankind has colonized the vast, cold reaches of space. From suburban planets "
           f"to entire solar systems dedicated to vice, there isn't a sector in the\nMilky Way Galaxy that's been "
@@ -1036,8 +1030,8 @@ def gain_experience_points(player):
     """
     enemy = make_appropriate_enemy_type(player)
     if player["level"] == 3:
-        print(f"You are already at the max level of {Colours.blue}3{Colours.end}!\n You did not gain any scrap from the "
-              f"battle.")
+        print(f"You are already at the max level of {Colours.blue}3{Colours.end}!\n You did not gain any scrap from the"
+              f" battle.")
     else:
         experience_gained = enemy["experience_points"]
         player["exp"] += experience_gained
@@ -1184,7 +1178,7 @@ def game():
                                             player["special_action_counter"] == 1:
                                         resurrect(player)
                         if enemy["health"] <= 0:
-                            enemy_death_text()
+                            enemy_death_text(player)
                             gain_experience_points(player)
                             time.sleep(1)
                         elif player["health"] <= 0:
