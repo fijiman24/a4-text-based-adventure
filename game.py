@@ -157,7 +157,7 @@ def make_player():
             "player_class_special_action": None,
             "special_action_counter": 0,
             "level": 1,
-            "damage": 20,
+            "damage": MAX_PLAYER_DAMAGE[0],
             "boss_phase_counter": 3
             }
 
@@ -267,10 +267,22 @@ def confirm_player_class(class_name, player):
 
 
 def warrior_ship(player):
-    """
+    """Modify dictionary to change values to attributes of the warrior ship.
 
-    :param player:
-    :return:
+    :param player: must be a dictionary
+    :precondition: must have key "health",
+    :precondition: must have key "ship"
+    :precondition: must have key "player_class"
+    :precondition: must have key "player_class_special_action"
+    :precondition: must have key "special_action_counter"
+    :precondition: must have key "damage"
+    :postcondition: modify dictionary to include new attributes of the warrior ship
+    :return: updated player dictionary
+
+    >>> warrior_ship({"health": 20, "ship": None, "player_class": None, "player_class_special_action": None,\
+    "special_action_counter": 0, "damage": 20}) # doctest: +NORMALIZE_WHITESPACE
+    {'health': 18, 'ship': 'Warrior', 'player_class': 'Squire', 'player_class_special_action': 'Resurrect',
+    'special_action_counter': 1, 'damage': 25}
     """
     player["health"] -= 2
     player["ship"] = "Warrior"
@@ -278,7 +290,6 @@ def warrior_ship(player):
     player["player_class_special_action"] = "Resurrect"
     player["special_action_counter"] = 1
     player["damage"] = round(MAX_PLAYER_DAMAGE[0] * 1.25)
-    print(player)
     return player
 
 
