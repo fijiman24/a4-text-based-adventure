@@ -141,8 +141,8 @@ def make_player():
     {'health': 20, 'x-coordinate': 0, 'y-coordinate': 0, 'name': ''}
     """
     return {"health": MAX_PLAYER_HEALTH[0],
-            "x-coordinate": 23,
-            "y-coordinate": 23,
+            "x-coordinate": STARTING_X_COORDINATE[0],
+            "y-coordinate": STARTING_Y_COORDINATE[0],
             "name": None,
             "exp": 0,
             "ship": None,
@@ -553,25 +553,34 @@ def boss_battle_player_attack(boss, player):
     return boss["health"]
 
 
+def combat_boss_attack_phase_one_and_three(player):
+    boss = make_appropriate_boss_phase(player)
+    enemy_damage = random.randint(1, boss['maximum_damage'])
+    player['health'] -= enemy_damage
+    print(f"The {Colours.magenta}{boss['name']}{Colours.end} did {Colours.magenta}{enemy_damage}{Colours.end}"
+          f" damage to you!\n")
+    return player['health']
+
+
+def combat_boss_attack_phase_two(player):
+    boss = make_appropriate_boss_phase(player)
+    enemy_damage_first_attack = random.randint(1, boss['maximum_damage'])
+    player['health'] -= enemy_damage_first_attack
+    print(f"The {Colours.magenta}{boss['name']}{Colours.end}'s left head did "
+          f"{Colours.magenta}{enemy_damage_first_attack}{Colours.end} damage to you!")
+    enemy_damage_second_attack = random.randint(1, boss['maximum_damage'])
+    player['health'] -= enemy_damage_second_attack
+    print(f"The {Colours.magenta}{boss['name']}{Colours.end}'s right head did "
+          f"{Colours.magenta}{enemy_damage_second_attack}{Colours.end} damage to you!\n")
+    return player['health']
+
+
 def combat_boss_attack(player):
     time.sleep(1)
-    boss = make_appropriate_boss_phase(player)
     if player["boss_phase_counter"] == 3 or player["boss_phase_counter"] == 1:
-        enemy_damage = random.randint(1, boss['maximum_damage'])
-        player['health'] -= enemy_damage
-        print(f"The {Colours.magenta}{boss['name']}{Colours.end} did {Colours.magenta}{enemy_damage}{Colours.end}"
-              f" damage to you!\n")
-        return player['health']
+        return combat_boss_attack_phase_one_and_three(player)
     elif player["boss_phase_counter"] == 2:
-        enemy_damage_first_attack = random.randint(1, boss['maximum_damage'])
-        player['health'] -= enemy_damage_first_attack
-        print(f"The {Colours.magenta}{boss['name']}{Colours.end}'s left head did "
-              f"{Colours.magenta}{enemy_damage_first_attack}{Colours.end} damage to you!")
-        enemy_damage_second_attack = random.randint(1, boss['maximum_damage'])
-        player['health'] -= enemy_damage_second_attack
-        print(f"The {Colours.magenta}{boss['name']}{Colours.end}'s right head did "
-              f"{Colours.magenta}{enemy_damage_second_attack}{Colours.end} damage to you!\n")
-        return player['health']
+        return combat_boss_attack_phase_two(player)
 
 
 def boss_battle_print_health_values(player, boss):
