@@ -296,10 +296,21 @@ def warrior_ship(player):
 
 
 def magician_ship(player):
-    """
+    """Modify dictionary to change values to attributes of the magician ship.
 
-    :param player:
-    :return:
+    :param player: must be a dictionary
+    :precondition: must have key "ship"
+    :precondition: must have key "player_class"
+    :precondition: must have key "player_class_special_action"
+    :precondition: must have key "special_action_counter"
+    :precondition: must have key "damage"
+    :postcondition: modify dictionary to include new attributes of the magician ship
+    :return: updated player dictionary
+
+    >>> magician_ship({"ship": None, "player_class": None, "player_class_special_action": None, \
+    "special_action_counter": 0, "damage": 20}) # doctest: +NORMALIZE_WHITESPACE
+    {'ship': 'Magician', 'player_class': 'Sapper', 'player_class_special_action': 'Magic Blast',
+    'special_action_counter': 0, 'damage': 16}
     """
     player["ship"] = "Magician"
     player["player_class"] = "Sapper"
