@@ -497,6 +497,31 @@ def enemy_disruptor_teleport_attack_activate(enemy, player):
         return player
 
 
+def make_enemy_boss_phase_one():
+    return {
+        "name": "Intergalactic Space Worm",
+        "health": 40,
+        "maximum_damage": 5
+    }
+
+
+def make_enemy_boss_phase_two():
+    return {
+        "name": "Two-Headed Intergalactic Space Worm",
+        "health": 40,
+        "maximum_damage": 5
+    }
+
+
+def make_enemy_boss_phase_three():
+    return {
+        "name": "Headless Intergalactic Space Worm",
+        "health": 80,
+        "maximum_damage": 2,
+        "special_ability_counter": 5
+    }
+
+
 def game_board_coordinates(player_x_coordinate, player_y_coordinate):
     """Return dictionary representing game board, with unoccupied coordinates containing a blue asterisk, and occupied
        coordinates containing a yellow at symbol.
