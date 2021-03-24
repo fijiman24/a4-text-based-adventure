@@ -141,8 +141,8 @@ def make_player():
     {'health': 20, 'x-coordinate': 0, 'y-coordinate': 0, 'name': ''}
     """
     return {"health": MAX_PLAYER_HEALTH[0],
-            "x-coordinate": STARTING_X_COORDINATE[0],
-            "y-coordinate": STARTING_Y_COORDINATE[0],
+            "x-coordinate": 23,
+            "y-coordinate": 23,
             "name": None,
             "exp": 0,
             "ship": None,
@@ -325,7 +325,7 @@ def special_action_selector(player):
         resurrect(player)
     elif player["ship"] == "Magician":
         blast_damage = magic_blast(player)
-        print(f"You charged up your beam to blast the enemy ship with {Colours.blue}{blast_damage}{Colours.end} "
+        print(f"You charged up your beam to blast the enemy with {Colours.blue}{blast_damage}{Colours.end} "
               f"damage!\n")
         return blast_damage
     elif player["ship"] == "Thief":
@@ -345,7 +345,8 @@ def resurrect(player):
             player["special_action_counter"] = 0
             new_hp = 5 + player["level"] * 5
             player["health"] = new_hp
-            print(f"Your undying will allowed you to survive the attack and restored your health to {new_hp}!\n")
+            print(f"Your undying will allowed you to survive the attack and restored your health to "
+                  f"{Colours.blue}{new_hp}{Colours.end}!\n")
             return player
         else:
             print(f"Your passive will allow you to survive a critical attack.\n")
@@ -361,7 +362,7 @@ def magic_blast(player):
     """
     blast_damage = player["special_action_counter"] * 5
     player["special_action_counter"] = 0
-    print(f"You relinquished your charges to deal {Colours.blue}{blast_damage}{Colours.end} to the enemy ship!")
+    print(f"You relinquished your charges to deal {Colours.blue}{blast_damage}{Colours.end} to the enemy!")
     return blast_damage
 
 
@@ -375,7 +376,7 @@ def multi_attack(player):
     total_attack = 0
     for attacks in range(0, 5):
         attack = random.randint(1, split_attack)
-        print(f"You dealt {Colours.blue}{attack}{Colours.end} damage to the enemy ship!")
+        print(f"You dealt {Colours.blue}{attack}{Colours.end} damage to the enemy!")
         total_attack += attack
     return total_attack
 
@@ -509,8 +510,8 @@ def make_enemy_boss_phase_one():
 def make_enemy_boss_phase_two():
     return {
         "name": "Two-Headed Intergalactic Space Worm",
-        "health": 40,
-        "maximum_damage": 4
+        "health": 50,
+        "maximum_damage": 5
     }
 
 
@@ -532,27 +533,90 @@ def make_appropriate_boss_phase(player):
         return make_enemy_boss_phase_three()
 
 
+def boss_battle_player_attack(boss, player):
+    """Return enemy's health value after being attacked by player.
+
+    :param boss: a positive integer
+    :param player: a dictionary
+    :precondition: enemy_health is any positive integer
+    :postcondition: subtract a random integer between [1, player["damage"]] from enemy_health
+    :postcondition: return enemy_health
+    :return: enemy_health
+
+    no doctest, this uses random values
+    """
+    player_damage = random.randint(1, player["damage"])
+    enemy = make_appropriate_boss_phase(player)
+    print(f"You did {Colours.blue}{player_damage}{Colours.end} damage to the "
+          f"{Colours.magenta}{enemy['name']}{Colours.end}!\n")
+    boss["health"] -= player_damage
+    return boss["health"]
+
+
 def combat_boss_attack(player):
     time.sleep(1)
     boss = make_appropriate_boss_phase(player)
     if player["boss_phase_counter"] == 3 or player["boss_phase_counter"] == 1:
         enemy_damage = random.randint(1, boss['maximum_damage'])
         player['health'] -= enemy_damage
-        print(f"The enemy {Colours.magenta}{boss['name']}{Colours.end} did {Colours.magenta}{enemy_damage}{Colours.end}"
+        print(f"The {Colours.magenta}{boss['name']}{Colours.end} did {Colours.magenta}{enemy_damage}{Colours.end}"
               f" damage to you!\n")
-        time.sleep(1)
         return player['health']
     elif player["boss_phase_counter"] == 2:
         enemy_damage_first_attack = random.randint(1, boss['maximum_damage'])
         player['health'] -= enemy_damage_first_attack
         print(f"The {Colours.magenta}{boss['name']}{Colours.end}'s left head did "
-              f"{Colours.magenta}{enemy_damage_first_attack}{Colours.end} damage to you!\n")
+              f"{Colours.magenta}{enemy_damage_first_attack}{Colours.end} damage to you!")
         enemy_damage_second_attack = random.randint(1, boss['maximum_damage'])
         player['health'] -= enemy_damage_second_attack
-        print(f"The {Colours.magenta}{boss['name']}{Colours.end}'s left head did "
+        print(f"The {Colours.magenta}{boss['name']}{Colours.end}'s right head did "
               f"{Colours.magenta}{enemy_damage_second_attack}{Colours.end} damage to you!\n")
-        time.sleep(1)
         return player['health']
+
+
+def boss_battle_print_health_values(player, boss):
+    """
+
+    :return:
+    """
+    time.sleep(1)
+    print(f"Your {Colours.blue}{player['player_class']}{Colours.end} can take "
+          f"{Colours.blue}{player['health']}{Colours.end} more points of damage.")
+    print(f"The enemy {Colours.magenta}{boss['name']}{Colours.end} can take "
+          f"{Colours.magenta}{boss['health']}{Colours.end} more points of damage.\n")
+
+
+def boss_ultimate_attack_countdown(boss):
+    """
+
+    :param boss:
+    :return:
+    """
+    boss["special_ability_counter"] -= 1
+    if boss["special_ability_counter"] > 0:
+        print(f"The {Colours.magenta}{boss['name']}{Colours.end}'s body writhes.")
+    return boss
+
+
+def boss_ultimate_attack_activate(enemy, player):
+    """
+
+    :param enemy:
+    :param player:
+    :return:
+    """
+    if enemy["special_ability_counter"] == 0:
+        print(f"The {enemy['name']}'s body unleashes overwhelming astral power!\nYou, your ship, your crew, and "
+              f"everything else in Sector Six takes {Colours.magenta}99999{Colours.end} damage!\n")
+        player["health"] -= 99999
+        return player
+    elif enemy["special_ability_counter"] < 0:
+        print(f"The {enemy['name']}'s body unleashes EVEN MORE overwhelming astral power!\nYou, your ship, your crew, "
+              f"and everything else in Sector Six takes {Colours.magenta}99999{Colours.end} damage! Again!\n")
+        player["health"] -= 99999
+        return player
+    else:
+        return player
 
 
 def game_board_coordinates(player_x_coordinate, player_y_coordinate):
@@ -717,7 +781,7 @@ def confirm_move_to_boss_room():
     :return:
     """
     print(f"You're about to enter the gravitational pull of the wormhole. This is a point of no return. You've almost "
-          "escaped Sector Six with your treasure, but you have a feeling you\n may face some final resistance.\n"
+          "escaped Sector Six with your treasure, but you have a feeling you\nmay face some final resistance...\n"
           "Are you sure you wish to proceed?")
     print(list(enumerate(["Yes", "No"], start=1)))
 
@@ -800,10 +864,10 @@ def regen_health(player_health):
     20
     """
     if player_health <= (MAX_PLAYER_HEALTH[0] - REGEN_VALUE[0]):
-        print(f"You regained {Colours.blue}{REGEN_VALUE[0]}{Colours.end} health points!")
+        print(f"You repaired your ship by {Colours.blue}{REGEN_VALUE[0]}{Colours.end} points!")
         return player_health + REGEN_VALUE[0]
     elif MAX_PLAYER_HEALTH[0] > player_health > (MAX_PLAYER_HEALTH[0] - REGEN_VALUE[0]):
-        print(f"You regained {Colours.blue}all of your health{Colours.end}!")
+        print(f"You repaired your ship {Colours.blue}completely{Colours.end}!")
         return MAX_PLAYER_HEALTH[0]
     else:
         return player_health
@@ -1112,12 +1176,12 @@ def game():
                 elif in_boss_room:
                     while player["boss_phase_counter"] > 0:
                         boss = make_appropriate_boss_phase(player)
-                        # introduce boss print statement
+                        print(f"You were accosted by a {boss['name']}!")
                         while player["health"] > 0 and boss["health"] > 0:
-                            combat_print_health_values(player, boss)
+                            boss_battle_print_health_values(player, boss)
                             combat_round_player_choice = combat_choice()
                             if combat_round_player_choice == "1":
-                                boss["health"] = combat_player_attack(boss["health"], player)
+                                boss["health"] = boss_battle_player_attack(boss, player)
                             elif combat_round_player_choice == "2":
                                 if player["ship"] == "Magician" or player["ship"] == "Thief":
                                     boss["health"] -= special_action_selector(player)
@@ -1135,17 +1199,23 @@ def game():
                                 continue
                             if boss["health"] > 0:
                                 player["health"] = combat_boss_attack(player)
+                                if boss["name"] == "Headless Intergalactic Space Worm":
+                                    boss = boss_ultimate_attack_countdown(boss)
+                                    player = boss_ultimate_attack_activate(boss, player)
                                 if player["health"] <= 0 and player["ship"] == "Warrior" and \
                                         player["special_action_counter"] == 1:
                                     resurrect(player)
                         if boss["health"] <= 0:
-                            # print_boss_death_text(player)
+                            print(f"The {boss['name']} died!")
                             player["boss_phase_counter"] -= 1
                             time.sleep(1)
+                            player["health"] += 20
+                            print(f"The space worm's cosmic ichor washes over your {player['player_class']}, repairing "
+                                  f"it by 20 points!\n")
                         elif player["health"] <= 0:
                             player_death_text()
                             exit()
-                    #print_end_game_text
+                    print("A winner is you!")
                     exit()
                 game_board = game_board_coordinates(player['x-coordinate'], player['y-coordinate'])
                 display_game_board(player['x-coordinate'], player['y-coordinate'], game_board)
