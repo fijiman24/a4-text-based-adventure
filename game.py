@@ -254,7 +254,7 @@ def confirm_player_class(class_name, player):
     if choice == "1":
         return True
     elif choice == "2":
-        return select_player_class(player)
+        select_player_class(player)
     else:
         print(f"That is not a valid choice! \n")
         confirm_player_class(class_name, player)
