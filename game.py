@@ -838,7 +838,7 @@ def combat_choice():
     return input()
 
 
-def print_combat_health_values(player, enemy):
+def combat_print_health_values(player, enemy):
     """
 
     :return:
@@ -848,70 +848,6 @@ def print_combat_health_values(player, enemy):
           f"{Colours.blue}{player['health']}{Colours.end} more points of damage.")
     print(f"The enemy {Colours.red}{enemy['name']}{Colours.end} can take "
           f"{Colours.red}{enemy['health']}{Colours.end} more points of damage.\n")
-
-
-def combat_duel(player):
-    """Return player's health value after enemy["health"] or player_health reaches 0.
-
-    :param player: a dictionary
-    :precondition: player must contain keys "level", "health", and "exp"
-    :postcondition: take turns subtracting a random integer between [1, player["damage"]] from enemy["health"] and a
-                    random integer [1, MAX_ENEMY_DAMAGE] from player_health until player["health"] or enemy["health"] == 0
-    :postcondition: return player["health"] value after enemy["health"] or player["health"] == 0
-    :return: player["health"] after enemy["health"] or player["health"] reaches 0
-
-    no doctest, this uses random values
-    """
-    enemy = make_appropriate_enemy_type(player)
-    print(f"You were spotted by an enemy {Colours.red}{enemy['name']}{Colours.end}!")
-    initiative = combat_initiative_roll(player)
-
-    if not initiative:
-        player["health"] = combat_enemy_attack(player)
-
-    while player["health"] > 0 and enemy["health"] > 0:
-        print_combat_health_values(player, enemy)
-        combat_round_player_choice = combat_choice()
-        if combat_round_player_choice == "1":
-            enemy["health"] = combat_player_attack(enemy["health"], player)
-        elif combat_round_player_choice == "2":
-            if player["ship"] == "Magician" or player["ship"] == "Thief":
-                enemy["health"] -= special_action_selector(player)
-            elif player["ship"] == "Priest":
-                special_action_selector(player)
-            elif player["ship"] == "Warrior":
-                special_action_selector(player)
-                continue
-        elif combat_round_player_choice == "3":
-            player["health"] = backstab(player["health"])
-            break
-        elif combat_round_player_choice != "1" or combat_round_player_choice != "2" or combat_round_player_choice != \
-                "3":
-            print(f"That is not a valid choice!")
-            continue
-        if enemy["health"] > 0:
-            enemy_flee_chance = combat_enemy_flee()
-            if enemy_flee_chance:
-                enemy["health"] = 99999
-                break
-            elif not enemy_flee_chance:
-                player["health"] = combat_enemy_attack(player)
-                if player["health"] <= 0 and player["ship"] == "Warrior" and player["special_action_counter"] == 1:
-                    resurrect(player)
-
-    if enemy["health"] <= 0:
-        enemy_death_text()
-        gain_experience_points(player)
-        time.sleep(1)
-    elif player["health"] <= 0:
-        player_death_text()
-        exit()
-    elif enemy["health"] == 99999:
-        print(f"The enemy {Colours.red}{enemy['name']}{Colours.end} escaped!")
-        time.sleep(1)
-        return player["health"]
-    else:
-        return player["health"]
 
 
 def gain_experience_points(player):
@@ -1033,7 +969,54 @@ def game():
                 if not in_boss_room:
                     enemy_encounter = spawn_enemy()
                     if enemy_encounter:
-                        combat_duel(player)
+                        enemy = make_appropriate_enemy_type(player)
+                        print(f"You were spotted by an enemy {Colours.red}{enemy['name']}{Colours.end}!")
+                        initiative = combat_initiative_roll(player)
+
+                        if not initiative:
+                            player["health"] = combat_enemy_attack(player)
+
+                        while player["health"] > 0 and enemy["health"] > 0:
+                            combat_print_health_values(player, enemy)
+                            combat_round_player_choice = combat_choice()
+                            if combat_round_player_choice == "1":
+                                enemy["health"] = combat_player_attack(enemy["health"], player)
+                            elif combat_round_player_choice == "2":
+                                if player["ship"] == "Magician" or player["ship"] == "Thief":
+                                    enemy["health"] -= special_action_selector(player)
+                                elif player["ship"] == "Priest":
+                                    special_action_selector(player)
+                                elif player["ship"] == "Warrior":
+                                    special_action_selector(player)
+                                    continue
+                            elif combat_round_player_choice == "3":
+                                player["health"] = backstab(player["health"])
+                                break
+                            elif combat_round_player_choice != "1" or combat_round_player_choice != "2" or combat_round_player_choice != \
+                                    "3":
+                                print(f"That is not a valid choice!")
+                                continue
+                            if enemy["health"] > 0:
+                                enemy_flee_chance = combat_enemy_flee()
+                                if enemy_flee_chance:
+                                    enemy["health"] = 99999
+                                    break
+                                elif not enemy_flee_chance:
+                                    player["health"] = combat_enemy_attack(player)
+                                    if player["health"] <= 0 and player["ship"] == "Warrior" and \
+                                            player["special_action_counter"] == 1:
+                                        resurrect(player)
+
+                        if enemy["health"] <= 0:
+                            enemy_death_text()
+                            gain_experience_points(player)
+                            time.sleep(1)
+                        elif player["health"] <= 0:
+                            player_death_text()
+                            exit()
+                        elif enemy["health"] == 99999:
+                            print(f"The enemy {Colours.red}{enemy['name']}{Colours.end} escaped!")
+                            time.sleep(1)
                     else:
                         player['health'] = regen_health(player['health'])
                 game_board = game_board_coordinates(player['x-coordinate'], player['y-coordinate'])
