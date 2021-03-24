@@ -467,11 +467,24 @@ def make_appropriate_enemy_type(player):
 
 
 def enemy_disruptor_teleport_attack_countdown(enemy):
+    """
+
+    :param enemy:
+    :return:
+    """
     enemy["special_ability_counter"] -= 1
+    if enemy["special_ability_counter"] > 0:
+        print(f"The enemy {Colours.red}{enemy['name']}{Colours.end} is charging...something.")
     return enemy
 
 
 def enemy_disruptor_teleport_attack_activate(enemy, player):
+    """
+
+    :param enemy:
+    :param player:
+    :return:
+    """
     if enemy["special_ability_counter"] == 0:
         random_x_coordinate = random.randint(5, 10)
         random_y_coordinate = random.randint(5, 10)
