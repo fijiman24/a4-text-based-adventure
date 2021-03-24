@@ -523,6 +523,38 @@ def make_enemy_boss_phase_three():
     }
 
 
+def make_appropriate_boss_phase(player):
+    if player["boss_phase_counter"] == 3:
+        return make_enemy_boss_phase_one()
+    elif player["boss_phase_counter"] == 2:
+        return make_enemy_boss_phase_two()
+    elif player["boss_phase_counter"] == 1:
+        return make_enemy_boss_phase_three()
+
+
+def combat_boss_attack(player):
+    time.sleep(1)
+    boss = make_appropriate_boss_phase(player)
+    if player["boss_phase_counter"] == 3 or player["boss_phase_counter"] == 1:
+        enemy_damage = random.randint(1, boss['maximum_damage'])
+        player['health'] -= enemy_damage
+        print(f"The enemy {Colours.magenta}{boss['name']}{Colours.end} did {Colours.magenta}{enemy_damage}{Colours.end}"
+              f" damage to you!\n")
+        time.sleep(1)
+        return player['health']
+    elif player["boss_phase_counter"] == 2:
+        enemy_damage_first_attack = random.randint(1, boss['maximum_damage'])
+        player['health'] -= enemy_damage_first_attack
+        print(f"The {Colours.magenta}{boss['name']}{Colours.end}'s left head did "
+              f"{Colours.magenta}{enemy_damage_first_attack}{Colours.end} damage to you!\n")
+        enemy_damage_second_attack = random.randint(1, boss['maximum_damage'])
+        player['health'] -= enemy_damage_second_attack
+        print(f"The {Colours.magenta}{boss['name']}{Colours.end}'s left head did "
+              f"{Colours.magenta}{enemy_damage_second_attack}{Colours.end} damage to you!\n")
+        time.sleep(1)
+        return player['health']
+
+
 def game_board_coordinates(player_x_coordinate, player_y_coordinate):
     """Return dictionary representing game board, with unoccupied coordinates containing a blue asterisk, and occupied
        coordinates containing a yellow at symbol.
@@ -1102,12 +1134,12 @@ def game():
                                 print(f"That is not a valid choice!")
                                 continue
                             if boss["health"] > 0:
-                                player["health"] = combat_boss_attack(enemy, player)
+                                player["health"] = combat_boss_attack(player)
                                 if player["health"] <= 0 and player["ship"] == "Warrior" and \
                                         player["special_action_counter"] == 1:
                                     resurrect(player)
                         if boss["health"] <= 0:
-                            print_boss_death_text(player)
+                            # print_boss_death_text(player)
                             player["boss_phase_counter"] -= 1
                             time.sleep(1)
                         elif player["health"] <= 0:
