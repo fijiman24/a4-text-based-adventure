@@ -38,10 +38,10 @@ def ascii_intro():
 
     """
     print(f"{Colours.yellow}  /$$$$$$                        /$$                                /$$$$$$  /$$          ")
-    print(" /$$__  $$                      | $$                               /$$__  $$|__/          ")
-    print("| $$  \__/  /$$$$$$   /$$$$$$$ /$$$$$$    /$$$$$$   /$$$$$$       | $$  \__/ /$$ /$$   /$$")
-    print("|  $$$$$$  /$$__  $$ /$$_____/|_  $$_/   /$$__  $$ /$$__  $$      |  $$$$$$ | $$|  $$ /$$/")
-    print(" \____  $$| $$$$$$$$| $$        | $$    | $$  \ $$| $$  \__/       \____  $$| $$ \  $$$$/ ")
+    print(f" /$$__  $$                      | $$                               /$$__  $$|__/          ")
+    print(f"| $$  \__/  /$$$$$$   /$$$$$$$ /$$$$$$    /$$$$$$   /$$$$$$       | $$  \__/ /$$ /$$   /$$")
+    print(f"|  $$$$$$  /$$__  $$ /$$_____/|_  $$_/   /$$__  $$ /$$__  $$      |  $$$$$$ | $$|  $$ /$$/")
+    print(f" \____  $$| $$$$$$$$| $$        | $$    | $$  \ $$| $$  \__/       \____  $$| $$ \  $$$$/ ")
     print(f" /$$  \ $$| $$_____/| $$        | $$ /$$| $$  | $$| $$             /$$  \ $$| $$  >$$  $$ ")
     print(f"|  $$$$$$/|  $$$$$$$|  $$$$$$$  |  $$$$/|  $$$$$$/| $$            |  $$$$$$/| $$ /$$/\  $$")
     print(f" \______/  \_______/ \_______/   \___/   \______/ |__/             \______/ |__/|__/  \__/\n{Colours.end}")
@@ -61,15 +61,15 @@ def story_introduction_text():
     have to do is escape to the nearest wormhole, treasure in tow, and you'll be christened the first ever space captain to have successfully pilfered from...
     <BLANKLINE>
     """
-    print("In the distant future, humankind has colonized the vast, cold reaches of space. From suburban planets "
-          "to entire solar systems dedicated to vice, there isn't a sector in the\nMilky Way Galaxy that's been "
-          "left untouched by our ever-expanding race. One such sector is devoted to storing all of humanity's physical "
-          "wealth and fortune. Many a space\npirate has tried their hand at laying siege to this sector in hopes of "
-          "plundering some riches for themselves, and all have been gunned down by the local security militias. \n")
-    print("All except you. You put together a ragtag crew, formulated the perfect plan, and somehow managed to fill "
-          "your ship with as much stolen loot as she could carry. Now all you\nhave to do is escape to the nearest "
-          "wormhole, treasure in tow, and you'll be christened the first ever space captain to have successfully "
-          "pilfered from...\n")
+    print(f"In the distant future, humankind has colonized the vast, cold reaches of space. From suburban planets "
+          f"to entire solar systems dedicated to vice, there isn't a sector in the\nMilky Way Galaxy that's been "
+          f"left untouched by our ever-expanding race. One such sector is devoted to storing all of humanity's physical"
+          f" wealth and fortune. Many a space\npirate has tried their hand at laying siege to this sector in hopes of "
+          f"plundering some riches for themselves, and all have been gunned down by the local security militias. \n")
+    print(f"All except you. You put together a ragtag crew, formulated the perfect plan, and somehow managed to fill "
+          f"your ship with as much stolen loot as she could carry. Now all you\nhave to do is escape to the nearest "
+          f"wormhole, treasure in tow, and you'll be christened the first ever space captain to have successfully "
+          f"pilfered from...\n")
 
 
 def boss_fight_start_text():
@@ -93,7 +93,7 @@ def player_death_text():
 
     postcondition: print text describing player death
     """
-    print("You died.")
+    print(f"You died.")
     exit()
 
 
@@ -102,7 +102,7 @@ def enemy_death_text():
 
     postcondition: print text describing enemy death
     """
-    print("The enemy died.")
+    print(f"The enemy died.")
     time.sleep(1)
 
 
@@ -166,13 +166,23 @@ def input_player_name():
     """
     name_input = str(input(f"Enter your {Colours.blue}name{Colours.end}, captain: ")).title()
     if name_input.lower() == "chris" or name_input.lower() == "christopher" or name_input.lower() == "chris thompson":
-        print("You can be more adventurous than that! \n")
+        print(f"You can be more adventurous than that! \n")
         return input_player_name()
     elif name_input.strip() == "":
-        print("Every space captain needs a name! \n")
+        print(f"Every space captain needs a name! \n")
         return input_player_name()
     else:
         return name_input
+
+
+def display_player_class_menu():
+    """
+
+    :return:
+    """
+    class_choices = list(enumerate(["Squire", "Sapper", "Ghost", "Cherub"], start=1))
+    print(f"Select a {Colours.blue}spaceship{Colours.end}: \n", class_choices)
+    return input()
 
 
 def select_player_class(player):
@@ -185,31 +195,41 @@ def select_player_class(player):
     :postcondition: pass user input to confirm_player_class()
     :return: class after being passed to confirm_player_class()
     """
-    class_choices = list(enumerate(["Squire", "Sapper", "Ghost", "Cherub"], start=1))
-    print(f"Select a {Colours.blue}spaceship{Colours.end}: \n", class_choices)
-    choice = input()
+    choice = display_player_class_menu()
     if choice == "1":
-        print("A Lazarus Engine™ allows for this ship to repair itself after its hull integrity has been completely "
-              "breached for the first time.")
         if confirm_player_class("Squire", player):
             warrior_ship(player)
     elif choice == "2":
-        print("Destroy enemy ships to steal their energy and charge up your Quasar Cannon™ for a devastating attack.")
         if confirm_player_class("Sapper", player):
             magician_ship(player)
     elif choice == "3":
-        print("A nimble ship covered in aerodynamic SlipStream™ technology allows the pilot to make the first move in "
-              "combat, and attack multiple times in one turn.")
         if confirm_player_class("Ghost", player):
             thief_ship(player)
     elif choice == "4":
-        print("QuickFix™ Protocols allows this ship to repair itself during combat.")
         if confirm_player_class("Cherub", player):
             priest_ship(player)
     else:
-        print("That is not a valid choice! \n")
+        print(f"That is not a valid choice! \n")
         select_player_class(player)
     return player
+
+
+def print_class_description(class_name):
+    """
+
+    :param class_name:
+    :return:
+    """
+    if class_name == "Squire":
+        print(f"A Lazarus Engine™ allows for this ship to repair itself after its hull integrity has been completely "
+              "breached for the first time.")
+    elif class_name == "Sapper":
+        print(f"Destroy enemy ships to steal their energy and charge up your Quasar Cannon™ for a devastating attack.")
+    elif class_name == "Ghost":
+        print(f"A nimble ship covered in aerodynamic SlipStream™ technology allows the pilot to make the first move in "
+              "combat, and attack multiple times in one turn.")
+    elif class_name == "Cherub":
+        print(f"QuickFix™ Protocols allows this ship to repair itself during combat.")
 
 
 def confirm_player_class(class_name, player):
@@ -226,6 +246,7 @@ def confirm_player_class(class_name, player):
     :postcondition: print "That is not a valid choice" if input is neither "1" or "2" and recall confirm_player_class()
     :return: class_name if input is "1", select_player_class() if input is "2"
     """
+    print_class_description(class_name)
     print(f"Do you pilot a {Colours.blue}{class_name}{Colours.end}?")
     print(list(enumerate(["Yes", "No"], start=1)))
 
@@ -235,7 +256,7 @@ def confirm_player_class(class_name, player):
     elif choice == "2":
         return select_player_class(player)
     else:
-        print("That is not a valid choice! \n")
+        print(f"That is not a valid choice! \n")
         confirm_player_class(class_name, player)
 
 
@@ -296,9 +317,9 @@ def resurrect(player):
             print(f"Your undying will allowed you to survive the attack and restored your health to {new_hp}!\n")
             return player
         else:
-            print("Your passive will allow you to survive a critical attack.\n")
+            print(f"Your passive will allow you to survive a critical attack.\n")
     else:
-        print("Your passive have already been used. You will not revive if your hp hits 0.\n")
+        print(f"Your passive have already been used. You will not revive if your hp hits 0.\n")
 
 
 def magic_blast(player):
@@ -497,7 +518,7 @@ def cardinal_direction():
     options = []
     for choice in zip(itertools.count(1), directions):
         options.append(choice)
-    print("Please enter a number corresponding to the direction you wish to move in.")
+    print(f"Please enter a number corresponding to the direction you wish to move in.")
     print(options)
     choice = input()
     if choice.isdigit():
@@ -557,7 +578,7 @@ def confirm_move_to_boss_room():
 
     :return:
     """
-    print("You're about to enter the gravitational pull of the wormhole. This is a point of no return. You've almost "
+    print(f"You're about to enter the gravitational pull of the wormhole. This is a point of no return. You've almost "
           "escaped Sector Six with your treasure, but you have a feeling you may face some final resistance. "
           "Are you sure you wish to proceed?")
     print(list(enumerate(["Yes", "No"], start=1)))
@@ -672,7 +693,7 @@ def backstab(player_health):
         else:
             player_death_text()
     else:
-        print("You successfully escape back into darkness of space.")
+        print(f"You successfully escape back into darkness of space.")
         return player_health
 
 
@@ -687,7 +708,7 @@ def combat_initiative_roll(player):
     enemy_roll = random.randint(1, 100)
     enemy = make_appropriate_enemy_type(player)
     if player["ship"] == "Thief":
-        print("The nimbleness of your ship allows you to attack first.\n")
+        print(f"The nimbleness of your ship allows you to attack first.\n")
         return True
     if player_roll == enemy_roll:  # checks for draws
         print(f'Draw! You both rolled a {Colours.blue}{player_roll}{Colours.end}. Rerolling....\n')
@@ -808,7 +829,7 @@ def combat_duel(player):
             break
         elif combat_round_player_choice != "1" or combat_round_player_choice != "2" or combat_round_player_choice != \
                 "3":
-            print("That is not a valid choice!")
+            print(f"That is not a valid choice!")
             continue
         if enemy["health"] > 0:
             enemy_flee_chance = combat_enemy_flee()
@@ -960,14 +981,14 @@ def game():
                 game_board = game_board_coordinates(player['x-coordinate'], player['y-coordinate'])
                 display_game_board(player['x-coordinate'], player['y-coordinate'], game_board)
             else:
-                print("That's not a valid move!")
+                print(f"That's not a valid move!")
         elif main_menu_selection == "2":
             check_player_statistics(player)
         elif main_menu_selection == "3":
-            print("You have abandoned ship! Sector Six has stopped another group of would-be thieves...")
+            print(f"You have abandoned ship! Sector Six has stopped another group of would-be thieves...")
             exit()
         else:
-            print("That is not a valid choice!\n")
+            print(f"That is not a valid choice!\n")
 
 
 def main():
