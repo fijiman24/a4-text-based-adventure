@@ -429,10 +429,10 @@ def make_enemy_difficulty_three():
     """
     return {
         "name": "Disruptor",
-        "health": 30,
+        "health": 60,
         "experience_points": 100,
-        "maximum_damage": 15,
-        "special_ability_counter": 2
+        "maximum_damage": 5,
+        "special_ability_counter": 4
     }
 
 
@@ -445,8 +445,7 @@ def make_enemy_difficulty_four():
         "name": "Shredder",
         "health": 40,
         "experience_points": 150,
-        "maximum_damage": 20,
-        "special_ability_counter": 3
+        "maximum_damage": 25,
     }
 
 
@@ -456,15 +455,33 @@ def make_appropriate_enemy_type(player):
     :param player:
     :return:
     """
-    if player["x-coordinate"] in range(0, 5) and player["y-coordinate"] in range(0, 5):
-        return make_enemy_difficulty_one()
-    elif player["x-coordinate"] in range(5, 15) or player["y-coordinate"] in range(5, 15):
-        return make_enemy_difficulty_two()
-    elif player["x-coordinate"] in range(15, 20) or player["y-coordinate"] in range(15, 20):
-        return make_enemy_difficulty_three()
-    elif player["x-coordinate"] in range(20, 25) or player["y-coordinate"] in range(20, 25) and \
+    if player["x-coordinate"] in range(20, 25) or player["y-coordinate"] in range(20, 25) and \
             (player["x-coordinate"] != 24 and player["y-coordinate"] != 24):
         return make_enemy_difficulty_four()
+    elif player["x-coordinate"] in range(15, 20) or player["y-coordinate"] in range(15, 20):
+        return make_enemy_difficulty_three()
+    elif player["x-coordinate"] in range(5, 15) or player["y-coordinate"] in range(5, 15):
+        return make_enemy_difficulty_two()
+    elif player["x-coordinate"] in range(0, 5) or player["y-coordinate"] in range(0, 5):
+        return make_enemy_difficulty_one()
+
+
+def enemy_disruptor_teleport_attack_countdown(enemy):
+    enemy["special_ability_counter"] -= 1
+    return enemy
+
+
+def enemy_disruptor_teleport_attack_activate(enemy, player):
+    if enemy["special_ability_counter"] == 0:
+        random_x_coordinate = random.randint(5, 10)
+        random_y_coordinate = random.randint(5, 10)
+        player["x-coordinate"] = random_x_coordinate
+        player["y-coordinate"] = random_y_coordinate
+        print(f"The enemy {enemy['name']} opened a rift in spacetime and teleported you "
+              f"to {player['x-coordinate']}, {player['y-coordinate']}!")
+        return player
+    else:
+        return player
 
 
 def game_board_coordinates(player_x_coordinate, player_y_coordinate):
@@ -629,7 +646,7 @@ def confirm_move_to_boss_room():
     :return:
     """
     print(f"You're about to enter the gravitational pull of the wormhole. This is a point of no return. You've almost "
-          "escaped Sector Six with your treasure, but you have a feeling you may face some final resistance. "
+          "escaped Sector Six with your treasure, but you have a feeling you\n may face some final resistance.\n"
           "Are you sure you wish to proceed?")
     print(list(enumerate(["Yes", "No"], start=1)))
 
@@ -992,8 +1009,8 @@ def game():
                             elif combat_round_player_choice == "3":
                                 player["health"] = backstab(player["health"])
                                 break
-                            elif combat_round_player_choice != "1" or combat_round_player_choice != "2" or combat_round_player_choice != \
-                                    "3":
+                            elif combat_round_player_choice != "1" or combat_round_player_choice != "2" or \
+                                    combat_round_player_choice != "3":
                                 print(f"That is not a valid choice!")
                                 continue
                             if enemy["health"] > 0:
@@ -1002,11 +1019,13 @@ def game():
                                     enemy["health"] = 99999
                                     break
                                 elif not enemy_flee_chance:
+                                    if enemy["name"] == "Disruptor":
+                                        enemy = enemy_disruptor_teleport_attack_countdown(enemy)
+                                        player = enemy_disruptor_teleport_attack_activate(enemy, player)
                                     player["health"] = combat_enemy_attack(player)
                                     if player["health"] <= 0 and player["ship"] == "Warrior" and \
                                             player["special_action_counter"] == 1:
                                         resurrect(player)
-
                         if enemy["health"] <= 0:
                             enemy_death_text()
                             gain_experience_points(player)
@@ -1022,7 +1041,7 @@ def game():
                 game_board = game_board_coordinates(player['x-coordinate'], player['y-coordinate'])
                 display_game_board(player['x-coordinate'], player['y-coordinate'], game_board)
             else:
-                print(f"That's not a valid move!")
+                print(f"Please move to a different coordinate.")
         elif main_menu_selection == "2":
             check_player_statistics(player)
         elif main_menu_selection == "3":
