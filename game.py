@@ -263,7 +263,7 @@ def confirm_player_class(class_name, player):
         select_player_class(player)
     else:
         print(f"That is not a valid choice! \n")
-        confirm_player_class(class_name, player)
+        return confirm_player_class(class_name, player)
 
 
 def warrior_ship(player):
