@@ -72,12 +72,30 @@ def story_introduction_text():
           f"pilfered from...\n")
 
 
-def boss_fight_start_text():
+def boss_fight_start_text(player):
     """Print text introducing the end game boss.
 
     :return:
     """
-    pass
+    if player["boss_phase_counter"] == 3:
+        print(f"Boss first phase!\n")
+    elif player["boss_phase_counter"] == 2:
+        print(f"Boss second phase!\n")
+    elif player["boss_phase_counter"] == 1:
+        print(f"Boss third phase!\n")
+
+
+def boss_phase_death_text(player):
+    """Print text introducing the end game boss.
+
+    :return:
+    """
+    if player["boss_phase_counter"] == 3:
+        print(f"First phase boss died!\n")
+    elif player["boss_phase_counter"] == 2:
+        print(f"Second phase boss died!\n")
+    elif player["boss_phase_counter"] == 1:
+        print(f"Third phase boss died!\n")
 
 
 def story_ending_text():
@@ -85,7 +103,8 @@ def story_ending_text():
 
     :postcondition: print the ending story text
     """
-    pass
+    print(f"A winner is you!\n")
+    exit()
 
 
 def player_death_text():
@@ -93,16 +112,17 @@ def player_death_text():
 
     postcondition: print text describing player death
     """
-    print(f"You died.")
+    print(f"Your ship's integrity has been breached! Sector Six has claimed another crew of would-be thieves.\n")
     exit()
 
 
-def enemy_death_text():
+def enemy_death_text(player):
     """Print text describing enemy death.
 
     postcondition: print text describing enemy death
     """
-    print(f"The enemy died.")
+    enemy = make_appropriate_enemy_type(player)
+    print(f"The enemy {Colours.red}{enemy}{Colours.end} has been defeated!\n")
     time.sleep(1)
 
 
@@ -120,13 +140,6 @@ def check_if_player_in_boss_room(x_coordinate, y_coordinate):
         return True
     else:
         return False
-
-
-def check_if_goal_attained(boss_health):
-    """Return True if boss_health <= 0, else return False.
-
-    """
-    pass
 
 
 def make_player():
@@ -1185,7 +1198,7 @@ def game():
                 elif in_boss_room:
                     while player["boss_phase_counter"] > 0:
                         boss = make_appropriate_boss_phase(player)
-                        print(f"You were accosted by a {boss['name']}!")
+                        boss_fight_start_text(player)
                         while player["health"] > 0 and boss["health"] > 0:
                             boss_battle_print_health_values(player, boss)
                             combat_round_player_choice = combat_choice()
@@ -1215,7 +1228,7 @@ def game():
                                         player["special_action_counter"] == 1:
                                     resurrect(player)
                         if boss["health"] <= 0:
-                            print(f"The {boss['name']} died!")
+                            boss_phase_death_text(player)
                             player["boss_phase_counter"] -= 1
                             time.sleep(1)
                             player["health"] += 20
@@ -1224,8 +1237,7 @@ def game():
                         elif player["health"] <= 0:
                             player_death_text()
                             exit()
-                    print("A winner is you!")
-                    exit()
+                    story_ending_text()
                 game_board = game_board_coordinates(player['x-coordinate'], player['y-coordinate'])
                 display_game_board(player['x-coordinate'], player['y-coordinate'], game_board)
             else:
