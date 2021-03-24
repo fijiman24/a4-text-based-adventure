@@ -20,7 +20,6 @@ class Colours:
 
 
 # Constants enclosed in tuples (yes, it looks weird)
-MAX_PLAYER_HEALTH = (20,)
 REGEN_VALUE = (4,)
 MAX_PLAYER_DAMAGE = (20,)
 MAX_ENEMY_DAMAGE = (10,)
@@ -147,7 +146,8 @@ def make_player():
     >>> make_player()
     {'health': 20, 'x-coordinate': 0, 'y-coordinate': 0, 'name': ''}
     """
-    return {"health": MAX_PLAYER_HEALTH[0],
+    return {"health": 20,
+            "maximum_health": 20,
             "x-coordinate": STARTING_X_COORDINATE[0],
             "y-coordinate": STARTING_Y_COORDINATE[0],
             "name": None,
@@ -270,7 +270,8 @@ def warrior_ship(player):
     """Modify dictionary to change values to attributes of the warrior ship.
 
     :param player: must be a dictionary
-    :precondition: must have key "health",
+    :precondition: must have key "health"
+    :precondition: must have key "maximum_health"
     :precondition: must have key "ship"
     :precondition: must have key "player_class"
     :precondition: must have key "player_class_special_action"
@@ -279,12 +280,13 @@ def warrior_ship(player):
     :postcondition: modify dictionary to include new attributes of the warrior ship
     :return: updated player dictionary
 
-    >>> warrior_ship({"health": 20, "ship": None, "player_class": None, "player_class_special_action": None,\
-    "special_action_counter": 0, "damage": 20}) # doctest: +NORMALIZE_WHITESPACE
-    {'health': 18, 'ship': 'Warrior', 'player_class': 'Squire', 'player_class_special_action': 'Resurrect',
-    'special_action_counter': 1, 'damage': 25}
+    >>> warrior_ship({"health": 20, "maximum_health":20, "ship": None, "player_class": None, \
+    "player_class_special_action": None, "special_action_counter": 0, "damage": 20}) # doctest: +NORMALIZE_WHITESPACE
+    {'health': 18, 'maximum_health': 18, 'ship': 'Warrior', 'player_class': 'Squire',
+    'player_class_special_action': 'Resurrect', 'special_action_counter': 1, 'damage': 25}
     """
     player["health"] -= 2
+    player["maximum_health"] -= 2
     player["ship"] = "Warrior"
     player["player_class"] = "Squire"
     player["player_class_special_action"] = "Resurrect"
@@ -327,6 +329,7 @@ def priest_ship(player):
     :return:
     """
     player["health"] -= 4
+    player["maximum_health"] -= 4
     player["ship"] = "Priest"
     player["player_class"] = "Cherub"
     player["player_class_special_action"] = "Healing Spell"
@@ -407,10 +410,10 @@ def heal_spell(player):
     :return:
     """
     amount_healed = player["level"] * 6
-    max_health = MAX_PLAYER_HEALTH[0] + player["level"] * 3
-    if amount_healed + player["health"] > MAX_PLAYER_HEALTH[0] + player["level"] * 3:
-        player["health"] = MAX_PLAYER_HEALTH[0] + player["level"] * 3
-        print(f"You repaired your hull for {Colours.blue}{max_health - MAX_PLAYER_HEALTH[0]}{Colours.end} health.")
+    if amount_healed + player["health"] > player["maximum_health"]:
+        print(f"You repaired your hull for {Colours.blue}{player['maximum_health'] - player['health']}{Colours.end}"
+              f" health.")
+        player["health"] = player["maximum_health"]
     else:
         player["health"] += amount_healed
         print(f"You repaired your hull for {Colours.blue}{amount_healed}{Colours.end} health.")
@@ -869,34 +872,36 @@ def move_y_axis(direction, y_coordinate):
         return y_coordinate
 
 
-def regen_health(player_health):
-    """Add REGEN_VALUE to current_health if current_health <= MAX_PLAYER_HEALTH, else return MAX_PLAYER_HEALTH.
+def regen_health(player_health, maximum_health):
+    """Add REGEN_VALUE to current_health if current_health <= maximum_health, else return maximum_health.
 
-    :param player_health: any integer
+    :param player_health: any integer less than or equal to maximum_health
+    :param maximum_health: any integer
     :precondition: player_health is any integer
-    :postcondition: add REGEN_VALUE to player_health if player_health <= MAX_PLAYER_HEALTH after adding REGEN_VALUE
-    :postcondition: make player_health = MAX_PLAYER_HEALTH if adding REGEN_VALUE to player_health would make it >
-                    MAX_PLAYER_HEALTH
-    :return: player_health plus REGEN_VALUE if player_health <= MAX_PLAYER_HEALTH, else MAX_PLAYER_HEALTH
+    :precondition: maximum_health is any integer
+    :postcondition: add REGEN_VALUE to player_health if player_health <= maximum_health after adding REGEN_VALUE
+    :postcondition: make player_health = maximum_health if adding REGEN_VALUE to player_health would make it >
+                    maximum_health
+    :return: player_health plus REGEN_VALUE if player_health <= maximum_health, else maximum_health
 
-    >>> regen_health(-1)
+    >>> regen_health(-1, 20)
     You regained 4 health points!
     3
-    >>> regen_health(14)
+    >>> regen_health(14, 20)
     You regained 4 health points!
     18
-    >>> regen_health(19)
+    >>> regen_health(19, 20)
     You regained all of your health!
     20
-    >>> regen_health(20)
+    >>> regen_health(20, 20)
     20
     """
-    if player_health <= (MAX_PLAYER_HEALTH[0] - REGEN_VALUE[0]):
+    if player_health <= (maximum_health - REGEN_VALUE[0]):
         print(f"You repaired your ship by {Colours.blue}{REGEN_VALUE[0]}{Colours.end} points!")
         return player_health + REGEN_VALUE[0]
-    elif MAX_PLAYER_HEALTH[0] > player_health > (MAX_PLAYER_HEALTH[0] - REGEN_VALUE[0]):
+    elif maximum_health > player_health > (maximum_health - REGEN_VALUE[0]):
         print(f"You repaired your ship {Colours.blue}completely{Colours.end}!")
-        return MAX_PLAYER_HEALTH[0]
+        return maximum_health
     else:
         return player_health
 
@@ -1086,6 +1091,7 @@ def level_system(player):
         player["exp"] = 0
         player["damage"] += 2
         player["health"] += 5
+        player["maximum_health"] += 5
         class_upgrade(player)
         print(f"You gained a level! You are now level {Colours.blue}{player['level']}{Colours.end} and your ship has "
               f"been upgrade to a {Colours.blue}{player['player_class']}{Colours.end}.")
@@ -1200,7 +1206,7 @@ def game():
                             print(f"The enemy {Colours.red}{enemy['name']}{Colours.end} escaped!")
                             time.sleep(1)
                     else:
-                        player['health'] = regen_health(player['health'])
+                        player['health'] = regen_health(player['health'], player['maximum_health'])
                 elif in_boss_room:
                     while player["boss_phase_counter"] > 0:
                         boss = make_appropriate_boss_phase(player)
