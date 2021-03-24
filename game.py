@@ -116,7 +116,7 @@ def enemy_death_text(player):
     postcondition: print text describing enemy death
     """
     enemy = make_appropriate_enemy_type(player)
-    print(f"The enemy {Colours.red}{enemy}{Colours.end} has been defeated!\n")
+    print(f"The enemy {Colours.red}{enemy['name']}{Colours.end} has been defeated!\n")
     time.sleep(1)
 
 
