@@ -69,35 +69,78 @@ def boss_fight_start_text(player):
     """Print text introducing the end game boss.
 
     :return:
+    >>> player_character = make_player()
+    >>> boss_fight_start_text(player_character)
+
+    >>> player_character["boss_phase_counter"] = 2
+    >>> boss_fight_start_text(player_character)
+
+    >>> player_character["boss_phase_counter"] = 1
+    >>> boss_fight_start_text(player_character)
+
+
     """
     if player["boss_phase_counter"] == 3:
-        print(f"Boss first phase!\n")
+        print(f"You've almost escaped from Sector Six, treasure in tow. To your surprise, the enemy militia is nowhere"
+              f" to be found. Where's their final resistance?\nAs you begin your approach to the wormhole's entrance, a"
+              f" shrill scream surrounds your ship. Sound...isn't supposed to travel through space. Whatever made "
+              f"that\nsound transcends the laws of nature itself. From the pitch black of the wormhole, you notice a "
+              f"pair of scarlet eyes peering back at you from the darkness.\nA titanic, grotesque "
+              f"{Colours.magenta}pink{Colours.end} body emerges from the wormhole. It's an...\n"
+              f"{Colours.magenta}Intergalactic Space Worm{Colours.end}!\n")
     elif player["boss_phase_counter"] == 2:
-        print(f"Boss second phase!\n")
+        print(f"It's a {Colours.magenta}Two-Headed Intergalactic Space Worm{Colours.end}!\n")
     elif player["boss_phase_counter"] == 1:
-        print(f"Boss third phase!\n")
+        print(f"Get rid of the {Colours.magenta}Headless Intergalactic Space Worm{Colours.end}'s corpse to finally "
+              f"escape Sector Six!\n")
 
 
 def boss_phase_death_text(player):
     """Print text introducing the end game boss.
 
     :return:
+    >>> player_character = make_player()
+    >>> boss_phase_death_text(player_character)
+
+    >>> player_character["boss_phase_counter"] = 2
+    >>> boss_phase_death_text(player_character)
+
+    >>> player_character["boss_phase_counter"] = 1
+    >>> boss_phase_death_text(player_character)
     """
     if player["boss_phase_counter"] == 3:
-        print(f"First phase boss died!\n")
+        print(f"You manage to obliterate the {Colours.magenta}Intergalactic Space Worm{Colours.end}'s head!\nHowever, "
+              f"its smouldering corpse begins to convulse, and from the gaping hole in its neck sprouts two more "
+              f"heads!\n")
     elif player["boss_phase_counter"] == 2:
-        print(f"Second phase boss died!\n")
+        print(f"You manage to obliterate the {Colours.magenta}Two-Headed Intergalactic Space Worm{Colours.end}'s heads!"
+              f"\nHowever, its corpse now blocks the entrance to the wormhole.\n")
     elif player["boss_phase_counter"] == 1:
-        print(f"Third phase boss died!\n")
+        print(f"You finally obliterate the {Colours.magenta}Headless Intergalactic Space Worm{Colours.end}!\n")
 
 
-def story_ending_text():
+def story_ending_text(player):
     """Print the ending story text.
 
     :postcondition: print the ending story text
+
+    >>> player_character = make_player()
+    >>> player_character['name'] = "Jaraxxus"
+    >>> story_ending_text(player_character)
+
     """
-    print(f"A winner is you!\n")
-    exit()
+    print(f"You and your crew disappear into the wormhole, along with untold treasure. For millennia, the galaxy "
+          f"will tell tales of the legendary\nCaptain {Colours.blue}{player['name']}{Colours.end}, the first space "
+          f"captain to pilfer from...\n")
+    print(f"{Colours.yellow}  /$$$$$$                        /$$                                /$$$$$$  /$$          ")
+    print(f" /$$__  $$                      | $$                               /$$__  $$|__/          ")
+    print(f"| $$  \__/  /$$$$$$   /$$$$$$$ /$$$$$$    /$$$$$$   /$$$$$$       | $$  \__/ /$$ /$$   /$$")
+    print(f"|  $$$$$$  /$$__  $$ /$$_____/|_  $$_/   /$$__  $$ /$$__  $$      |  $$$$$$ | $$|  $$ /$$/")
+    print(f" \____  $$| $$$$$$$$| $$        | $$    | $$  \ $$| $$  \__/       \____  $$| $$ \  $$$$/ ")
+    print(f" /$$  \ $$| $$_____/| $$        | $$ /$$| $$  | $$| $$             /$$  \ $$| $$  >$$  $$ ")
+    print(f"|  $$$$$$/|  $$$$$$$|  $$$$$$$  |  $$$$/|  $$$$$$/| $$            |  $$$$$$/| $$ /$$/\  $$")
+    print(f" \______/  \_______/ \_______/   \___/   \______/ |__/             \______/ |__/|__/  \__/{Colours.end}\n")
+    print(f"Thanks for playing!")
 
 
 def player_death_text():
@@ -106,7 +149,6 @@ def player_death_text():
     postcondition: print text describing player death
     """
     print(f"Your ship's integrity has been breached! Sector Six has claimed another crew of would-be thieves.\n")
-    exit()
 
 
 def enemy_death_text(player):
@@ -1280,7 +1322,8 @@ def game():
                         elif player["health"] <= 0:
                             player_death_text()
                             exit()
-                    story_ending_text()
+                    story_ending_text(player)
+                    exit()
                 game_board = game_board_coordinates(player['x-coordinate'], player['y-coordinate'])
                 display_game_board(player['x-coordinate'], player['y-coordinate'], game_board)
             else:
