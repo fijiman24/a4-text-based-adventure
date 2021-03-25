@@ -267,16 +267,18 @@ def check_if_player_in_boss_room(x_coordinate, y_coordinate):
         return False
 
 
-def make_player():  # A
-    """Return a dictionary representing the player's maximum health, their starting x-coordinate, their starting
-       y-coordinate, and their name.
+def make_player():
+    """Create and return dictionary for player's starting values.
 
-    :postcondition: Return a dictionary representing the player's maximum health, their starting x-coordinate, their
-                    starting y-coordinate, and their name
-    :return: a dictionary representing the player's current health, starting x-coordinate and y-coordinate, and name
+    :postcondition: Return a dictionary representing the player's health, maximum_health, their starting x-coordinate,
+                    their starting y-coordinate, name, exp, ship, player_class, player_class_special_action,
+                    special_action_counter, level, damage, and boss_phase_counter
+    :return: a dictionary
 
-    >>> make_player()
-    {'health': 20, 'x-coordinate': 0, 'y-coordinate': 0, 'name': ''}
+    >>> make_player() #doctest: +NORMALIZE_WHITESPACE
+    {'health': 20, 'maximum_health': 20, 'x-coordinate': 0, 'y-coordinate': 0, 'name': None, 'exp': 0, 'ship': None,
+     'player_class': None, 'player_class_special_action': None, 'special_action_counter': 0, 'level': 1, 'damage': 20,
+      'boss_phase_counter': 3}
     """
     return {"health": 20,
             "maximum_health": 20,
