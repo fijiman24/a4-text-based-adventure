@@ -33,7 +33,16 @@ def ascii_intro():
 
     :postcondition: print ascii art of game title
 
-    >>> ascii_intro()
+    >>> ascii_intro() # doctest: +NORMALIZE_WHITESPACE
+    \033[93m  /$$$$$$                        /$$                                /$$$$$$  /$$
+            /$$__  $$                      | $$                               /$$__  $$|__/
+            | $$  \__/  /$$$$$$   /$$$$$$$ /$$$$$$    /$$$$$$   /$$$$$$       | $$  \__/ /$$ /$$   /$$
+            |  $$$$$$  /$$__  $$ /$$_____/|_  $$_/   /$$__  $$ /$$__  $$      |  $$$$$$ | $$|  $$ /$$/
+            \____  $$| $$$$$$$$| $$        | $$    | $$  \ $$| $$  \__/       \____  $$| $$ \  $$$$/
+            /$$  \ $$| $$_____/| $$        | $$ /$$| $$  | $$| $$             /$$  \ $$| $$  >$$  $$
+           |  $$$$$$/|  $$$$$$$|  $$$$$$$  |  $$$$/|  $$$$$$/| $$            |  $$$$$$/| $$ /$$/\  $$
+            \______/  \_______/ \_______/   \___/   \______/ |__/             \______/ |__/|__/  \__/
+    \033[0m
 
     """
     print(f"{Colours.yellow}  /$$$$$$                        /$$                                /$$$$$$  /$$          ")
@@ -51,8 +60,17 @@ def story_introduction_text():
 
     :postcondition: print the introductory story text
 
-    >>> story_introduction_text()
-
+    >>> story_introduction_text() # doctest: +NORMALIZE_WHITESPACE
+    In the distant future, humankind has colonized the vast, cold reaches of space. From suburban planets to entire \
+    solar systems dedicated to vice, there isn't a sector in the Milky Way Galaxy that's been left untouched by our \
+    ever-expanding race. One such sector is devoted to storing all of humanity's physical wealth and fortune. Many a \
+    space pirate has tried their hand at laying siege to this sector in hopes of plundering some riches for themselves,\
+     and all have been gunned down by the local security militias.
+    <BLANKLINE>
+    All except you. You put together a ragtag crew, formulated the perfect plan, and somehow managed to fill your ship \
+    with as much stolen loot as she could carry. Now all you have to do is escape to the nearest wormhole, treasure in \
+    tow, and you'll be christened the first ever space captain to have successfully pilfered from...
+    <BLANKLINE>
     """
     print(f"In the distant future, humankind has colonized the vast, cold reaches of space. From suburban planets "
           f"to entire solar systems dedicated to vice, there isn't a sector in the\nMilky Way Galaxy that's been "
