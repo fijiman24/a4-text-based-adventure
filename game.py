@@ -668,10 +668,15 @@ def make_enemy_difficulty_two():
     }
 
 
-def make_enemy_difficulty_three():  # A
-    """
+def make_enemy_difficulty_three():
+    """Create dictionary of the difficulty three enemy.
 
-    :return:
+    :precondition: nothing
+    :postcondition: generate new dictionary based on enemy attributes
+    :return: dictionary
+
+    >>> make_enemy_difficulty_three()
+    {'name': 'Disruptor', 'health': 60, 'experience_points': 100, 'maximum_damage': 5, 'special_ability_counter': 4}
     """
     return {
         "name": "Disruptor",
