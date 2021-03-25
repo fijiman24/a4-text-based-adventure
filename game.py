@@ -1299,8 +1299,8 @@ def move_y_axis(direction, y_coordinate):
         return y_coordinate
 
 
-def regen_health(player_health, maximum_health):  # A
-    """Add REGEN_VALUE to current_health if current_health <= maximum_health, else return maximum_health.
+def regen_health(player_health, maximum_health):
+    """Restore player health by up to 4 points.
 
     :param player_health: any integer less than or equal to maximum_health
     :param maximum_health: any integer
@@ -1312,13 +1312,13 @@ def regen_health(player_health, maximum_health):  # A
     :return: player_health plus REGEN_VALUE if player_health <= maximum_health, else maximum_health
 
     >>> regen_health(-1, 20)
-    You regained 4 health points!
+    You repaired your ship by \033[94m4\033[0m points!
     3
     >>> regen_health(14, 20)
-    You regained 4 health points!
+    You repaired your ship by \033[94m4\033[0m points!
     18
     >>> regen_health(19, 20)
-    You regained all of your health!
+    You repaired your ship \033[94mcompletely\033[0m!
     20
     >>> regen_health(20, 20)
     20
