@@ -532,7 +532,7 @@ def special_action_selector(player):  # A
         heal_spell(player)
 
 
-def resurrect(player):  # A
+def resurrect(player):
     """Resurrect player if health <= 0 and if special_action_counter == 1.
 
     :param player: must be a dictionary
@@ -574,11 +574,23 @@ def resurrect(player):  # A
         print(f"Your passive have already been used. You will not revive if your hp hits 0.\n")
 
 
-def magic_blast(player):  # A
-    """
+def magic_blast(player):
+    """Blast the enemy based on the number of counters the player has.
 
-    :param player:
-    :return:
+    :param player: must be a dictionary
+    :precondition: must contain key "special_action_counter" with value >= 0
+    :postcondition: calculate damage then set counter to zero and print out damage statement
+    :return: integer value of blast damage
+
+    >>> magic_blast({"special_action_counter": 0})
+    You relinquished your charges to deal \033[94m0\033[0m to the enemy!
+    0
+    >>> magic_blast({"special_action_counter": 1})
+    You relinquished your charges to deal \033[94m5\033[0m to the enemy!
+    5
+    >>> magic_blast({"special_action_counter": 5})
+    You relinquished your charges to deal \033[94m25\033[0m to the enemy!
+    25
     """
     blast_damage = player["special_action_counter"] * 5
     player["special_action_counter"] = 0
