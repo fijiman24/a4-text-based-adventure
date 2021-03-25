@@ -413,7 +413,7 @@ def confirm_player_class(class_name, player):
         return confirm_player_class(class_name, player)
 
 
-def warrior_ship(player):  # A
+def warrior_ship(player):
     """Modify dictionary to change values to attributes of the warrior ship.
 
     :param player: must be a dictionary
@@ -432,8 +432,8 @@ def warrior_ship(player):  # A
     {'health': 18, 'maximum_health': 18, 'ship': 'Warrior', 'player_class': 'Squire',
     'player_class_special_action': 'Resurrect', 'special_action_counter': 1, 'damage': 25}
     """
-    player["health"] -= 2
-    player["maximum_health"] -= 2
+    player["health"] = 18
+    player["maximum_health"] = 18
     player["ship"] = "Warrior"
     player["player_class"] = "Squire"
     player["player_class_special_action"] = "Resurrect"
@@ -442,7 +442,7 @@ def warrior_ship(player):  # A
     return player
 
 
-def magician_ship(player):  # A
+def magician_ship(player):
     """Modify dictionary to change values to attributes of the magician ship.
 
     :param player: must be a dictionary
@@ -467,7 +467,7 @@ def magician_ship(player):  # A
     return player
 
 
-def thief_ship(player):  # A
+def thief_ship(player):
     """Modify dictionary to change values to attributes of the thief ship.
 
     :param player: must be a dictionary
@@ -488,7 +488,7 @@ def thief_ship(player):  # A
     return player
 
 
-def priest_ship(player):  # A
+def priest_ship(player):
     """Modify dictionary to change values to attributes of the priest ship.
 
     :param player: must be a dictionary
@@ -506,8 +506,8 @@ def priest_ship(player):  # A
     {'health': 16, 'maximum_health': 16, 'ship': 'Priest', 'player_class': 'Cherub',
     'player_class_special_action': 'Healing Spell', 'damage': 20}
     """
-    player["health"] -= 4
-    player["maximum_health"] -= 4
+    player["health"] = 16
+    player["maximum_health"] = 4
     player["ship"] = "Priest"
     player["player_class"] = "Cherub"
     player["player_class_special_action"] = "Healing Spell"
