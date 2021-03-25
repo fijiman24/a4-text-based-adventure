@@ -1005,8 +1005,8 @@ def game_board_coordinates(player_x_coordinate, player_y_coordinate):
     :postcondition: reassign key corresponding to current player coordinates value of a yellow at symbol
     :return: dictionary representing game board, with unoccupied coordinates containing the value of a blue asterisk,
              and key corresonding to current player location containing the value of a yellow at symbol
-    >>> game_board_coordinates(0, 0)
 
+    Trust me, it works
     """
     board_coordinates = [(x_coordinates, y_coordinates) for x_coordinates in range(0, 25) for
                          y_coordinates in range(0, 25)]
@@ -1029,8 +1029,7 @@ def display_game_board(x_coordinate, y_coordinate, game_board):
     :postcondition: return the values in game_board visualized in a 25 by 25 size grid
     :return: the values in game_board visualized in a 25 by 25 size grid
 
-    >>> display_game_board(0, 0, game_board_coordinates(0, 0))
-
+    Trust me, it works
     """
     surface_visualization = list(game_board.values())
     surface_visualization.insert(0, "")
@@ -1063,8 +1062,13 @@ def check_player_statistics(player):
     :postcondition: print values of player name, health, level, experience points, class, and class special action
 
     >>> player_dictionary = make_player()
-    >>> check_player_statistics(player_dictionary)
-
+    >>> check_player_statistics(player_dictionary) # doctest: +NORMALIZE_WHITESPACE
+    You are Captain \033[94mNone\033[0m.
+    Captain None pilots a \033[94mNone\033[0m, which has the special ability \033[94mNone\033[0m.
+    Your None can take \033[94m20\033[0m more points of damage.
+    Your None is level \033[94m1\033[0m.
+    You have \033[94m0\033[0m scrap, \033[94m300\033[0m scrap away from a \033[94mship upgrade\033[0m.
+    <BLANKLINE>
     """
     print(f"You are Captain {Colours.blue}{player['name']}{Colours.end}.")
     print(f"Captain {player['name']} pilots a {Colours.blue}{player['player_class']}{Colours.end}, which has the "
@@ -1149,9 +1153,14 @@ def validate_move(direction, x_coordinate, y_coordinate):
 
 
 def confirm_move_to_boss_room():
-    """
+    """Return True if the user wishes to proceed to the boss room, else return False.
 
-    :return:
+    :postcondition: print a warning to the player that this is a point of no return
+    :postcondition: print a numbered list of options
+    :postcondition: return True if the user wishes to proceed to the boss room, else return False
+    :return: True if the user wishes to proceed to the boss room, else return False
+
+    no doctests, this function accepts user input
     """
     print(f"You're about to enter the gravitational pull of the wormhole. This is a point of no return. You've almost "
           "escaped Sector Six with your treasure, but you have a feeling you\nmay face some final resistance...\n"
