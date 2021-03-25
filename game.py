@@ -533,10 +533,32 @@ def special_action_selector(player):  # A
 
 
 def resurrect(player):  # A
-    """
+    """Resurrect player if health <= 0 and if special_action_counter == 1.
 
-    :param player:
-    :return:
+    :param player: must be a dictionary
+    :precondition: must contain key "special_action_counter" containing an integer value of 0 or 1
+    :precondition: must contain key "health"
+    :precondition: must contain key "level"
+    :postcondition: calculate and restore health if special_action_counter == 1 and health <= 0
+    :return: player or nothing
+
+    >>> resurrect({"special_action_counter":1, "health": 1, "level": 1})
+    Your passive will allow you to survive a critical attack.
+    <BLANKLINE>
+    >>> resurrect({"special_action_counter":0, "health": 0, "level": 1})
+    Your passive have already been used. You will not revive if your hp hits 0.
+    <BLANKLINE>
+    >>> resurrect({"special_action_counter": 0, "health": 10, "level": 2})
+    Your passive have already been used. You will not revive if your hp hits 0.
+    <BLANKLINE>
+    >>> resurrect({"special_action_counter": 1, "health": 0, "level": 1})
+    Your undying will allowed you to survive the attack and restored your health to \033[94m10\033[0m!
+    <BLANKLINE>
+    {'special_action_counter': 0, 'health': 10, 'level': 1}
+    >>> resurrect({"special_action_counter": 1, "health": -5, "level": 3})
+    Your undying will allowed you to survive the attack and restored your health to \033[94m20\033[0m!
+    <BLANKLINE>
+    {'special_action_counter': 0, 'health': 20, 'level': 3}
     """
     if player["special_action_counter"] == 1:
         if player["health"] <= 0:
