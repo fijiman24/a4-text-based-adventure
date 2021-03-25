@@ -1473,15 +1473,56 @@ def combat_print_health_values(player, enemy):
           f"{Colours.red}{enemy['health']}{Colours.end} more points of damage.\n")
 
 
-def gain_experience_points(player):  # A
+def gain_experience_points(player):
     """Add experience points for player if not max level.
 
     :param player: must be a dictionary
-    :precondition: dictionary must contain keys "exp", "level", "player_class" and "race"
+    :precondition: dictionary must contain key "exp" with the value being an integer
+    :precondition: dictionary must contain key "level" with the value being an integer
+    :precondition: dictionary must contain key "player_class"
+    :precondition: dictionary must contain key "x-coordinate" with the value being an integer
+    :precondition: dictionary must contain key "y-coordinate" with the value being an integer
+    :precondition: dictionary must contain key "health" with the value being an integer
+    :precondition: dictionary must contain key "damage" with the value being an integer
+    :precondition: dictionary must contain key "health" with the value being an integer
+    :precondition: dictionary must contain key "maximum_health" with the value being an integer
+    :precondition: dictionary must contain key "ship"
+    :precondition: dictionary must contain key "special_action_counter" if key "ship" == "Magician"
     :postcondition: rolls for experience gain then check
     :return: player if player is not at the max level
 
-    no doctest, this uses random values
+    >>> gain_experience_points({"level": 1, "exp": 250, "damage": 20, "health": 20, "maximum_health": 20,\
+    "ship": "Warrior", "player_class": "Squire", "x-coordinate": 0, "y-coordinate": 0}) #doctest: +NORMALIZE_WHITESPACE
+    You won the battle! You gained \033[94m25\033[0m scrap.
+    {'level': 1, 'exp': 275, 'damage': 20, 'health': 20, 'maximum_health': 20, 'ship': 'Warrior',
+     'player_class': 'Squire', 'x-coordinate': 0, 'y-coordinate': 0}
+    >>> gain_experience_points({"level": 2, "exp": 299, "damage": 22, "health": 25, "maximum_health": 25,\
+    "ship": "Thief", "player_class": "Banshee", "x-coordinate": 8, "y-coordinate": 8}) #doctest: +NORMALIZE_WHITESPACE
+    You won the battle! You gained \033[94m50\033[0m scrap.
+    You gained a level! You are now level \033[94m3\033[0m and your ship has been upgrade to a \033[94mRevenant\033[0m.
+    {'level': 3, 'exp': 0, 'damage': 24, 'health': 30, 'maximum_health': 30, 'ship': 'Thief', 'player_class': 'Revenant',
+    'x-coordinate': 8, 'y-coordinate': 8}
+    >>> gain_experience_points({"level": 1, "exp": 320, "damage": 20, "health": 20, "maximum_health": 20,\
+     "ship": "Magician", "player_class": "Sapper", "special_action_counter": 1, "x-coordinate": 16, \
+     "y-coordinate": 16}) #doctest: +NORMALIZE_WHITESPACE
+    You won the battle! You gained \033[94m100\033[0m scrap.
+    You gained a level! You are now level \033[94m2\033[0m and your ship has been upgrade to a \033[94mDrainer\033[0m.
+    You also gained another charge on your special attack! You now have a total of \033[94m2\033[0m.
+    You gained a charge on your special attack. You now have a total of \033[94m3\033[0m charge(s).
+    {'level': 2, 'exp': 0, 'damage': 22, 'health': 25, 'maximum_health': 25, 'ship': 'Magician',
+     'player_class': 'Drainer', 'special_action_counter': 3, 'x-coordinate': 16, 'y-coordinate': 16}
+    >>> gain_experience_points({"level": 2, "exp": 300, "damage": 22, "health": 25, "maximum_health": 28, \
+    "ship": "Priest", "player_class": "Archangel", "x-coordinate": 23, "y-coordinate": 23})\
+     #doctest: +NORMALIZE_WHITESPACE
+    You won the battle! You gained \033[94m150\033[0m scrap.
+    You gained a level! You are now level \033[94m3\033[0m and your ship has been upgrade to a \033[94mSeraphim\033[0m.
+    {'level': 3, 'exp': 0, 'damage': 24, 'health': 30, 'maximum_health': 33, 'ship': 'Priest',
+     'player_class': 'Seraphim', 'x-coordinate': 23, 'y-coordinate': 23}
+    >>> gain_experience_points({"level": 3, "exp": 0, "damage": 22, "health": 30, "maximum_health": 30, \
+    "ship": "Priest", "player_class": "Archangel", "x-coordinate": 23, "y-coordinate": 23})\
+     #doctest: +NORMALIZE_WHITESPACE
+    You are already at the max level of \033[94m3\033[0m!
+    You did not gain any scrap from the battle.
     """
     enemy = make_appropriate_enemy_type(player)
     if player["level"] == 3:
@@ -1503,7 +1544,7 @@ def level_system(player):
     """Level up the player if they reach a certain amount of experience points.
 
     :param player: must be a dictionary
-    :precondition: dictionary must contain key "exp" with thevalue being an integer
+    :precondition: dictionary must contain key "exp" with the value being an integer
     :precondition: dictionary must contain key "level" with the value being an integer
     :precondition: dictionary must contain key "player_class"
     :precondition: dictionary must contain key "damage" with the value being an integer
