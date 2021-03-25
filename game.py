@@ -1352,15 +1352,16 @@ def regen_health(player_health, maximum_health):
         return player_health
 
 
-def backstab(player_health):  # A
-    """20 percent chance to subtract between [1, MAX_SHIV_DAMAGE] from current_health, else return current_health.
+def backstab(player_health):
+    """Roll for shiv chance and damage.
 
     :param player_health: any integer
     :precondition: player_health is any integer
     :postcondition: generate a random integer between [1, 5]
     :postcondition: if integer is 1, subtract between [1, MAX_SHIV_DAMAGE] from player_health
     :postcondition: if integer is not 1, return player_health
-    :return: player_health minus between [1, MAX_SHIV_DAMAGE] if True, else player_health
+    :postcondition: if player health is reduced to 0 or less, call player_death_text function
+    :return: player_health
     """
     backstab_chance = random.randint(1, 5)
     backstab_damage = random.randint(1, MAX_SHIV_DAMAGE[0])
