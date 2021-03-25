@@ -1499,30 +1499,41 @@ def gain_experience_points(player):  # A
         return player
 
 
-def level_system(player):  # A
+def level_system(player):
     """Level up the player if they reach a certain amount of experience points.
 
     :param player: must be a dictionary
-    :precondition: dictionary must contain keys "exp", "level", "player_class", "damage", "health" and "ship"
-    :precondition: dictionary must contain key "special_action_counter" if key "ship" is "Magician"
+    :precondition: dictionary must contain key "exp" with thevalue being an integer
+    :precondition: dictionary must contain key "level" with the value being an integer
+    :precondition: dictionary must contain key "player_class"
+    :precondition: dictionary must contain key "damage" with the value being an integer
+    :precondition: dictionary must contain key "health" with the value being an integer
+    :precondition: dictionary must contain key "maximum_health" with the value being an integer
+    :precondition: dictionary must contain key "ship"
+    :precondition: dictionary must contain key "special_action_counter" if key "ship" == "Magician"
     :postcondition: calculate if experience requirement met then increases level, damage and health then sets exp to 0
     :postcondition: if experience requirement met and "ship" is "Magician", increment special_action_counter by 1
     :return: player
 
-    >>> level_system({"level": 1, "exp": 250, "damage": 20, "health": 20, "ship": "Warrior", "player_class": "Squire"})
-    {'level': 1, 'exp': 250, 'damage': 20, 'health': 20, 'ship': 'Warrior', 'player_class': 'Squire'}
-    >>> level_system({"level": 2, "exp": 299, "damage": 22, "health": 25, "ship": "Thief", "player_class": "Banshee"})
-    {'level': 2, 'exp': 299, 'damage': 22, 'health': 25, 'ship': 'Thief', 'player_class': 'Banshee'}
-    >>> level_system({"level": 1, "exp": 320, "damage": 20, "health": 20, "ship": "Magician", "player_class": "Sapper"\
-    , "special_action_counter": 1}) #doctest: +NORMALIZE_WHITESPACE
-    You gained a level! You are now level 2 and your ship has been upgrade to a Drainer.
-    You also gained another charge on your special attack! You now have a total of 2.
-    {'level': 2, 'exp': 0, 'damage': 22, 'health': 25, 'ship': 'Magician', 'player_class': 'Drainer',
-    'special_action_counter': 2}
-    >>> level_system({"level": 2, "exp": 300, "damage": 22, "health": 25, "ship": "Priest",\
-    "player_class": "Archangel"})
-    You gained a level! You are now level 3 and your ship has been upgrade to a Seraphim.
-    {'level': 3, 'exp': 0, 'damage': 24, 'health': 30, 'ship': 'Priest', 'player_class': 'Seraphim'}
+    >>> level_system({"level": 1, "exp": 250, "damage": 20, "health": 20, "maximum_health": 20,\
+    "ship": "Warrior", "player_class": "Squire"}) #doctest: +NORMALIZE_WHITESPACE
+    {'level': 1, 'exp': 250, 'damage': 20, 'health': 20, 'maximum_health': 20, 'ship': 'Warrior',
+     'player_class': 'Squire'}
+    >>> level_system({"level": 2, "exp": 299, "damage": 22, "health": 25, "maximum_health": 25,\
+     "ship": "Thief", "player_class": "Banshee"}) #doctest: +NORMALIZE_WHITESPACE
+    {'level': 2, 'exp': 299, 'damage': 22, 'health': 25, 'maximum_health': 25, 'ship': 'Thief',
+     'player_class': 'Banshee'}
+    >>> level_system({"level": 1, "exp": 320, "damage": 20, "health": 20, "maximum_health": 20, "ship": "Magician",\
+    "player_class": "Sapper", "special_action_counter": 1}) #doctest: +NORMALIZE_WHITESPACE
+    You gained a level! You are now level \033[94m2\033[0m and your ship has been upgrade to a \033[94mDrainer\033[0m.
+    You also gained another charge on your special attack! You now have a total of \033[94m2\033[0m.
+    {'level': 2, 'exp': 0, 'damage': 22, 'health': 25, 'maximum_health': 25, 'ship': 'Magician',
+     'player_class': 'Drainer', 'special_action_counter': 2}
+    >>> level_system({"level": 2, "exp": 300, "damage": 22, "health": 25, "maximum_health": 28, "ship": "Priest",\
+    "player_class": "Archangel"}) #doctest: +NORMALIZE_WHITESPACE
+    You gained a level! You are now level \033[94m3\033[0m and your ship has been upgrade to a \033[94mSeraphim\033[0m.
+    {'level': 3, 'exp': 0, 'damage': 24, 'health': 30, 'maximum_health': 33, 'ship': 'Priest',
+     'player_class': 'Seraphim'}
     """
     if player["exp"] >= 300:
         player["level"] += 1
