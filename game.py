@@ -515,11 +515,16 @@ def priest_ship(player):
     return player
 
 
-def special_action_selector(player):  # A
-    """
+def special_action_selector(player):
+    """Select special move based on player ship type.
 
-    :param player:
-    :return:
+    :param player: must be a dictionary
+    :precondition: dictionary must contain key "health"
+    :precondition: dictionary must contain key "ship"
+    :precondition: dictionary must contain key "damage"
+    :precondition: dictionary must contain key "special_action_counter"
+    :postcondition: correctly select ability based on ship type then executes the ability function
+    :return: player if "ship" == "Warrior" or "Priest" else damage amount
     """
     if player["ship"] == "Warrior":
         resurrect(player)
