@@ -650,10 +650,15 @@ def make_enemy_difficulty_one():
     }
 
 
-def make_enemy_difficulty_two():  # A
-    """
+def make_enemy_difficulty_two():
+    """Create dictionary of the difficulty two enemy.
 
-    :return:
+    :precondition: nothing
+    :postcondition: generate new dictionary based on enemy attributes
+    :return: dictionary
+
+    >>> make_enemy_difficulty_two()
+    {'name': 'Gunner', 'health': 20, 'experience_points': 50, 'maximum_damage': 10}
     """
     return {
         "name": "Gunner",
