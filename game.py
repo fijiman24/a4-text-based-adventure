@@ -1524,8 +1524,8 @@ def gain_experience_points(player):
     "ship": "Thief", "player_class": "Banshee", "x-coordinate": 8, "y-coordinate": 8}) #doctest: +NORMALIZE_WHITESPACE
     You won the battle! You gained \033[94m50\033[0m scrap.
     You gained a level! You are now level \033[94m3\033[0m and your ship has been upgrade to a \033[94mRevenant\033[0m.
-    {'level': 3, 'exp': 0, 'damage': 24, 'health': 30, 'maximum_health': 30, 'ship': 'Thief', 'player_class': 'Revenant',
-    'x-coordinate': 8, 'y-coordinate': 8}
+    {'level': 3, 'exp': 0, 'damage': 24, 'health': 30, 'maximum_health': 30, 'ship': 'Thief',
+     'player_class': 'Revenant', 'x-coordinate': 8, 'y-coordinate': 8}
     >>> gain_experience_points({"level": 1, "exp": 320, "damage": 20, "health": 20, "maximum_health": 20,\
      "ship": "Magician", "player_class": "Sapper", "special_action_counter": 1, "x-coordinate": 16, \
      "y-coordinate": 16}) #doctest: +NORMALIZE_WHITESPACE
