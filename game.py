@@ -1437,19 +1437,34 @@ def combat_enemy_flee():  # A
         return False
 
 
-def combat_choice():  # A
+def combat_choice():
     """Present menu of combat options.
-
     """
     options = list(enumerate(["Normal Attack", "Special Ability", "Flee"], start=1))
     print(f"You are engaged in a space battle. What will you do next?\n", options)
     return input()
 
 
-def combat_print_health_values(player, enemy):  # A
-    """
+def combat_print_health_values(player, enemy):
+    """Print health values of player and enemy.
 
-    :return:
+    :param player: must be a dictionary
+    :param enemy: must be a dictionary
+    :precondition: player dictionary must contain key "player_class"
+    :precondition: player dictionary must contain key "health"
+    :precondition: enemy dictionary must contain key "name"
+    :precondition: enemy dictionary must contain key "health
+    :postcondition: print out statements that show player class and health and enemy name and health
+    :return: nothing
+
+    >>> combat_print_health_values({"player_class": "Squire", "health": 10}, {"name": "Dinghy", "health": 5})
+    Your \033[94mSquire\033[0m can take \033[94m10\033[0m more points of damage.
+    The enemy \033[91mDinghy\033[0m can take \033[91m5\033[0m more points of damage.
+    <BLANKLINE>
+    >>> combat_print_health_values({"player_class": "robot", "health": "five"}, {"name": "supercar", "health": "ten"})
+    Your \033[94mrobot\033[0m can take \033[94mfive\033[0m more points of damage.
+    The enemy \033[91msupercar\033[0m can take \033[91mten\033[0m more points of damage.
+    <BLANKLINE>
     """
     time.sleep(1)
     print(f"Your {Colours.blue}{player['player_class']}{Colours.end} can take "
