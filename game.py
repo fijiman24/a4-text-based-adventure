@@ -324,7 +324,7 @@ def display_player_class_menu():
     return input()
 
 
-def select_player_class(player):  # A
+def select_player_class(player):
     """Print class description and return class after being passed to confirm_player_class().
 
     :precondition: user enters input when prompted
@@ -332,7 +332,7 @@ def select_player_class(player):  # A
                     (4, 'Cherub')]
     :postcondition: print class description
     :postcondition: pass user input to confirm_player_class()
-    :return: class after being passed to confirm_player_class()
+    :return: player dictionary after being passed to confirm_player_class()
     """
     choice = display_player_class_menu()
     if choice == "1":
@@ -384,13 +384,14 @@ def print_class_description(class_name):
         print(f"QuickFix™ Protocols allows this ship to repair itself during combat.")
 
 
-def confirm_player_class(class_name, player):  # A
+def confirm_player_class(class_name, player):
     """Return class_name or call select_player_class, depending on user input.
 
     :param class_name: any string
     :param player: a dictionary
     :precondition: class_name is any string representing the selected player class
     :precondition: user enters input when prompted
+    :postcondition: call print_class_description to print class description
     :postcondition: print f"Do you pilot a {class_name}?"
     :postcondition: print a numbered list of options [(1, 'Yes'), (2, 'No')]
     :postcondition: return class_name if input is "1"
