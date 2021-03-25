@@ -1335,8 +1335,6 @@ def backstab(player_health):  # A
     :postcondition: if integer is 1, subtract between [1, MAX_SHIV_DAMAGE] from player_health
     :postcondition: if integer is not 1, return player_health
     :return: player_health minus between [1, MAX_SHIV_DAMAGE] if True, else player_health
-
-    no doctest, this uses random values
     """
     backstab_chance = random.randint(1, 5)
     backstab_damage = random.randint(1, MAX_SHIV_DAMAGE[0])
@@ -1352,12 +1350,15 @@ def backstab(player_health):  # A
         return player_health
 
 
-def combat_initiative_roll(player):  # A
-    """Roll to see if player or foe attacks first.
+def combat_initiative_roll(player):
+    """Check to see if player or enemy attacks first.
 
-    :precondition: params must be met
-    :postcondition: rolls to check if foe attacks first then returns player
-    :return: player if foe goes first otherwise nothing
+    :param player: must be a dictionary
+    :precondition: dictionary must contain key "ship"
+    :postcondition: call make_appropriate_enemy_type function to create enemy
+    :postcondition: return True if key "ship == "Thief"
+    :postcondition: randomly rolls for player and enemy to check who attacks first
+    :return: True if key "ship" == "Thief" or if player roll is greater than enemy roll else False
     """
     player_roll = random.randint(1, 100)
     enemy_roll = random.randint(1, 100)
