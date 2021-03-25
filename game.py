@@ -296,13 +296,11 @@ def make_player():
             }
 
 
-def input_player_name():  # A
+def input_player_name():
     """Return player name.
 
     :postcondition: convert player's input into title case
     :return: player name
-
-    no doctests, accepts user input
     """
     name_input = str(input(f"Enter your {Colours.blue}name{Colours.end}, captain: ")).title()
     if name_input.lower() == "chris" or name_input.lower() == "christopher" or name_input.lower() == "chris thompson":
@@ -315,10 +313,11 @@ def input_player_name():  # A
         return name_input
 
 
-def display_player_class_menu():  # A
-    """
+def display_player_class_menu():
+    """Display and prompt the choices of classes that the user may select from.
 
-    :return:
+    :postcondition: enumerate and display classes then prompt and return the user input
+    :return: user input
     """
     class_choices = list(enumerate(["Squire", "Sapper", "Ghost", "Cherub"], start=1))
     print(f"Select a {Colours.blue}spaceship{Colours.end}: \n", class_choices)
