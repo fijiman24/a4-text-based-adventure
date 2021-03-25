@@ -507,7 +507,7 @@ def priest_ship(player):
     'player_class_special_action': 'Healing Spell', 'damage': 20}
     """
     player["health"] = 16
-    player["maximum_health"] = 4
+    player["maximum_health"] = 16
     player["ship"] = "Priest"
     player["player_class"] = "Cherub"
     player["player_class_special_action"] = "Healing Spell"
