@@ -599,13 +599,12 @@ def magic_blast(player):
 
 
 def multi_attack(player):
-    """
+    """Split damage into 5 smaller but more powerful attacks.
 
     :param player: must be a dictionary
-    :precondition:
-    :precondition:
-    :postcondition:
-    :return:
+    :precondition: must contain key "damage" with a value greater or equal to 2
+    :postcondition: splits damage then randomly generate 5 different attacks
+    :return: sum of the 5 attacks
     """
     split_attack = round(player["damage"] * 2 / 5)
     total_attack = 0
