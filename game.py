@@ -1355,8 +1355,10 @@ def combat_initiative_roll(player):
 
     :param player: must be a dictionary
     :precondition: dictionary must contain key "ship"
+    :precondition: dictionary must contain key "x-coordinate"
+    :precondition: dictionary must contain key "y-coordinate"
     :postcondition: call make_appropriate_enemy_type function to create enemy
-    :postcondition: return True if key "ship == "Thief"
+    :postcondition: return True if key "ship" == "Thief"
     :postcondition: randomly rolls for player and enemy to check who attacks first
     :return: True if key "ship" == "Thief" or if player roll is greater than enemy roll else False
     """
