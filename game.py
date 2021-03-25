@@ -26,6 +26,8 @@ MAX_ENEMY_DAMAGE = (10,)
 MAX_SHIV_DAMAGE = (4,)
 STARTING_X_COORDINATE = (0,)
 STARTING_Y_COORDINATE = (0,)
+GAME_BOARD_WIDTH = (25,)
+GAME_BOARD_LENGTH = (25,)
 
 
 def ascii_intro():
@@ -757,8 +759,8 @@ def make_appropriate_enemy_type(player):
     >>> make_appropriate_enemy_type(player_character)
     {'name': 'Shredder', 'health': 40, 'experience_points': 150, 'maximum_damage': 25}
     """
-    if player["x-coordinate"] in range(20, 25) or player["y-coordinate"] in range(20, 25) and \
-            (player["x-coordinate"] != 24 and player["y-coordinate"] != 24):
+    if player["x-coordinate"] in range(20, GAME_BOARD_WIDTH[0]) or player["y-coordinate"] in \
+            range(20, GAME_BOARD_LENGTH[0]) and (player["x-coordinate"] != 24 and player["y-coordinate"] != 24):
         return make_enemy_difficulty_four()
     elif player["x-coordinate"] in range(15, 20) or player["y-coordinate"] in range(15, 20):
         return make_enemy_difficulty_three()
@@ -1103,8 +1105,8 @@ def game_board_coordinates(player_x_coordinate, player_y_coordinate):
 
     Trust me, it works
     """
-    board_coordinates = [(x_coordinates, y_coordinates) for x_coordinates in range(0, 25) for
-                         y_coordinates in range(0, 25)]
+    board_coordinates = [(x_coordinates, y_coordinates) for x_coordinates in range(0, GAME_BOARD_WIDTH[0]) for
+                         y_coordinates in range(0, GAME_BOARD_LENGTH[0])]
     game_board = {coordinate: f"{Colours.blue}*{Colours.end}" for coordinate in board_coordinates}
     game_board[(player_y_coordinate, player_x_coordinate)] = f"{Colours.yellow}@{Colours.end}"
     return game_board
@@ -1128,8 +1130,8 @@ def display_game_board(x_coordinate, y_coordinate, game_board):
     """
     surface_visualization = list(game_board.values())
     surface_visualization.insert(0, "")
-    for index in range(1, len(surface_visualization) + 25):
-        if index % 26 == 0:
+    for index in range(1, len(surface_visualization) + GAME_BOARD_WIDTH[0]):
+        if index % (GAME_BOARD_WIDTH[0] + 1) == 0:
             surface_visualization.insert(index, "\n")
     surface_visualization.pop()
     print(*surface_visualization, sep=" ")
