@@ -598,13 +598,16 @@ def magic_blast(player):
     return blast_damage
 
 
-def multi_attack(player):  # A
+def multi_attack(player):
     """
 
-    :param player:
+    :param player: must be a dictionary
+    :precondition:
+    :precondition:
+    :postcondition:
     :return:
     """
-    split_attack = int(round(player["damage"] * player["level"] * 1.25 / 5))
+    split_attack = round(player["damage"] * 2 / 5)
     total_attack = 0
     for attacks in range(0, 5):
         attack = random.randint(1, split_attack)
