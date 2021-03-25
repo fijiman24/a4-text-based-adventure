@@ -632,10 +632,15 @@ def heal_spell(player):  # A
     return player
 
 
-def make_enemy_difficulty_one():  # A
-    """
+def make_enemy_difficulty_one():
+    """Create dictionary of the difficulty one enemy.
 
-    :return:
+    :precondition: nothing
+    :postcondition: generate new dictionary based on enemy attributes
+    :return: dictionary
+
+    >>> make_enemy_difficulty_one()
+    {'name': 'Dinghy', 'health': 10, 'experience_points': 25, 'maximum_damage': 5}
     """
     return {
         "name": "Dinghy",
