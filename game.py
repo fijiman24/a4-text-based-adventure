@@ -352,11 +352,24 @@ def select_player_class(player):  # A
     return player
 
 
-def print_class_description(class_name):  # A
-    """
+def print_class_description(class_name):
+    """Print description of the inputted class.
 
-    :param class_name:
-    :return:
+    :param class_name: must be a string containing either "Squire", "Sapper", "Ghost" or "Cherub"
+    :precondition: param must be met
+    :postcondition: print description of the input class type
+    :return: nothing
+
+    >>> print_class_description("Squire") # doctest: +NORMALIZE_WHITESPACE
+    A Lazarus Engine™ allows for this ship to repair itself after its hull integrity has been completely
+    breached for the first time.
+    >>> print_class_description("Sapper")
+    Destroy enemy ships to steal their energy and charge up your Quasar Cannon™ for a devastating attack.
+    >>> print_class_description("Ghost") # doctest: +NORMALIZE_WHITESPACE
+    A nimble ship covered in aerodynamic SlipStream™ technology allows the pilot to make the first move in
+    combat, and attack multiple times in one turn.
+    >>> print_class_description("Cherub")
+    QuickFix™ Protocols allows this ship to repair itself during combat.
     """
     if class_name == "Squire":
         print(f"A Lazarus Engine™ allows for this ship to repair itself after its hull integrity has been completely "
