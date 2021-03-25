@@ -1535,15 +1535,13 @@ def class_upgrade(player):  # A
     return player
 
 
-def spawn_enemy():  # A
-    """20 percent chance to return True, else False.
+def spawn_enemy():
+    """Roll to check if an enemy will be spawned.
 
     :postcondition: generate a random integer between [1, 5]
     :postcondition: if integer is 1 return True
-    :postcondition: if integer is not 1 return false
+    :postcondition: if integer is not 1 return False
     :return: True if integer is 1, else False
-
-    no doctest, this uses random values
     """
     spawn_chance = random.randint(1, 5)
     if spawn_chance == 1:
