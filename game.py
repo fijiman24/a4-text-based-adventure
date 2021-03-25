@@ -65,7 +65,7 @@ def story_introduction_text():
     solar systems dedicated to vice, there isn't a sector in the Milky Way Galaxy that's been left untouched by our \
     ever-expanding race. One such sector is devoted to storing all of humanity's physical wealth and fortune. Many a \
     space pirate has tried their hand at laying siege to this sector in hopes of plundering some riches for themselves,\
-     and all have been gunned down by the local security militias.
+    and all have been gunned down by the local security militias.
     <BLANKLINE>
     All except you. You put together a ragtag crew, formulated the perfect plan, and somehow managed to fill your ship \
     with as much stolen loot as she could carry. Now all you have to do is escape to the nearest wormhole, treasure in \
@@ -84,19 +84,31 @@ def story_introduction_text():
 
 
 def boss_fight_start_text(player):
-    """Print text introducing the end game boss.
+    """Print text introducing the appropriate boss phase.
 
-    :return:
+    :param player: a dictionary
+    :precondition: player is a dictionary representing the player character
+    :precondition: player contains a key called boss_phase_counter
+    :precondition: the value of boss_phase_counter is between [1, 3]
+    :postcondition: print text introducing the appropriate boss phase
+
     >>> player_character = make_player()
-    >>> boss_fight_start_text(player_character)
-
+    >>> boss_fight_start_text(player_character) # doctest: +NORMALIZE_WHITESPACE
+    You've almost escaped from Sector Six, treasure in tow. To your surprise, the enemy militia is nowhere to be found.\
+    Where's their final resistance? As you begin your approach to the wormhole's entrance, a shrill scream surrounds \
+    your ship. Sound...isn't supposed to travel through space. Whatever made that sound transcends the laws of nature \
+    itself. From the pitch black of the wormhole, you notice a pair of scarlet eyes peering back at you from the \
+    darkness. A titanic, grotesque \033[95mpink\033[0m body emerges from the wormhole. It's an...
+    \033[95mIntergalactic Space Worm\033[0m!
+    <BLANKLINE>
     >>> player_character["boss_phase_counter"] = 2
-    >>> boss_fight_start_text(player_character)
-
+    >>> boss_fight_start_text(player_character) # doctest: +NORMALIZE_WHITESPACE
+    It's a \033[95mTwo-Headed Intergalactic Space Worm\033[0m!
+    <BLANKLINE>
     >>> player_character["boss_phase_counter"] = 1
-    >>> boss_fight_start_text(player_character)
-
-
+    >>> boss_fight_start_text(player_character) # doctest: +NORMALIZE_WHITESPACE
+    Get rid of the \033[95mHeadless Intergalactic Space Worm\033[0m to finally escape Sector Six!
+    <BLANKLINE>
     """
     if player["boss_phase_counter"] == 3:
         print(f"You've almost escaped from Sector Six, treasure in tow. To your surprise, the enemy militia is nowhere"
@@ -109,8 +121,8 @@ def boss_fight_start_text(player):
     elif player["boss_phase_counter"] == 2:
         print(f"It's a {Colours.magenta}Two-Headed Intergalactic Space Worm{Colours.end}!\n")
     elif player["boss_phase_counter"] == 1:
-        print(f"Get rid of the {Colours.magenta}Headless Intergalactic Space Worm{Colours.end}'s corpse to finally "
-              f"escape Sector Six!\n")
+        print(f"Get rid of the {Colours.magenta}Headless Intergalactic Space Worm{Colours.end} to finally escape Sector"
+              f" Six!\n")
 
 
 def boss_phase_death_text(player):
@@ -118,13 +130,13 @@ def boss_phase_death_text(player):
 
     :return:
     >>> player_character = make_player()
-    >>> boss_phase_death_text(player_character)
+    >>> boss_phase_death_text(player_character) # doctest: +NORMALIZE_WHITESPACE
 
     >>> player_character["boss_phase_counter"] = 2
-    >>> boss_phase_death_text(player_character)
+    >>> boss_phase_death_text(player_character) # doctest: +NORMALIZE_WHITESPACE
 
     >>> player_character["boss_phase_counter"] = 1
-    >>> boss_phase_death_text(player_character)
+    >>> boss_phase_death_text(player_character) # doctest: +NORMALIZE_WHITESPACE
     """
     if player["boss_phase_counter"] == 3:
         print(f"You manage to obliterate the {Colours.magenta}Intergalactic Space Worm{Colours.end}'s head!\nHowever, "
@@ -140,11 +152,27 @@ def boss_phase_death_text(player):
 def story_ending_text(player):
     """Print the ending story text.
 
+    :param player: a dictionary
+    :precondition: player is a dictionary representing the player character
+    :precondition: player contains a key called name
     :postcondition: print the ending story text
 
     >>> player_character = make_player()
     >>> player_character['name'] = "Jaraxxus"
-    >>> story_ending_text(player_character)
+    >>> story_ending_text(player_character) # doctest: +NORMALIZE_WHITESPACE
+    You and your crew disappear into the wormhole, along with untold treasure. For millennia, the galaxy will tell \
+    tales of the legendary Captain \033[94mJaraxxus\033[0m, the first space captain to pilfer from...
+    <BLANKLINE>
+    \033[93m         /$$$$$$                        /$$                                /$$$$$$  /$$
+            /$$__  $$                      | $$                               /$$__  $$|__/
+            | $$  \__/  /$$$$$$   /$$$$$$$ /$$$$$$    /$$$$$$   /$$$$$$       | $$  \__/ /$$ /$$   /$$
+            |  $$$$$$  /$$__  $$ /$$_____/|_  $$_/   /$$__  $$ /$$__  $$      |  $$$$$$ | $$|  $$ /$$/
+            \____  $$| $$$$$$$$| $$        | $$    | $$  \ $$| $$  \__/       \____  $$| $$ \  $$$$/
+            /$$  \ $$| $$_____/| $$        | $$ /$$| $$  | $$| $$             /$$  \ $$| $$  >$$  $$
+           |  $$$$$$/|  $$$$$$$|  $$$$$$$  |  $$$$/|  $$$$$$/| $$            |  $$$$$$/| $$ /$$/\  $$
+            \______/  \_______/ \_______/   \___/   \______/ |__/             \______/ |__/|__/  \__/\033[0m
+    <BLANKLINE>
+    Thanks for playing!
 
     """
     print(f"You and your crew disappear into the wormhole, along with untold treasure. For millennia, the galaxy "
