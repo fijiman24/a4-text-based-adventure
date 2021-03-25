@@ -36,23 +36,24 @@ def ascii_intro():
     >>> ascii_intro() # doctest: +NORMALIZE_WHITESPACE
     \033[93m  /$$$$$$                        /$$                                /$$$$$$  /$$
             /$$__  $$                      | $$                               /$$__  $$|__/
-            | $$  \__/  /$$$$$$   /$$$$$$$ /$$$$$$    /$$$$$$   /$$$$$$       | $$  \__/ /$$ /$$   /$$
+            | $$  \\__/  /$$$$$$   /$$$$$$$ /$$$$$$    /$$$$$$   /$$$$$$       | $$  \\__/ /$$ /$$   /$$
             |  $$$$$$  /$$__  $$ /$$_____/|_  $$_/   /$$__  $$ /$$__  $$      |  $$$$$$ | $$|  $$ /$$/
-            \____  $$| $$$$$$$$| $$        | $$    | $$  \ $$| $$  \__/       \____  $$| $$ \  $$$$/
-            /$$  \ $$| $$_____/| $$        | $$ /$$| $$  | $$| $$             /$$  \ $$| $$  >$$  $$
-           |  $$$$$$/|  $$$$$$$|  $$$$$$$  |  $$$$/|  $$$$$$/| $$            |  $$$$$$/| $$ /$$/\  $$
-            \______/  \_______/ \_______/   \___/   \______/ |__/             \______/ |__/|__/  \__/
+            \\____  $$| $$$$$$$$| $$        | $$    | $$  \\ $$| $$  \\__/       \\____  $$| $$ \\  $$$$/
+            /$$  \\ $$| $$_____/| $$        | $$ /$$| $$  | $$| $$             /$$  \\ $$| $$  >$$  $$
+           |  $$$$$$/|  $$$$$$$|  $$$$$$$  |  $$$$/|  $$$$$$/| $$            |  $$$$$$/| $$ /$$/\\  $$
+            \\______/  \\_______/ \\_______/   \\___/   \\______/ |__/             \\______/ |__/|__/  \\__/
     \033[0m
 
     """
     print(f"{Colours.yellow}  /$$$$$$                        /$$                                /$$$$$$  /$$          ")
     print(f" /$$__  $$                      | $$                               /$$__  $$|__/          ")
-    print(f"| $$  \__/  /$$$$$$   /$$$$$$$ /$$$$$$    /$$$$$$   /$$$$$$       | $$  \__/ /$$ /$$   /$$")
+    print(f"| $$  \\__/  /$$$$$$   /$$$$$$$ /$$$$$$    /$$$$$$   /$$$$$$       | $$  \\__/ /$$ /$$   /$$")
     print(f"|  $$$$$$  /$$__  $$ /$$_____/|_  $$_/   /$$__  $$ /$$__  $$      |  $$$$$$ | $$|  $$ /$$/")
-    print(f" \____  $$| $$$$$$$$| $$        | $$    | $$  \ $$| $$  \__/       \____  $$| $$ \  $$$$/ ")
-    print(f" /$$  \ $$| $$_____/| $$        | $$ /$$| $$  | $$| $$             /$$  \ $$| $$  >$$  $$ ")
-    print(f"|  $$$$$$/|  $$$$$$$|  $$$$$$$  |  $$$$/|  $$$$$$/| $$            |  $$$$$$/| $$ /$$/\  $$")
-    print(f" \______/  \_______/ \_______/   \___/   \______/ |__/             \______/ |__/|__/  \__/\n{Colours.end}")
+    print(f" \\____  $$| $$$$$$$$| $$        | $$    | $$  \\ $$| $$  \\__/       \\____  $$| $$ \\  $$$$/ ")
+    print(f" /$$  \\ $$| $$_____/| $$        | $$ /$$| $$  | $$| $$             /$$  \\ $$| $$  >$$  $$ ")
+    print(f"|  $$$$$$/|  $$$$$$$|  $$$$$$$  |  $$$$/|  $$$$$$/| $$            |  $$$$$$/| $$ /$$/\\  $$")
+    print(f" \\______/  \\_______/ \\_______/   \\___/   \\______/ |__/             \\______/ |__/|__/  \\__/\n"
+          f"{Colours.end}")
 
 
 def story_introduction_text():
@@ -126,17 +127,29 @@ def boss_fight_start_text(player):
 
 
 def boss_phase_death_text(player):
-    """Print text introducing the end game boss.
+    """Print text describing the appropriate boss phase death.
 
-    :return:
+    :param player: a dictionary
+    :precondition: player is a dictionary representing the player character
+    :precondition: player contains a key called boss_phase_counter
+    :precondition: the value of boss_phase_counter is between [1, 3]
+    :postcondition: print text describing the appropriate boss phase death
+
     >>> player_character = make_player()
     >>> boss_phase_death_text(player_character) # doctest: +NORMALIZE_WHITESPACE
+    You manage to obliterate the \033[95mIntergalactic Space Worm\033[0m's head!
+    However, its smouldering corpse begins to convulse, and from the gaping hole in its neck sprouts two more heads!
+    <BLANKLINE>
 
     >>> player_character["boss_phase_counter"] = 2
     >>> boss_phase_death_text(player_character) # doctest: +NORMALIZE_WHITESPACE
-
+    You manage to obliterate the \033[95mTwo-Headed Intergalactic Space Worm\033[0m's heads!
+    However, its corpse now blocks the entrance to the wormhole.
+    <BLANKLINE>
     >>> player_character["boss_phase_counter"] = 1
     >>> boss_phase_death_text(player_character) # doctest: +NORMALIZE_WHITESPACE
+    You finally obliterate the \033[95mHeadless Intergalactic Space Worm\033[0m!
+    <BLANKLINE>
     """
     if player["boss_phase_counter"] == 3:
         print(f"You manage to obliterate the {Colours.magenta}Intergalactic Space Worm{Colours.end}'s head!\nHowever, "
@@ -165,42 +178,69 @@ def story_ending_text(player):
     <BLANKLINE>
     \033[93m         /$$$$$$                        /$$                                /$$$$$$  /$$
             /$$__  $$                      | $$                               /$$__  $$|__/
-            | $$  \__/  /$$$$$$   /$$$$$$$ /$$$$$$    /$$$$$$   /$$$$$$       | $$  \__/ /$$ /$$   /$$
+            | $$  \\__/  /$$$$$$   /$$$$$$$ /$$$$$$    /$$$$$$   /$$$$$$       | $$  \\__/ /$$ /$$   /$$
             |  $$$$$$  /$$__  $$ /$$_____/|_  $$_/   /$$__  $$ /$$__  $$      |  $$$$$$ | $$|  $$ /$$/
-            \____  $$| $$$$$$$$| $$        | $$    | $$  \ $$| $$  \__/       \____  $$| $$ \  $$$$/
-            /$$  \ $$| $$_____/| $$        | $$ /$$| $$  | $$| $$             /$$  \ $$| $$  >$$  $$
-           |  $$$$$$/|  $$$$$$$|  $$$$$$$  |  $$$$/|  $$$$$$/| $$            |  $$$$$$/| $$ /$$/\  $$
-            \______/  \_______/ \_______/   \___/   \______/ |__/             \______/ |__/|__/  \__/\033[0m
+            \\____  $$| $$$$$$$$| $$        | $$    | $$  \\ $$| $$  \\__/       \\____  $$| $$ \\  $$$$/
+            /$$  \\ $$| $$_____/| $$        | $$ /$$| $$  | $$| $$             /$$  \\ $$| $$  >$$  $$
+           |  $$$$$$/|  $$$$$$$|  $$$$$$$  |  $$$$/|  $$$$$$/| $$            |  $$$$$$/| $$ /$$/\\  $$
+            \\______/  \\_______/ \\_______/   \\___/   \\______/ |__/             \\______/ |__/|__/  \\__/
+    \033[0m
     <BLANKLINE>
     Thanks for playing!
-
     """
     print(f"You and your crew disappear into the wormhole, along with untold treasure. For millennia, the galaxy "
           f"will tell tales of the legendary\nCaptain {Colours.blue}{player['name']}{Colours.end}, the first space "
           f"captain to pilfer from...\n")
     print(f"{Colours.yellow}  /$$$$$$                        /$$                                /$$$$$$  /$$          ")
     print(f" /$$__  $$                      | $$                               /$$__  $$|__/          ")
-    print(f"| $$  \__/  /$$$$$$   /$$$$$$$ /$$$$$$    /$$$$$$   /$$$$$$       | $$  \__/ /$$ /$$   /$$")
+    print(f"| $$  \\__/  /$$$$$$   /$$$$$$$ /$$$$$$    /$$$$$$   /$$$$$$       | $$  \\__/ /$$ /$$   /$$")
     print(f"|  $$$$$$  /$$__  $$ /$$_____/|_  $$_/   /$$__  $$ /$$__  $$      |  $$$$$$ | $$|  $$ /$$/")
-    print(f" \____  $$| $$$$$$$$| $$        | $$    | $$  \ $$| $$  \__/       \____  $$| $$ \  $$$$/ ")
-    print(f" /$$  \ $$| $$_____/| $$        | $$ /$$| $$  | $$| $$             /$$  \ $$| $$  >$$  $$ ")
-    print(f"|  $$$$$$/|  $$$$$$$|  $$$$$$$  |  $$$$/|  $$$$$$/| $$            |  $$$$$$/| $$ /$$/\  $$")
-    print(f" \______/  \_______/ \_______/   \___/   \______/ |__/             \______/ |__/|__/  \__/{Colours.end}\n")
-    print(f"Thanks for playing!")
+    print(f" \\____  $$| $$$$$$$$| $$        | $$    | $$  \\ $$| $$  \\__/       \\____  $$| $$ \\  $$$$/ ")
+    print(f" /$$  \\ $$| $$_____/| $$        | $$ /$$| $$  | $$| $$             /$$  \\ $$| $$  >$$  $$ ")
+    print(f"|  $$$$$$/|  $$$$$$$|  $$$$$$$  |  $$$$/|  $$$$$$/| $$            |  $$$$$$/| $$ /$$/\\  $$")
+    print(f" \\______/  \\_______/ \\_______/   \\___/   \\______/ |__/             \\______/ |__/|__/  \\__/\n"
+          f"{Colours.end}")
+    print("Thanks for playing!")
 
 
 def player_death_text():
     """Print text describing player death.
 
     postcondition: print text describing player death
+
+    >>> player_death_text() # doctest: +NORMALIZE_WHITESPACE
+    Your ship's integrity has been breached! Sector Six has claimed another crew of would-be thieves.
+    <BLANKLINE>
+    \033[91mYOU ARE DEAD\033[0m
     """
     print(f"Your ship's integrity has been breached! Sector Six has claimed another crew of would-be thieves.\n")
+    print(f"{Colours.red}YOU ARE DEAD{Colours.end}")
 
 
 def enemy_death_text(player):
     """Print text describing enemy death.
-
+    :param player: a dictionary
+    :precondition: player is dictionary representing the player character
+    :precondition: player contains a key called x-coordinate
+    :precondition: player contains a key called y-coordinate
     postcondition: print text describing enemy death
+
+    >>> player_character = make_player()
+    >>> enemy_death_text(player_character) # doctest: +NORMALIZE_WHITESPACE
+    The enemy \033[91mDinghy\033[0m has been defeated!
+    <BLANKLINE>
+    >>> player_character['x-coordinate'] = 5
+    >>> enemy_death_text(player_character) # doctest: +NORMALIZE_WHITESPACE
+    The enemy \033[91mGunner\033[0m has been defeated!
+    <BLANKLINE>
+    >>> player_character['x-coordinate'] = 15
+    >>> enemy_death_text(player_character) # doctest: +NORMALIZE_WHITESPACE
+    The enemy \033[91mDisruptor\033[0m has been defeated!
+    <BLANKLINE>
+    >>> player_character['x-coordinate'] = 20
+    >>> enemy_death_text(player_character) # doctest: +NORMALIZE_WHITESPACE
+    The enemy \033[91mShredder\033[0m has been defeated!
+    <BLANKLINE>
     """
     enemy = make_appropriate_enemy_type(player)
     print(f"The enemy {Colours.red}{enemy['name']}{Colours.end} has been defeated!\n")
@@ -210,7 +250,11 @@ def enemy_death_text(player):
 def check_if_player_in_boss_room(x_coordinate, y_coordinate):
     """Return True if player x- and y- coordinates are both 24, else return False.
 
-    :return: True if player x- and y- coordinates are both 24, else return False
+    :param x_coordinate: any integer
+    :param y_coordinate: any integer
+    :precondition: x_coordinate and y_coordinate are both integers
+    :postcondition: return True if player x_coordinate and y_coordiante are both 24, else return False
+    :return: True if player x_coordinate and y_coordiante are both 24, else return False
 
     >>> check_if_player_in_boss_room(0, 5)
     False
