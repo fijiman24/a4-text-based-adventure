@@ -622,11 +622,30 @@ def multi_attack(player):
     return total_attack
 
 
-def heal_spell(player):  # A
-    """
+def heal_spell(player):
+    """Restore the player's health.
 
-    :param player:
-    :return:
+    :param player: must be a dictionary
+    :precondition: dictionary must contain key "level" with value being an integer
+    :precondition: dictionary must contain key "health" with value being an integer
+    :precondition: dictionary must contain key "maximum_health" with value being an integer
+    :postcondition: calculate amount of health restored based on player's level
+    :postcondition: check if the amount healed will be greater than maximum health, if so, set player health to max hp
+    :postcondition" prints out the amount of health restored
+    :return: player
+
+    >>> heal_spell({"level": 1,"health":10 ,"maximum_health":20})
+    You repaired your hull for \033[94m6\033[0m health.
+    {'level': 1, 'health': 16, 'maximum_health': 20}
+    >>> heal_spell({"level": 2,"health":19 ,"maximum_health":20})
+    You repaired your hull for \033[94m1\033[0m health.
+    {'level': 2, 'health': 20, 'maximum_health': 20}
+    >>> heal_spell({"level": 3,"health": 10 ,"maximum_health":30})
+    You repaired your hull for \033[94m18\033[0m health.
+    {'level': 3, 'health': 28, 'maximum_health': 30}
+    >>> heal_spell({"level": 1,"health": 20 ,"maximum_health":20})
+    You repaired your hull for \033[94m0\033[0m health.
+    {'level': 1, 'health': 20, 'maximum_health': 20}
     """
     amount_healed = player["level"] * 6
     if amount_healed + player["health"] > player["maximum_health"]:
@@ -1390,7 +1409,7 @@ def combat_initiative_roll(player):
         return False
 
 
-def combat_player_attack(enemy_health, player):  # A
+def combat_player_attack(enemy_health, player):
     """Return enemy's health value after being attacked by player.
 
     :param enemy_health: a positive integer
@@ -1399,8 +1418,6 @@ def combat_player_attack(enemy_health, player):  # A
     :postcondition: subtract a random integer between [1, player["damage"]] from enemy_health
     :postcondition: return enemy_health
     :return: enemy_health
-
-    no doctest, this uses random values
     """
     player_damage = random.randint(1, player["damage"])
     enemy = make_appropriate_enemy_type(player)
@@ -1411,7 +1428,7 @@ def combat_player_attack(enemy_health, player):  # A
     return enemy_health
 
 
-def combat_enemy_attack(player):  # A
+def combat_enemy_attack(player):
     """Return player's health value after being attacked by enemy.
 
     :param player: a positive integer
@@ -1419,8 +1436,6 @@ def combat_enemy_attack(player):  # A
     :postcondition: subtract a random integer between [1, MAX_ENEMY_DAMAGE] from player_health
     :postcondition: return player_health
     :return: player_health
-
-    no doctest, this uses random values
     """
     time.sleep(1)
     enemy = make_appropriate_enemy_type(player)
@@ -1432,10 +1447,11 @@ def combat_enemy_attack(player):  # A
     return player['health']
 
 
-def combat_enemy_flee():  # A
-    """20 percent chance that enemy will flee from combat.
+def combat_enemy_flee():
+    """Roll to see if enemy will flee.
 
-    :return:
+    :postcondition: randomly rolls between [1,5], if roll == 1, return True else False
+    :return: True or False
     """
     enemy_flee_chance = random.randint(1, 5)
     if enemy_flee_chance == 1:
