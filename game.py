@@ -806,14 +806,18 @@ def make_appropriate_boss_phase(player):
 
 
 def boss_battle_player_attack(boss, player):
-    """Return enemy's health value after being attacked by player.
+    """Return boss after being attacked by the player.
 
-    :param boss: a positive integer
+    :param boss: a dictionary
     :param player: a dictionary
-    :precondition: enemy_health is any positive integer
-    :postcondition: subtract a random integer between [1, player["damage"]] from enemy_health
-    :postcondition: return enemy_health
-    :return: enemy_health
+    :precondition: boss is a dictionary representing the boss phase
+    :precondition: boss contains a key called health
+    :precondition: boss contains a key called name
+    :precondition: player is a dictionary representing the player character
+    :precondition: player contains a key called damage
+    :postcondition: subtract a random integer between (1, player["damage"]) from boss["health"]
+    :postcondition: return boss after being attacked by the player
+    :return: boss after being attacked by the player
 
     no doctest, this uses random values
     """
@@ -826,6 +830,17 @@ def boss_battle_player_attack(boss, player):
 
 
 def combat_boss_attack_phase_one_and_three(player):
+    """Return player after being attacked by phase one or phase three of the endgame boss.
+
+    :param player: a dictionary
+    :precondition: player is a dictionary representing the player character
+    :precondition: player contains a key called health
+    :postcondition: subtract a random integer between (1, boss["maximum_damage"]) from player["health"]
+    :postcondition: return player after being attacked by phase one or phase three of the endgame boss
+    :return: player after being attacked by phase one or phase three of the endgame boss
+
+    no doctest, this uses random values
+    """
     boss = make_appropriate_boss_phase(player)
     enemy_damage = random.randint(1, boss['maximum_damage'])
     player['health'] -= enemy_damage
@@ -835,6 +850,17 @@ def combat_boss_attack_phase_one_and_three(player):
 
 
 def combat_boss_attack_phase_two(player):
+    """Return player after being attacked by phase two of the endgame boss.
+
+    :param player: a dictionary
+    :precondition: player is a dictionary representing the player character
+    :precondition: player contains a key called health
+    :postcondition: subtract a random integer between (1, boss["maximum_damage"]) from player["health"]
+    :postcondition: return player after being attacked by phase two of the endgame boss
+    :return: player after being attacked by phase two of the endgame boss
+
+    no doctest, this uses random values
+    """
     boss = make_appropriate_boss_phase(player)
     enemy_damage_first_attack = random.randint(1, boss['maximum_damage'])
     player['health'] -= enemy_damage_first_attack
@@ -848,6 +874,17 @@ def combat_boss_attack_phase_two(player):
 
 
 def combat_boss_attack(player):
+    """Return player after being attacked by the appropriate the endgame boss phase.
+
+    :param player: a dictionary
+    :precondition: player is a dictionary representing the player character
+    :precondition: player contains a key called boss_phase_counter
+    :postcondition: if boss_phase_counter is 1 or 3, pass player through combat_boss_attack_phase_one_and_three()
+    :postcondition: if boss_phase_counter is 2, pass player through combat_boss_attack_phase_two()
+    :return: player after being attacked by the appropriate the endgame boss phase
+
+    no doctest, this uses random values
+    """
     time.sleep(1)
     if player["boss_phase_counter"] == 3 or player["boss_phase_counter"] == 1:
         return combat_boss_attack_phase_one_and_three(player)
@@ -856,9 +893,21 @@ def combat_boss_attack(player):
 
 
 def boss_battle_print_health_values(player, boss):
-    """
+    """Print text describing the health values of the player and the boss.
 
-    :return:
+    :param player: a dictionary
+    :param boss: a dictionary
+    :precondition: player is a dictionary representing the player character
+    :precondition: boss is a dictionary representing the boss phase
+    :postcondition: print text describing the health values of the player and the boss
+
+    >>> player_character = make_player()
+    >>> player_character["player_class"] = "Ghost"
+    >>> boss_phase = make_appropriate_boss_phase(player_character)
+    >>> boss_battle_print_health_values(player_character, boss_phase) # doctest: +NORMALIZE_WHITESPACE
+    Your \033[94mGhost\033[0m can take \033[94m20\033[0m more points of damage.
+    The enemy \033[95mIntergalactic Space Worm\033[0m can take \033[95m40\033[0m more points of damage.
+    <BLANKLINE>
     """
     time.sleep(1)
     print(f"Your {Colours.blue}{player['player_class']}{Colours.end} can take "
@@ -868,10 +917,21 @@ def boss_battle_print_health_values(player, boss):
 
 
 def boss_ultimate_attack_countdown(boss):
-    """
+    """Return boss with special_ability_counter decremented by 1 if special_ability_counter > 0, else return boss.
 
-    :param boss:
-    :return:
+    :param boss: a dictionary
+    :precondition: boss is a dictionary representing the boss phase
+    :precondition: boss contains the key special_ability_counter
+    :postcondition: return boss with special_ability_counter decremented by 1 if special_ability_counter > 0, else
+                    return boss
+    :postcondition: print a statement explaining that the boss is charging its special attack if
+                    special_ability_counter > 0
+    :return: boss with special_ability_counter decremented by 1 if special_ability_counter > 0, else boss
+
+    >>> boss_phase = make_enemy_boss_phase_three()
+    >>> boss_ultimate_attack_countdown(boss_phase)
+    The \033[95mHeadless Intergalactic Space Worm\033[0m's body writhes.
+    {'name': 'Headless Intergalactic Space Worm', 'health': 80, 'maximum_damage': 2, 'special_ability_counter': 4}
     """
     boss["special_ability_counter"] -= 1
     if boss["special_ability_counter"] > 0:
