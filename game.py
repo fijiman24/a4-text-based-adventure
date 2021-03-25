@@ -939,21 +939,53 @@ def boss_ultimate_attack_countdown(boss):
     return boss
 
 
-def boss_ultimate_attack_activate(enemy, player):
-    """
+def boss_ultimate_attack_activate(boss, player):
+    """Return player with player["health"] decremented by 99999 if boss["special_ability_counter"] <= 0, else return
+       player.
 
-    :param enemy:
-    :param player:
-    :return:
+    :param boss: a dictionary
+    :param player: a dictionary
+    :precondition: boss is a dictionary representing the boss phase
+    :precondition: boss contains a key called special_ability_counter
+    :precondition: player is a dictionary representing the player character
+    :precondition: player contains a key called health
+    :postcondition: if boss["special_ability_counter"] == 0, print text describing the boss using the ultimate attack
+                    for the first time
+    :postcondition: if boss["special_ability_counter"] == 0, print text describing the boss using the ultimate attack
+                    again
+    :postcondition: return player with player["health"] decremented by 99999 if boss["special_ability_counter"] <= 0,
+                    else return player
+    :return: player with player["health"] decremented by 99999 if boss["special_ability_counter"] <= 0, else player
+
+    >>> boss_phase = make_enemy_boss_phase_three()
+    >>> boss_phase["special_ability_counter"] = 0
+    >>> player_character = make_player()
+    >>> boss_ultimate_attack_activate(boss_phase, player_character) # doctest: +NORMALIZE_WHITESPACE
+    The \033[95mHeadless Intergalactic Space Worm\033[0m's body unleashes overwhelming astral power!
+    You, your ship, your crew, and everything else in Sector Six takes \033[95m99999\033[0m damage!
+    <BLANKLINE>
+    {'health': -99979, 'maximum_health': 20, 'x-coordinate': 0, 'y-coordinate': 0, 'name': None, 'exp': 0, 'ship': \
+    None, 'player_class': None, 'player_class_special_action': None, 'special_action_counter': 0, 'level': 1, 'damage':\
+     20, 'boss_phase_counter': 3}
+    >>> boss_phase["special_ability_counter"] = -1
+    >>> boss_ultimate_attack_activate(boss_phase, player_character) # doctest: +NORMALIZE_WHITESPACE
+    The \033[95mHeadless Intergalactic Space Worm\033[0m's body unleashes EVEN MORE overwhelming astral power!
+    You, your ship, your crew, and everything else in Sector Six takes \033[95m99999\033[0m damage! Again!
+    <BLANKLINE>
+    {'health': -199978, 'maximum_health': 20, 'x-coordinate': 0, 'y-coordinate': 0, 'name': None, 'exp': 0, 'ship': \
+    None, 'player_class': None, 'player_class_special_action': None, 'special_action_counter': 0, 'level': 1, 'damage':\
+     20, 'boss_phase_counter': 3}
     """
-    if enemy["special_ability_counter"] == 0:
-        print(f"The {enemy['name']}'s body unleashes overwhelming astral power!\nYou, your ship, your crew, and "
-              f"everything else in Sector Six takes {Colours.magenta}99999{Colours.end} damage!\n")
+    if boss["special_ability_counter"] == 0:
+        print(f"The {Colours.magenta}{boss['name']}{Colours.end}'s body unleashes overwhelming astral power!\nYou, "
+              f"your ship, your crew, and everything else in Sector Six takes {Colours.magenta}99999{Colours.end} "
+              f"damage!\n")
         player["health"] -= 99999
         return player
-    elif enemy["special_ability_counter"] < 0:
-        print(f"The {enemy['name']}'s body unleashes EVEN MORE overwhelming astral power!\nYou, your ship, your crew, "
-              f"and everything else in Sector Six takes {Colours.magenta}99999{Colours.end} damage! Again!\n")
+    elif boss["special_ability_counter"] < 0:
+        print(f"The {Colours.magenta}{boss['name']}{Colours.end}'s body unleashes EVEN MORE overwhelming astral power!"
+              f"\nYou, your ship, your crew, and everything else in Sector Six takes "
+              f"{Colours.magenta}99999{Colours.end} damage! Again!\n")
         player["health"] -= 99999
         return player
     else:
