@@ -1525,7 +1525,27 @@ def level_system(player):  # A
     return player
 
 
-def class_upgrade(player):  # A
+def class_upgrade(player):
+    """Upgrade player class based on level and ship type.
+
+    :param player: must be a dictionary
+    "precondition: must contain key "player_class"
+    :precondition: must contain key "ship" with values "Warrior", "Magician", "Thief" or "Priest"
+    "precondition: must contain key "level" with integer values 1, 2 or 3
+    :postcondition: correctly identify and assign class based on level and ship type
+    :return: player
+
+    >>> class_upgrade({"ship": "Magician", "level": 1, "player_class": "Bob"})
+    {'ship': 'Magician', 'level': 1, 'player_class': 'Sapper'}
+    >>> class_upgrade({"ship": "Thief", "level": 1, "player_class": "Ghost"})
+    {'ship': 'Thief', 'level': 1, 'player_class': 'Ghost'}
+    >>> class_upgrade({"ship": "Warrior", "level": 2, "player_class": "Squire"})
+    {'ship': 'Warrior', 'level': 2, 'player_class': 'Knight'}
+    >>> class_upgrade({"ship": "Warrior", "level": 3, "player_class": "Phoenix"})
+    {'ship': 'Warrior', 'level': 3, 'player_class': 'Phoenix'}
+    >>> class_upgrade({"ship": "Priest", "level": 3, "player_class": "Cherub"})
+    {'ship': 'Priest', 'level': 3, 'player_class': 'Seraphim'}
+    """
     classes = {'Warrior': {1: "Squire", 2: "Knight", 3: "Phoenix"},
                'Magician': {1: "Sapper", 2: "Drainer", 3: "Charybdis"},
                'Thief': {1: "Ghost", 2: "Banshee", 3: "Revenant"},
