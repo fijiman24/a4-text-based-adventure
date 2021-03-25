@@ -637,10 +637,30 @@ def make_enemy_difficulty_four():  # A
 
 
 def make_appropriate_enemy_type(player):
-    """
+    """Return the appropriate enemy type, depending on player x- and y-coordinates.
 
-    :param player:
-    :return:
+    :param player: a dictionary
+    :precondition: player is a dictionary representing the player character
+    :precondition: player contains a key called x-coordinate
+    :precondition: player contains a key called y-coordinate
+    :postcondition: return make_enemy_difficulty_four() if player x- or y- coordinate is between [20, 24]
+    :postcondition: return make_enemy_difficulty_three() if player x- or y- coordinate is between [15, 19]
+    :postcondition: return make_enemy_difficulty_two() if player x- or y- coordinate is between [5, 14]
+    :postcondition: return make_enemy_difficulty_one() if player x- or y- coordinate is between [0, 4]
+    :return: the appropriate enemy type, depending on player x- and y-coordinates
+
+    >>> player_character = make_player()
+    >>> make_appropriate_enemy_type(player_character)
+    {'name': 'Dinghy', 'health': 10, 'experience_points': 25, 'maximum_damage': 5}
+    >>> player_character["x-coordinate"] = 5
+    >>> make_appropriate_enemy_type(player_character)
+    {'name': 'Gunner', 'health': 20, 'experience_points': 50, 'maximum_damage': 10}
+    >>> player_character["x-coordinate"] = 15
+    >>> make_appropriate_enemy_type(player_character)
+    {'name': 'Disruptor', 'health': 60, 'experience_points': 100, 'maximum_damage': 5, 'special_ability_counter': 4}
+    >>> player_character["x-coordinate"] = 20
+    >>> make_appropriate_enemy_type(player_character)
+    {'name': 'Shredder', 'health': 40, 'experience_points': 150, 'maximum_damage': 25}
     """
     if player["x-coordinate"] in range(20, 25) or player["y-coordinate"] in range(20, 25) and \
             (player["x-coordinate"] != 24 and player["y-coordinate"] != 24):
