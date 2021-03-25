@@ -135,7 +135,7 @@ def check_if_player_in_boss_room(x_coordinate, y_coordinate):
         return False
 
 
-def make_player():
+def make_player():  # A
     """Return a dictionary representing the player's maximum health, their starting x-coordinate, their starting
        y-coordinate, and their name.
 
@@ -162,7 +162,7 @@ def make_player():
             }
 
 
-def input_player_name():
+def input_player_name():  # A
     """Return player name.
 
     :postcondition: convert player's input into title case
@@ -181,7 +181,7 @@ def input_player_name():
         return name_input
 
 
-def display_player_class_menu():
+def display_player_class_menu():  # A
     """
 
     :return:
@@ -191,7 +191,7 @@ def display_player_class_menu():
     return input()
 
 
-def select_player_class(player):
+def select_player_class(player):  # A
     """Print class description and return class after being passed to confirm_player_class().
 
     :precondition: user enters input when prompted
@@ -220,7 +220,7 @@ def select_player_class(player):
     return player
 
 
-def print_class_description(class_name):
+def print_class_description(class_name):  # A
     """
 
     :param class_name:
@@ -238,7 +238,7 @@ def print_class_description(class_name):
         print(f"QuickFix™ Protocols allows this ship to repair itself during combat.")
 
 
-def confirm_player_class(class_name, player):
+def confirm_player_class(class_name, player):  # A
     """Return class_name or call select_player_class, depending on user input.
 
     :param class_name: any string
@@ -266,7 +266,7 @@ def confirm_player_class(class_name, player):
         return confirm_player_class(class_name, player)
 
 
-def warrior_ship(player):
+def warrior_ship(player):  # A
     """Modify dictionary to change values to attributes of the warrior ship.
 
     :param player: must be a dictionary
@@ -295,7 +295,7 @@ def warrior_ship(player):
     return player
 
 
-def magician_ship(player):
+def magician_ship(player):  # A
     """Modify dictionary to change values to attributes of the magician ship.
 
     :param player: must be a dictionary
@@ -320,7 +320,7 @@ def magician_ship(player):
     return player
 
 
-def thief_ship(player):
+def thief_ship(player):  # A
     """Modify dictionary to change values to attributes of the thief ship.
 
     :param player: must be a dictionary
@@ -341,7 +341,7 @@ def thief_ship(player):
     return player
 
 
-def priest_ship(player):
+def priest_ship(player):  # A
     """Modify dictionary to change values to attributes of the priest ship.
 
     :param player: must be a dictionary
@@ -368,7 +368,7 @@ def priest_ship(player):
     return player
 
 
-def special_action_selector(player):
+def special_action_selector(player):  # A
     """
 
     :param player:
@@ -387,7 +387,7 @@ def special_action_selector(player):
         heal_spell(player)
 
 
-def resurrect(player):
+def resurrect(player):  # A
     """
 
     :param player:
@@ -407,7 +407,7 @@ def resurrect(player):
         print(f"Your passive have already been used. You will not revive if your hp hits 0.\n")
 
 
-def magic_blast(player):
+def magic_blast(player):  # A
     """
 
     :param player:
@@ -419,7 +419,7 @@ def magic_blast(player):
     return blast_damage
 
 
-def multi_attack(player):
+def multi_attack(player):  # A
     """
 
     :param player:
@@ -434,7 +434,7 @@ def multi_attack(player):
     return total_attack
 
 
-def heal_spell(player):
+def heal_spell(player):  # A
     """
 
     :param player:
@@ -451,7 +451,7 @@ def heal_spell(player):
     return player
 
 
-def make_enemy_difficulty_one():
+def make_enemy_difficulty_one():  # A
     """
 
     :return:
@@ -464,7 +464,7 @@ def make_enemy_difficulty_one():
     }
 
 
-def make_enemy_difficulty_two():
+def make_enemy_difficulty_two():  # A
     """
 
     :return:
@@ -477,7 +477,7 @@ def make_enemy_difficulty_two():
     }
 
 
-def make_enemy_difficulty_three():
+def make_enemy_difficulty_three():  # A
     """
 
     :return:
@@ -491,7 +491,7 @@ def make_enemy_difficulty_three():
     }
 
 
-def make_enemy_difficulty_four():
+def make_enemy_difficulty_four():  # A
     """
 
     :return:
@@ -903,7 +903,7 @@ def move_y_axis(direction, y_coordinate):
         return y_coordinate
 
 
-def regen_health(player_health, maximum_health):
+def regen_health(player_health, maximum_health):  # A
     """Add REGEN_VALUE to current_health if current_health <= maximum_health, else return maximum_health.
 
     :param player_health: any integer less than or equal to maximum_health
@@ -937,7 +937,7 @@ def regen_health(player_health, maximum_health):
         return player_health
 
 
-def backstab(player_health):
+def backstab(player_health):  # A
     """20 percent chance to subtract between [1, MAX_SHIV_DAMAGE] from current_health, else return current_health.
 
     :param player_health: any integer
@@ -963,7 +963,7 @@ def backstab(player_health):
         return player_health
 
 
-def combat_initiative_roll(player):
+def combat_initiative_roll(player):  # A
     """Roll to see if player or foe attacks first.
 
     :precondition: params must be met
@@ -991,7 +991,7 @@ def combat_initiative_roll(player):
         return False
 
 
-def combat_player_attack(enemy_health, player):
+def combat_player_attack(enemy_health, player):  # A
     """Return enemy's health value after being attacked by player.
 
     :param enemy_health: a positive integer
@@ -1012,7 +1012,7 @@ def combat_player_attack(enemy_health, player):
     return enemy_health
 
 
-def combat_enemy_attack(player):
+def combat_enemy_attack(player):  # A
     """Return player's health value after being attacked by enemy.
 
     :param player: a positive integer
@@ -1033,7 +1033,7 @@ def combat_enemy_attack(player):
     return player['health']
 
 
-def combat_enemy_flee():
+def combat_enemy_flee():  # A
     """20 percent chance that enemy will flee from combat.
 
     :return:
@@ -1045,7 +1045,7 @@ def combat_enemy_flee():
         return False
 
 
-def combat_choice():
+def combat_choice():  # A
     """Present menu of combat options.
 
     """
@@ -1054,7 +1054,7 @@ def combat_choice():
     return input()
 
 
-def combat_print_health_values(player, enemy):
+def combat_print_health_values(player, enemy):  # A
     """
 
     :return:
@@ -1066,7 +1066,7 @@ def combat_print_health_values(player, enemy):
           f"{Colours.red}{enemy['health']}{Colours.end} more points of damage.\n")
 
 
-def gain_experience_points(player):
+def gain_experience_points(player):  # A
     """Add experience points for player if not max level.
 
     :param player: must be a dictionary
@@ -1092,7 +1092,7 @@ def gain_experience_points(player):
         return player
 
 
-def level_system(player):
+def level_system(player):  # A
     """Level up the player if they reach a certain amount of experience points.
 
     :param player: must be a dictionary
@@ -1133,7 +1133,7 @@ def level_system(player):
     return player
 
 
-def class_upgrade(player):
+def class_upgrade(player):  # A
     classes = {'Warrior': {1: "Squire", 2: "Knight", 3: "Phoenix"},
                'Magician': {1: "Sapper", 2: "Drainer", 3: "Charybdis"},
                'Thief': {1: "Ghost", 2: "Banshee", 3: "Revenant"},
@@ -1143,7 +1143,7 @@ def class_upgrade(player):
     return player
 
 
-def spawn_enemy():
+def spawn_enemy():  # A
     """20 percent chance to return True, else False.
 
     :postcondition: generate a random integer between [1, 5]
