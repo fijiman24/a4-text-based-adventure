@@ -674,10 +674,21 @@ def make_appropriate_enemy_type(player):
 
 
 def enemy_disruptor_teleport_attack_countdown(enemy):
-    """
+    """Return enemy with special_ability_counter decremented by 1 if special_ability_counter > 0, else return enemy.
 
-    :param enemy:
-    :return:
+    :param enemy: a dictionary
+    :precondition: enemy is dictionary representing the enemy
+    :precondition: enemy contains key special_ability_counter
+    :postcondition: if special_ability_counter > 0, decrement special_ability_counter and print text telling player
+                    that special_ability_counter has been decremented
+    :postcondition: return enemy with special_ability_counter decremented by 1 if special_ability_counter > 0, else
+                    return enemy
+    :return: enemy with special_ability_counter decremented by 1 if special_ability_counter > 0, else return enemy
+
+    >>> enemy_type = make_enemy_difficulty_three()
+    >>> enemy_disruptor_teleport_attack_countdown(enemy_type)
+    The enemy \033[91mDisruptor\033[0m is charging...something.
+    {'name': 'Disruptor', 'health': 60, 'experience_points': 100, 'maximum_damage': 5, 'special_ability_counter': 3}
     """
     enemy["special_ability_counter"] -= 1
     if enemy["special_ability_counter"] > 0:
@@ -686,11 +697,22 @@ def enemy_disruptor_teleport_attack_countdown(enemy):
 
 
 def enemy_disruptor_teleport_attack_activate(enemy, player):
-    """
+    """Teleport player to a new x- and y- coordinate.
 
-    :param enemy:
-    :param player:
-    :return:
+    :param enemy: a dictionary
+    :param player: a dictionary
+    :precondition: enemy is a dictionary representing the enemy
+    :precondition: enemy contains a key called special_ability_counter
+    :precondition: player is a dictionary representing the player character
+    :precondition: player contains a key called x-coordinate
+    :precondition: player contains a key called y-coordinate
+    :postcondition: return player with the value of x-coordinate and y-coordinate changed to a random number between
+                    (5, 10) if special_ability_counter == 0
+    :postcondition: return player unchanged if special_ability_counter != 0
+    :return: player with the value of x-coordinate and y-coordinate changed to a random number between (5, 10) if
+             special_ability_counter == 0, else return player
+
+    No doctest, this returns random values
     """
     if enemy["special_ability_counter"] == 0:
         random_x_coordinate = random.randint(5, 10)
@@ -705,6 +727,14 @@ def enemy_disruptor_teleport_attack_activate(enemy, player):
 
 
 def make_enemy_boss_phase_one():
+    """Return a dictionary representing the first phase of the boss.
+
+    :postcondition: return a dictionary representing the first phase of the boss
+    :return: a dictionary representing the first phase of the boss
+
+    >>> make_enemy_boss_phase_one()
+    {'name': 'Intergalactic Space Worm', 'health': 40, 'maximum_damage': 5}
+    """
     return {
         "name": "Intergalactic Space Worm",
         "health": 40,
@@ -713,6 +743,14 @@ def make_enemy_boss_phase_one():
 
 
 def make_enemy_boss_phase_two():
+    """Return a dictionary representing the second phase of the boss.
+
+    :postcondition: return a dictionary representing the second phase of the boss
+    :return: a dictionary representing the second phase of the boss
+
+    >>> make_enemy_boss_phase_two()
+    {'name': 'Two-Headed Intergalactic Space Worm', 'health': 50, 'maximum_damage': 5}
+    """
     return {
         "name": "Two-Headed Intergalactic Space Worm",
         "health": 50,
@@ -721,6 +759,14 @@ def make_enemy_boss_phase_two():
 
 
 def make_enemy_boss_phase_three():
+    """Return a dictionary representing the third phase of the boss.
+
+    :postcondition: return a dictionary representing the third phase of the boss
+    :return: a dictionary representing the third phase of the boss
+
+    >>> make_enemy_boss_phase_three()
+    {'name': 'Headless Intergalactic Space Worm', 'health': 80, 'maximum_damage': 2, 'special_ability_counter': 5}
+    """
     return {
         "name": "Headless Intergalactic Space Worm",
         "health": 80,
@@ -730,6 +776,27 @@ def make_enemy_boss_phase_three():
 
 
 def make_appropriate_boss_phase(player):
+    """Return the appropriate boss phase dictionary, according to player["boss_phase_counter"] value.
+
+    :param player: a dictionary
+    :precondition: player is a dictionary representing the player character
+    :precondition: player contains a key called boss_phase_counter
+    :precondition: boss_phase_counter is between [1, 3]
+    :postcondition: return dictionary from make_enemy_boss_phase_one() if player["boss_phase_counter"] == 3
+    :postcondition: return dictionary from make_enemy_boss_phase_two() if player["boss_phase_counter"] == 2
+    :postcondition: return dictionary from make_enemy_boss_phase_three() if player["boss_phase_counter"] == 1
+    :return: the appropriate boss phase dictionary, according to player["boss_phase_counter"] value
+
+    >>> player_character = make_player()
+    >>> make_appropriate_boss_phase(player_character)
+    {'name': 'Intergalactic Space Worm', 'health': 40, 'maximum_damage': 5}
+    >>> player_character["boss_phase_counter"] = 2
+    >>> make_appropriate_boss_phase(player_character)
+    {'name': 'Two-Headed Intergalactic Space Worm', 'health': 50, 'maximum_damage': 5}
+    >>> player_character["boss_phase_counter"] = 1
+    >>> make_appropriate_boss_phase(player_character)
+    {'name': 'Headless Intergalactic Space Worm', 'health': 80, 'maximum_damage': 2, 'special_ability_counter': 5}
+    """
     if player["boss_phase_counter"] == 3:
         return make_enemy_boss_phase_one()
     elif player["boss_phase_counter"] == 2:
