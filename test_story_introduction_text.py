@@ -6,7 +6,7 @@ from game import story_introduction_text
 
 class Test(TestCase):
     @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    def test_ascii_intro_print(self, mock_stdout):
+    def test_story_introduction_text_print(self, mock_stdout):
         story_introduction_text()
         expected = "In the distant future, humankind has colonized the vast, cold reaches of space. From suburban " \
                    "planets to entire solar systems dedicated to vice, there isn't a sector in the\nMilky Way Galaxy " \

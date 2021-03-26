@@ -7,7 +7,7 @@ from game import make_player
 
 class Test(TestCase):
     @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    def test_story_ending_print(self, mock_stdout):
+    def test_story_ending_text_print(self, mock_stdout):
         player_character = make_player()
         player_character["name"] = "Tirion"
         story_ending_text(player_character)
