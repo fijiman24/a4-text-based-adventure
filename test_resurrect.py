@@ -36,3 +36,14 @@ class TestResurrect(TestCase):
         expected = {"health": 10, "level": 1, "special_action_counter": 0}
 
         self.assertEqual(actual, expected)
+
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_one_counter_no_health_print(self, mock_output):
+        player = {"health": 0, "level": 1, "special_action_counter": 1}
+        resurrect(player)
+        actual = mock_output.getvalue()
+
+        expected = "Your undying will allowed you to survive the attack and restored your health to" \
+                   " \033[94m10\033[0m!\n\n"
+
+        self.assertEqual(actual, expected)
