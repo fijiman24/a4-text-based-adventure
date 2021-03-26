@@ -22,4 +22,3 @@ class TestMagicianShip(TestCase):
         self.assertEqual(actual["player_class_special_action"], "Magic Blast")
         self.assertEqual(actual["special_action_counter"], 0)
         self.assertEqual(actual["damage"], 16)
-
