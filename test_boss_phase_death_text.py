@@ -7,7 +7,7 @@ from game import make_player
 
 class Test(TestCase):
     @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    def test_boss_fight_start_text_phase_one(self, mock_stdout):
+    def test_boss_death_text_phase_one(self, mock_stdout):
         player_character = make_player()
         boss_phase_death_text(player_character)
         expected = "You manage to obliterate the [95mIntergalactic Space Worm[0m's head!\nHowever, its " \
@@ -16,7 +16,7 @@ class Test(TestCase):
         self.assertEqual(expected, mock_stdout.getvalue())
 
     @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    def test_boss_fight_start_text_phase_two(self, mock_stdout):
+    def test_boss_death_text_phase_two(self, mock_stdout):
         player_character = make_player()
         player_character["boss_phase_counter"] = 2
         boss_phase_death_text(player_character)
@@ -25,7 +25,7 @@ class Test(TestCase):
         self.assertEqual(expected, mock_stdout.getvalue())
 
     @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    def test_boss_fight_start_text_phase_three(self, mock_stdout):
+    def test_boss_death_text_phase_three(self, mock_stdout):
         player_character = make_player()
         player_character["boss_phase_counter"] = 1
         boss_phase_death_text(player_character)
