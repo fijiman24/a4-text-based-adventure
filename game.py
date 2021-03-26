@@ -308,7 +308,7 @@ def input_player_name():
     if name_input.lower() == "chris" or name_input.lower() == "christopher" or name_input.lower() == "chris thompson":
         print(f"You can be more adventurous than that! \n")
         return input_player_name()
-    elif name_input.strip() == "":
+    elif name_input.strip().strip() == "":
         print(f"Every space captain needs a name! \n")
         return input_player_name()
     else:
