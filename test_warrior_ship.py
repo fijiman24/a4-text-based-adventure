@@ -26,4 +26,3 @@ class TestWarriorShip(TestCase):
         self.assertEqual(actual["player_class_special_action"], "Resurrect")
         self.assertEqual(actual["special_action_counter"], 1)
         self.assertEqual(actual["damage"], 25)
-
