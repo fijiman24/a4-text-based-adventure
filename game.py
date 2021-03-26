@@ -663,7 +663,6 @@ def heal_spell(player):
 def make_enemy_difficulty_one():
     """Create dictionary of the difficulty one enemy.
 
-    :precondition: nothing
     :postcondition: generate new dictionary based on enemy attributes
     :return: dictionary
 
@@ -681,7 +680,6 @@ def make_enemy_difficulty_one():
 def make_enemy_difficulty_two():
     """Create dictionary of the difficulty two enemy.
 
-    :precondition: nothing
     :postcondition: generate new dictionary based on enemy attributes
     :return: dictionary
 
@@ -699,7 +697,6 @@ def make_enemy_difficulty_two():
 def make_enemy_difficulty_three():
     """Create dictionary of the difficulty three enemy.
 
-    :precondition: nothing
     :postcondition: generate new dictionary based on enemy attributes
     :return: dictionary
 
@@ -718,7 +715,6 @@ def make_enemy_difficulty_three():
 def make_enemy_difficulty_four():
     """Create dictionary of the difficulty four enemy.
 
-    :precondition: nothing
     :postcondition: generate new dictionary based on enemy attributes
     :return: dictionary
 
