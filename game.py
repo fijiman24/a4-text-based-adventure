@@ -315,7 +315,7 @@ def input_player_name():
         return name_input
 
 
-def display_player_class_menu():
+def display_player_class_menu():  # A
     """Display and prompt the choices of classes that the user may select from.
 
     :postcondition: enumerate and display classes then prompt and return the user input
@@ -326,7 +326,7 @@ def display_player_class_menu():
     return input()
 
 
-def select_player_class(player):
+def select_player_class(player):  # A
     """Print class description and return class after being passed to confirm_player_class().
 
     :precondition: user enters input when prompted
@@ -355,7 +355,7 @@ def select_player_class(player):
     return player
 
 
-def print_class_description(class_name):
+def print_class_description(class_name):  # A
     """Print description of the inputted class.
 
     :param class_name: must be a string containing either "Squire", "Sapper", "Ghost" or "Cherub"
@@ -386,7 +386,7 @@ def print_class_description(class_name):
         print(f"QuickFix™ Protocols allows this ship to repair itself during combat.")
 
 
-def confirm_player_class(class_name, player):
+def confirm_player_class(class_name, player):  # A
     """Return class_name or call select_player_class, depending on user input.
 
     :param class_name: any string
@@ -415,7 +415,7 @@ def confirm_player_class(class_name, player):
         return confirm_player_class(class_name, player)
 
 
-def warrior_ship(player):
+def warrior_ship(player):  # A
     """Modify dictionary to change values to attributes of the warrior ship.
 
     :param player: must be a dictionary
@@ -444,7 +444,7 @@ def warrior_ship(player):
     return player
 
 
-def magician_ship(player):
+def magician_ship(player):  # A
     """Modify dictionary to change values to attributes of the magician ship.
 
     :param player: must be a dictionary
@@ -469,7 +469,7 @@ def magician_ship(player):
     return player
 
 
-def thief_ship(player):
+def thief_ship(player):  # A
     """Modify dictionary to change values to attributes of the thief ship.
 
     :param player: must be a dictionary
@@ -490,7 +490,7 @@ def thief_ship(player):
     return player
 
 
-def priest_ship(player):
+def priest_ship(player):  # A
     """Modify dictionary to change values to attributes of the priest ship.
 
     :param player: must be a dictionary
@@ -517,7 +517,7 @@ def priest_ship(player):
     return player
 
 
-def special_action_selector(player):
+def special_action_selector(player):  # A
     """Select special move based on player ship type.
 
     :param player: must be a dictionary
@@ -541,7 +541,7 @@ def special_action_selector(player):
         heal_spell(player)
 
 
-def resurrect(player):
+def resurrect(player):  # A
     """Resurrect player if health <= 0 and if special_action_counter == 1.
 
     :param player: must be a dictionary
@@ -583,7 +583,7 @@ def resurrect(player):
         print(f"Your passive have already been used. You will not revive if your hp hits 0.\n")
 
 
-def magic_blast(player):
+def magic_blast(player):  # A
     """Blast the enemy based on the number of counters the player has.
 
     :param player: must be a dictionary
@@ -607,7 +607,7 @@ def magic_blast(player):
     return blast_damage
 
 
-def multi_attack(player):
+def multi_attack(player):  # A
     """Split damage into 5 smaller but more powerful attacks.
 
     :param player: must be a dictionary
@@ -624,7 +624,7 @@ def multi_attack(player):
     return total_attack
 
 
-def heal_spell(player):
+def heal_spell(player):  # A
     """Restore the player's health.
 
     :param player: must be a dictionary
@@ -812,7 +812,7 @@ def enemy_disruptor_teleport_attack_activate(enemy, player):
         random_y_coordinate = random.randint(5, 10)
         player["x-coordinate"] = random_x_coordinate
         player["y-coordinate"] = random_y_coordinate
-        print(f"The enemy {enemy['name']} opened a rift in spacetime and teleported you "
+        print(f"The enemy {Colours.red}{enemy['name']}{Colours.end} opened a rift in spacetime and teleported you "
               f"to {player['x-coordinate']}, {player['y-coordinate']}!")
         return player
     else:
