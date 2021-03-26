@@ -18,7 +18,7 @@ class TestRegenHealth(TestCase):
         actual_output = mock_output.getvalue()
 
         expected_health = 14
-        expected_output = "You repaired your ship for \033[94m4\033[0m health.\n"
+        expected_output = "You repaired your ship by \033[94m4\033[0m points!\n"
 
         self.assertEqual(actual_health, expected_health)
         self.assertEqual(actual_output, expected_output)
@@ -29,7 +29,7 @@ class TestRegenHealth(TestCase):
         actual_output = mock_output.getvalue()
 
         expected_health = 20
-        expected_output = "You repaired your ship for \033[94m2\033[0m health.\n"
+        expected_output = "You repaired your ship \033[94mcompletely\033[0m!\n"
 
         self.assertEqual(actual_health, expected_health)
         self.assertEqual(actual_output, expected_output)
