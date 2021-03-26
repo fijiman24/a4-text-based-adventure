@@ -5,7 +5,7 @@ from game import warrior_ship
 class TestWarriorShip(TestCase):
     def test_correct_length(self):
         actual = warrior_ship({})
-        self.assertGreaterEqual(actual, 7)
+        self.assertEqual(actual, 7)
 
     def test_correct_keys(self):
         actual = warrior_ship({})
