@@ -4,7 +4,7 @@ from game import priest_ship
 
 class TestWarriorShip(TestCase):
     def test_correct_length(self):
-        actual = priest_ship({})
+        actual = len(priest_ship({}))
         self.assertEqual(actual, 6)
 
     def test_correct_keys(self):
