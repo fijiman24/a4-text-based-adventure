@@ -355,7 +355,7 @@ def select_player_class(player):  # A
     return player
 
 
-def print_class_description(class_name):  # A
+def print_class_description(class_name):
     """Print description of the inputted class.
 
     :param class_name: must be a string containing either "Squire", "Sapper", "Ghost" or "Cherub"
@@ -415,7 +415,7 @@ def confirm_player_class(class_name, player):  # A
         return confirm_player_class(class_name, player)
 
 
-def warrior_ship(player):  # A
+def warrior_ship(player):
     """Modify dictionary to change values to attributes of the warrior ship.
 
     :param player: must be a dictionary
@@ -469,7 +469,7 @@ def magician_ship(player):  # A
     return player
 
 
-def thief_ship(player):  # A
+def thief_ship(player):
     """Modify dictionary to change values to attributes of the thief ship.
 
     :param player: must be a dictionary
@@ -490,7 +490,7 @@ def thief_ship(player):  # A
     return player
 
 
-def priest_ship(player):  # A
+def priest_ship(player):
     """Modify dictionary to change values to attributes of the priest ship.
 
     :param player: must be a dictionary
@@ -541,7 +541,7 @@ def special_action_selector(player):  # A
         heal_spell(player)
 
 
-def resurrect(player):  # A
+def resurrect(player):
     """Resurrect player if health <= 0 and if special_action_counter == 1.
 
     :param player: must be a dictionary
@@ -583,7 +583,7 @@ def resurrect(player):  # A
         print(f"Your passive have already been used. You will not revive if your hp hits 0.\n")
 
 
-def magic_blast(player):  # A
+def magic_blast(player):
     """Blast the enemy based on the number of counters the player has.
 
     :param player: must be a dictionary
@@ -624,7 +624,7 @@ def multi_attack(player):  # A
     return total_attack
 
 
-def heal_spell(player):  # A
+def heal_spell(player):
     """Restore the player's health.
 
     :param player: must be a dictionary
@@ -1606,7 +1606,7 @@ def level_system(player):
         player["maximum_health"] += 5
         class_upgrade(player)
         print(f"You gained a level! You are now level {Colours.blue}{player['level']}{Colours.end} and your ship has "
-              f"been upgrade to a {Colours.blue}{player['player_class']}{Colours.end}.")
+              f"been upgraded to a {Colours.blue}{player['player_class']}{Colours.end}.")
         if player["ship"] == "Magician":
             player["special_action_counter"] += 1
             print(f"You also gained another charge on your special attack! You now have a total of "
