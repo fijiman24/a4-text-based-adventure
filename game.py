@@ -386,7 +386,7 @@ def print_class_description(class_name):
         print(f"QuickFix™ Protocols allows this ship to repair itself during combat.")
 
 
-def confirm_player_class(class_name, player):  # A
+def confirm_player_class(class_name, player):
     """Return class_name or call select_player_class, depending on user input.
 
     :param class_name: any string
@@ -517,7 +517,7 @@ def priest_ship(player):
     return player
 
 
-def special_action_selector(player):  # A
+def special_action_selector(player):
     """Select special move based on player ship type.
 
     :param player: must be a dictionary
@@ -605,7 +605,7 @@ def magic_blast(player):
     return blast_damage
 
 
-def multi_attack(player):  # A
+def multi_attack(player):
     """Split damage into 5 smaller but more powerful attacks.
 
     :param player: must be a dictionary

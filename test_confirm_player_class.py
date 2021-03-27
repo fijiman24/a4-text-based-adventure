@@ -8,14 +8,6 @@ from game import make_player
 
 class TestConfirmPlayerClass(TestCase):
     @patch('builtins.input', side_effect=['1'])
-    def test_updates_player_dictionary(self, mock_input):
-        player = make_player()
-        confirm_player_class("Squire", player)
-        expected = "Squire"
-
-        self.assertEqual(expected, player["player_class"])
-
-    @patch('builtins.input', side_effect=['1'])
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_confirm_yes(self, mock_output, mock_input):
         actual = confirm_player_class("Squire", make_player())
@@ -39,7 +31,7 @@ class TestConfirmPlayerClass(TestCase):
                    " its hull integrity has been completely breached for the first time.\n" \
                    "Do you pilot a \033[94mSquire\033[0m?\n" \
                    "[(1, 'Yes'), (2, 'No')]\n"\
-                   "Select a [94mspaceship[0m: \n" \
+                   "Select a \033[94mspaceship\033[0m: \n" \
                    " [(1, 'Squire'), (2, 'Sapper'), (3, 'Ghost'), (4, 'Cherub')]\n" \
                    "A Lazarus Engine™ allows for this ship to repair itself after" \
                    " its hull integrity has been completely breached for the first time.\n" \
