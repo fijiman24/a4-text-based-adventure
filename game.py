@@ -307,10 +307,10 @@ def input_player_name():
     name_input = str(input(f"Enter your {Colours.blue}name{Colours.end}, captain: ")).title()
     if name_input.lower() == "chris" or name_input.lower() == "christopher" or name_input.lower() == "chris thompson":
         print(f"You can be more adventurous than that! \n")
-        return input_player_name()
+        return False
     elif name_input.strip().strip() == "":
         print(f"Every space captain needs a name! \n")
-        return input_player_name()
+        return False
     else:
         return name_input
 
@@ -1108,14 +1108,10 @@ def game_board_coordinates(player_x_coordinate, player_y_coordinate, game_board_
     >>> player_character["y-coordinate"] = 3
     >>> game_board_coordinates(player_character["x-coordinate"], player_character["y-coordinate"], + \
     5, 5) # doctest: +NORMALIZE_WHITESPACE
-    {(0, 0): '\\x1b[94m*\\x1b[0m', (0, 1): '\\x1b[94m*\\x1b[0m', (0, 2): '\\x1b[94m*\\x1b[0m', (0, 3):
-    '\\x1b[94m*\\x1b[0m', (0, 4): '\\x1b[94m*\\x1b[0m', (1, 0): '\\x1b[94m*\\x1b[0m', (1, 1): '\\x1b[94m*\\x1b[0m', \
-    (1, 2): '\\x1b[94m*\\x1b[0m', (1, 3): '\\x1b[94m*\\x1b[0m', (1, 4): '\\x1b[94m*\\x1b[0m', (2, 0): \
-    '\\x1b[94m*\\x1b[0m', (2, 1): '\\x1b[94m*\\x1b[0m', (2, 2): '\\x1b[94m*\\x1b[0m', (2, 3): '\\x1b[94m*\\x1b[0m', \
-    (2, 4): '\\x1b[94m*\\x1b[0m', (3, 0): '\\x1b[94m*\\x1b[0m', (3, 1): '\\x1b[94m*\\x1b[0m', (3, 2): \
-    '\\x1b[94m*\\x1b[0m', (3, 3): '\\x1b[93m@\\x1b[0m', (3, 4): '\\x1b[94m*\\x1b[0m', (4, 0): '\\x1b[94m*\\x1b[0m', \
-    (4, 1): '\\x1b[94m*\\x1b[0m', (4, 2): '\\x1b[94m*\\x1b[0m', (4, 3): '\\x1b[94m*\\x1b[0m', (4, 4): \
-    '\\x1b[94m*\\x1b[0m'}
+    {(0, 0): '*', (0, 1): '*', (0, 2): '*', (0, 3): '*', (0, 4): '*', (1, 0): '*', (1, 1): '*', (1, 2): '*', \
+    (1, 3): '*', (1, 4): '*', (2, 0): '*', (2, 1): '*', (2, 2): '*', (2, 3): '*', (2, 4): '*', (3, 0): '*', \
+    (3, 1): '*', (3, 2): '*', (3, 3): '\\x1b[93m@\\x1b[0m', (3, 4): '*', (4, 0): '*', (4, 1): '*', (4, 2): '*', \
+    (4, 3): '*', (4, 4): '*'}
     """
     board_coordinates = [(x_coordinates, y_coordinates) for x_coordinates in range(0, game_board_width) for
                          y_coordinates in range(0, game_board_length)]
@@ -1559,30 +1555,30 @@ def gain_experience_points(player):
     >>> gain_experience_points({"level": 1, "exp": 250, "damage": 20, "health": 20, "maximum_health": 20,\
     "ship": "Warrior", "player_class": "Squire", "x-coordinate": 0, "y-coordinate": 0}) #doctest: +NORMALIZE_WHITESPACE
     You won the battle! You gained \033[94m25\033[0m scrap.
-    {'level': 1, 'exp': 275, 'damage': 20, 'health': 20, 'maximum_health': 20, 'ship': 'Warrior',
-     'player_class': 'Squire', 'x-coordinate': 0, 'y-coordinate': 0}
+    {'level': 1, 'exp': 275, 'damage': 20, 'health': 20, 'maximum_health': 20, 'ship': 'Warrior', 'player_class': \
+    'Squire', 'x-coordinate': 0, 'y-coordinate': 0}
     >>> gain_experience_points({"level": 2, "exp": 299, "damage": 22, "health": 25, "maximum_health": 25,\
     "ship": "Thief", "player_class": "Banshee", "x-coordinate": 8, "y-coordinate": 8}) #doctest: +NORMALIZE_WHITESPACE
     You won the battle! You gained \033[94m50\033[0m scrap.
-    You gained a level! You are now level \033[94m3\033[0m and your ship has been upgrade to a \033[94mRevenant\033[0m.
-    {'level': 3, 'exp': 0, 'damage': 24, 'health': 30, 'maximum_health': 30, 'ship': 'Thief',
-     'player_class': 'Revenant', 'x-coordinate': 8, 'y-coordinate': 8}
+    You gained a level! You are now level \033[94m3\033[0m and your ship has been upgraded to a \033[94mRevenant\033[0m.
+    {'level': 3, 'exp': 0, 'damage': 24, 'health': 30, 'maximum_health': 30, 'ship': 'Thief', 'player_class': \
+    'Revenant', 'x-coordinate': 8, 'y-coordinate': 8}
     >>> gain_experience_points({"level": 1, "exp": 320, "damage": 20, "health": 20, "maximum_health": 20,\
      "ship": "Magician", "player_class": "Sapper", "special_action_counter": 1, "x-coordinate": 16, \
      "y-coordinate": 16}) #doctest: +NORMALIZE_WHITESPACE
     You won the battle! You gained \033[94m100\033[0m scrap.
-    You gained a level! You are now level \033[94m2\033[0m and your ship has been upgrade to a \033[94mDrainer\033[0m.
+    You gained a level! You are now level \033[94m2\033[0m and your ship has been upgraded to a \033[94mDrainer\033[0m.
     You also gained another charge on your special attack! You now have a total of \033[94m2\033[0m.
     You gained a charge on your special attack. You now have a total of \033[94m3\033[0m charge(s).
-    {'level': 2, 'exp': 0, 'damage': 22, 'health': 25, 'maximum_health': 25, 'ship': 'Magician',
-     'player_class': 'Drainer', 'special_action_counter': 3, 'x-coordinate': 16, 'y-coordinate': 16}
+    {'level': 2, 'exp': 0, 'damage': 22, 'health': 25, 'maximum_health': 25, 'ship': 'Magician', 'player_class': \
+    'Drainer', 'special_action_counter': 3, 'x-coordinate': 16, 'y-coordinate': 16}
     >>> gain_experience_points({"level": 2, "exp": 300, "damage": 22, "health": 25, "maximum_health": 28, \
     "ship": "Priest", "player_class": "Archangel", "x-coordinate": 23, "y-coordinate": 23})\
      #doctest: +NORMALIZE_WHITESPACE
     You won the battle! You gained \033[94m150\033[0m scrap.
-    You gained a level! You are now level \033[94m3\033[0m and your ship has been upgrade to a \033[94mSeraphim\033[0m.
-    {'level': 3, 'exp': 0, 'damage': 24, 'health': 30, 'maximum_health': 33, 'ship': 'Priest',
-     'player_class': 'Seraphim', 'x-coordinate': 23, 'y-coordinate': 23}
+    You gained a level! You are now level \033[94m3\033[0m and your ship has been upgraded to a \033[94mSeraphim\033[0m.
+    {'level': 3, 'exp': 0, 'damage': 24, 'health': 30, 'maximum_health': 33, 'ship': 'Priest', 'player_class': \
+    'Seraphim', 'x-coordinate': 23, 'y-coordinate': 23}
     >>> gain_experience_points({"level": 3, "exp": 0, "damage": 22, "health": 30, "maximum_health": 30, \
     "ship": "Priest", "player_class": "Archangel", "x-coordinate": 23, "y-coordinate": 23})\
      #doctest: +NORMALIZE_WHITESPACE
@@ -1631,15 +1627,15 @@ def level_system(player):
      'player_class': 'Banshee'}
     >>> level_system({"level": 1, "exp": 320, "damage": 20, "health": 20, "maximum_health": 20, "ship": "Magician",\
     "player_class": "Sapper", "special_action_counter": 1}) #doctest: +NORMALIZE_WHITESPACE
-    You gained a level! You are now level \033[94m2\033[0m and your ship has been upgrade to a \033[94mDrainer\033[0m.
+    You gained a level! You are now level \033[94m2\033[0m and your ship has been upgraded to a \033[94mDrainer\033[0m.
     You also gained another charge on your special attack! You now have a total of \033[94m2\033[0m.
-    {'level': 2, 'exp': 0, 'damage': 22, 'health': 25, 'maximum_health': 25, 'ship': 'Magician',
-     'player_class': 'Drainer', 'special_action_counter': 2}
+    {'level': 2, 'exp': 0, 'damage': 22, 'health': 25, 'maximum_health': 25, 'ship': 'Magician', \
+    'player_class': 'Drainer', 'special_action_counter': 2}
     >>> level_system({"level": 2, "exp": 300, "damage": 22, "health": 25, "maximum_health": 28, "ship": "Priest",\
     "player_class": "Archangel"}) #doctest: +NORMALIZE_WHITESPACE
-    You gained a level! You are now level \033[94m3\033[0m and your ship has been upgrade to a \033[94mSeraphim\033[0m.
-    {'level': 3, 'exp': 0, 'damage': 24, 'health': 30, 'maximum_health': 33, 'ship': 'Priest',
-     'player_class': 'Seraphim'}
+    You gained a level! You are now level \033[94m3\033[0m and your ship has been upgraded to a \033[94mSeraphim\033[0m.
+    {'level': 3, 'exp': 0, 'damage': 24, 'health': 30, 'maximum_health': 33, 'ship': 'Priest',\
+    'player_class': 'Seraphim'}
     """
     if player["exp"] >= 300:
         player["level"] += 1
@@ -1712,7 +1708,9 @@ def game():
     player = make_player()
     game_board = game_board_coordinates(player['x-coordinate'], player['y-coordinate'], GAME_BOARD_WIDTH[0],
                                         GAME_BOARD_LENGTH[0])
-    player['name'] = input_player_name()
+
+    while player['name'] is None:
+        player['name'] = input_player_name()
     select_player_class(player)
     achieved_goal = False
     display_game_board(player['x-coordinate'], player['y-coordinate'], GAME_BOARD_WIDTH[0], game_board)
