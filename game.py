@@ -1740,13 +1740,13 @@ def game():
                             if combat_round_player_choice == "1":
                                 enemy["health"] = combat_player_attack(enemy["health"], player)
                             elif combat_round_player_choice == "2":
-                                if player["ship"] == "Magician" or player["ship"] == "Thief":
-                                    enemy["health"] -= special_action_selector(player)
-                                elif player["ship"] == "Priest":
-                                    special_action_selector(player)
-                                elif player["ship"] == "Warrior":
+                                if player["ship"] == "Warrior":
                                     special_action_selector(player)
                                     continue
+                                elif player["ship"] == "Priest":
+                                    special_action_selector(player)
+                                else:
+                                    enemy["health"] -= special_action_selector(player)
                             elif combat_round_player_choice == "3":
                                 player["health"] = backstab(player["health"])
                                 break
@@ -1757,7 +1757,7 @@ def game():
                             if enemy["health"] > 0:
                                 enemy_flee_chance = combat_enemy_flee()
                                 if enemy_flee_chance:
-                                    enemy["health"] = 99999
+                                    enemy["health"] = -99999
                                     break
                                 elif not enemy_flee_chance:
                                     if enemy["name"] == "Disruptor":
@@ -1767,14 +1767,14 @@ def game():
                                     if player["health"] <= 0 and player["ship"] == "Warrior" and \
                                             player["special_action_counter"] == 1:
                                         resurrect(player)
-                        if enemy["health"] <= 0:
+                        if enemy["health"] <= 0 and enemy["health"] != -99999:
                             enemy_death_text(player)
                             gain_experience_points(player)
                             time.sleep(1)
                         elif player["health"] <= 0:
                             player_death_text()
                             exit()
-                        elif enemy["health"] == 99999:
+                        else:
                             print(f"The enemy {Colours.red}{enemy['name']}{Colours.end} escaped!")
                             time.sleep(1)
                     else:
@@ -1789,13 +1789,13 @@ def game():
                             if combat_round_player_choice == "1":
                                 boss["health"] = boss_battle_player_attack(boss, player)
                             elif combat_round_player_choice == "2":
-                                if player["ship"] == "Magician" or player["ship"] == "Thief":
-                                    boss["health"] -= special_action_selector(player)
-                                elif player["ship"] == "Priest":
-                                    special_action_selector(player)
-                                elif player["ship"] == "Warrior":
+                                if player["ship"] == "Warrior":
                                     special_action_selector(player)
                                     continue
+                                elif player["ship"] == "Priest":
+                                    special_action_selector(player)
+                                else:
+                                    boss["health"] -= special_action_selector(player)
                             elif combat_round_player_choice == "3":
                                 print(f"There is no escaping the space worm.")
                                 continue
@@ -1818,11 +1818,10 @@ def game():
                             player["health"] += 20
                             print(f"The space worm's cosmic ichor washes over your {player['player_class']}, repairing "
                                   f"it by 20 points!\n")
-                        elif player["health"] <= 0:
+                        else:
                             player_death_text()
                             exit()
-                    story_ending_text(player)
-                    exit()
+                    achieved_goal = True
                 game_board = game_board_coordinates(player['x-coordinate'], player['y-coordinate'], GAME_BOARD_WIDTH[0],
                                                     GAME_BOARD_LENGTH[0])
                 display_game_board(player['x-coordinate'], player['y-coordinate'], GAME_BOARD_WIDTH[0], game_board)
@@ -1835,6 +1834,8 @@ def game():
             exit()
         else:
             print(f"That is not a valid choice!\n")
+    story_ending_text(player)
+    exit()
 
 
 def main():
