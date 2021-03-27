@@ -1119,9 +1119,20 @@ def game_board_coordinates(player_x_coordinate, player_y_coordinate, game_board_
     """
     board_coordinates = [(x_coordinates, y_coordinates) for x_coordinates in range(0, game_board_width) for
                          y_coordinates in range(0, game_board_length)]
-    game_board = {coordinate: f"{Colours.blue}*{Colours.end}" for coordinate in board_coordinates}
+    game_board = {coordinate: f"*" for coordinate in board_coordinates}
     game_board[(player_y_coordinate, player_x_coordinate)] = f"{Colours.yellow}@{Colours.end}"
     return game_board
+
+
+def turn_blue(string):
+    """Turn a string blue.
+
+    :param string: any string
+    :precondition: string is any string
+    :postcondition: turn string blue
+    :return: string turned blue
+    """
+    return f"{Colours.blue}{string}{Colours.end}"
 
 
 def display_game_board(x_coordinate, y_coordinate, game_board_width, game_board):
@@ -1144,18 +1155,19 @@ def display_game_board(x_coordinate, y_coordinate, game_board_width, game_board)
 
     >>> board = game_board_coordinates(0, 0, 3, 3)
     >>> display_game_board(0, 0, 3, board) # doctest: +NORMALIZE_WHITESPACE
-    \033[93m@\033[0m \033[94m*\033[0m \033[94m*\033[0m
+    \033[94m\033[93m@\033[0m\033[0m \033[94m*\033[0m \033[94m*\033[0m
     \033[94m*\033[0m \033[94m*\033[0m \033[94m*\033[0m
     \033[94m*\033[0m \033[94m*\033[0m \033[94m*\033[0m
     You are at 0, 0.
     >>> board = game_board_coordinates(1, 1, 3, 3)
     >>> display_game_board(1, 1, 3, board) # doctest: +NORMALIZE_WHITESPACE
     \033[94m*\033[0m \033[94m*\033[0m \033[94m*\033[0m
-    \033[94m*\033[0m \033[93m@\033[0m \033[94m*\033[0m
+    \033[94m*\033[0m \033[94m\033[93m@\033[0m\033[0m \033[94m*\033[0m
     \033[94m*\033[0m \033[94m*\033[0m \033[94m*\033[0m
     You are at 1, 1.
     """
-    surface_visualization = list(game_board.values())
+    unoccupied_coordinates_blue = map(turn_blue, game_board.values())
+    surface_visualization = list(unoccupied_coordinates_blue)
     surface_visualization.insert(0, "")
     for index in range(1, len(surface_visualization) + game_board_width):
         if index % (game_board_width + 1) == 0:
