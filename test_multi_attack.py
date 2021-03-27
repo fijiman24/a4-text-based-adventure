@@ -23,3 +23,17 @@ class TestMultiAttack(TestCase):
 
         self.assertEqual(actual, expected)
         self.assertEqual(actual_output, expected_output)
+
+    @patch('random.randint', side_effect=[1, 2, 3, 4, 5])
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_damage_different_values(self, mock_output, random_number_generator):
+        player = make_player()
+        multi_attack(player)
+        actual_output = mock_output.getvalue()
+
+        expected_output = "You dealt \033[94m1\033[0m damage to the enemy!\n" \
+                          "You dealt \033[94m2\033[0m damage to the enemy!\n" \
+                          "You dealt \033[94m3\033[0m damage to the enemy!\n" \
+                          "You dealt \033[94m4\033[0m damage to the enemy!\n" \
+                          "You dealt \033[94m5\033[0m damage to the enemy!\n"
+        self.assertEqual(actual_output, expected_output)
