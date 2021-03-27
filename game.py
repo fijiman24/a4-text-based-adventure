@@ -1481,7 +1481,6 @@ def combat_enemy_attack(player):
     player['health'] -= enemy_damage
     print(f"The enemy {Colours.red}{enemy['name']}{Colours.end} did {Colours.red}{enemy_damage}{Colours.end} damage to "
           f"you!\n")
-    time.sleep(1)
     return player['health']
 
 
@@ -1812,12 +1811,12 @@ def game():
                                         player["special_action_counter"] == 1:
                                     resurrect(player)
                         if boss["health"] <= 0:
-                            boss_phase_death_text(player)
                             player["boss_phase_counter"] -= 1
                             time.sleep(1)
                             player["health"] += 20
                             print(f"The space worm's cosmic ichor washes over your {player['player_class']}, repairing "
                                   f"it by 20 points!\n")
+                            boss_phase_death_text(player)
                         else:
                             player_death_text()
                             exit()
