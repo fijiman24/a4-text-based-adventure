@@ -32,3 +32,16 @@ class TestCombatPlayerAttack(TestCase):
 
         self.assertEqual(actual_output, expected_output)
         self.assertEqual(actual_health, expected_health)
+
+    @patch('random.randint', side_effect=[15])
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_zero_enemy_health(self, mock_output, random_number_generator):
+        player = make_player()
+        actual_health = combat_player_attack(15, player)
+        actual_output = mock_output.getvalue()
+
+        expected_health = 0
+        expected_output = "You did \033[94m15\033[0m damage to the enemy \033[91mDinghy\033[0m!\n\n"
+
+        self.assertEqual(actual_output, expected_output)
+        self.assertEqual(actual_health, expected_health)
