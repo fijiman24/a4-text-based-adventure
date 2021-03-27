@@ -8,6 +8,14 @@ from game import make_player
 
 class TestConfirmPlayerClass(TestCase):
     @patch('builtins.input', side_effect=['1'])
+    def test_updates_player_dictionary(self, mock_input):
+        player = make_player()
+        confirm_player_class("Squire", player)
+        expected = "Squire"
+
+        self.assertEqual(expected, player["player_class"])
+
+    @patch('builtins.input', side_effect=['1'])
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_confirm_yes(self, mock_output, mock_input):
         actual = confirm_player_class("Squire", make_player())

@@ -1140,7 +1140,7 @@ def display_game_board(x_coordinate, y_coordinate, game_board):
     :postcondition: return the values in game_board visualized in a 25 by 25 size grid
     :return: the values in game_board visualized in a 25 by 25 size grid
 
-    Trust me, it works
+
     """
     surface_visualization = list(game_board.values())
     surface_visualization.insert(0, "")
