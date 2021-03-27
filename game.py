@@ -1124,26 +1124,41 @@ def game_board_coordinates(player_x_coordinate, player_y_coordinate, game_board_
     return game_board
 
 
-def display_game_board(x_coordinate, y_coordinate, game_board):
+def display_game_board(x_coordinate, y_coordinate, game_board_width, game_board):
     """Return the values in game_board visualized in a 25 by 25 size grid.
 
-    :param x_coordinate: any positive integer between [0, 24]
-    :param y_coordinate: any positive integer between [0, 24]
+    :param x_coordinate: any positive integer
+    :param y_coordinate: any positive positive integer
+    :param game_board_width: any positive integer
     :param game_board: a dictionary
-    :precondition: player_x_coordinate is any positive integer between [0, 24] representing current player x-coordinate
-    :precondition: player_x_coordinate is any positive integer between [0, 24] representing current player y-coordinate
+    :precondition: x_coordinate is any positive integer between [0, game_board_width]
+    :precondition: x_coordinate is equal to the x-coordinate in game_board where the value is a yellow @
+    :precondition: y_coordinate is any positive integer between and the highest y-coordinate in game_board
+    :precondition: y_coordinate is equal to the y-coordinate in game_board where the value is a yellow @
+    :precondition: game_board_width is equal to the highest x-coordinate in game_board
     :precondition: game_board is a dictionary whose keys are tuples of length 2
     :precondition: the tuples in game_board are permutations of all integers between [0, 24]
     :precondition: the values in game_board are either blue asterisks or yellow at symbols
     :postcondition: return the values in game_board visualized in a 25 by 25 size grid
     :return: the values in game_board visualized in a 25 by 25 size grid
 
-
+    >>> board = game_board_coordinates(0, 0, 3, 3)
+    >>> display_game_board(0, 0, 3, board) # doctest: +NORMALIZE_WHITESPACE
+    \033[93m@\033[0m \033[94m*\033[0m \033[94m*\033[0m
+    \033[94m*\033[0m \033[94m*\033[0m \033[94m*\033[0m
+    \033[94m*\033[0m \033[94m*\033[0m \033[94m*\033[0m
+    You are at 0, 0.
+    >>> board = game_board_coordinates(1, 1, 3, 3)
+    >>> display_game_board(1, 1, 3, board) # doctest: +NORMALIZE_WHITESPACE
+    \033[94m*\033[0m \033[94m*\033[0m \033[94m*\033[0m
+    \033[94m*\033[0m \033[93m@\033[0m \033[94m*\033[0m
+    \033[94m*\033[0m \033[94m*\033[0m \033[94m*\033[0m
+    You are at 1, 1.
     """
     surface_visualization = list(game_board.values())
     surface_visualization.insert(0, "")
-    for index in range(1, len(surface_visualization) + GAME_BOARD_WIDTH[0]):
-        if index % (GAME_BOARD_WIDTH[0] + 1) == 0:
+    for index in range(1, len(surface_visualization) + game_board_width):
+        if index % (game_board_width + 1) == 0:
             surface_visualization.insert(index, "\n")
     surface_visualization.pop()
     print(*surface_visualization, sep=" ")
@@ -1688,7 +1703,7 @@ def game():
     player['name'] = input_player_name()
     select_player_class(player)
     achieved_goal = False
-    display_game_board(player['x-coordinate'], player['y-coordinate'], game_board)
+    display_game_board(player['x-coordinate'], player['y-coordinate'], GAME_BOARD_WIDTH[0], game_board)
 
     while not achieved_goal:
         main_menu_selection = display_main_menu()
@@ -1800,7 +1815,7 @@ def game():
                     exit()
                 game_board = game_board_coordinates(player['x-coordinate'], player['y-coordinate'], GAME_BOARD_WIDTH[0],
                                                     GAME_BOARD_LENGTH[0])
-                display_game_board(player['x-coordinate'], player['y-coordinate'], game_board)
+                display_game_board(player['x-coordinate'], player['y-coordinate'], GAME_BOARD_WIDTH[0], game_board)
             else:
                 print(f"Please move to a different coordinate.")
         elif main_menu_selection == "2":
