@@ -532,8 +532,6 @@ def special_action_selector(player):  # A
         resurrect(player)
     elif player["ship"] == "Magician":
         blast_damage = magic_blast(player)
-        print(f"You charged up your beam to blast the enemy with {Colours.blue}{blast_damage}{Colours.end} "
-              f"damage!\n")
         return blast_damage
     elif player["ship"] == "Thief":
         return multi_attack(player)
