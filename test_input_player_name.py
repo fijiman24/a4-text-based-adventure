@@ -20,15 +20,17 @@ class Test(TestCase):
     @patch('builtins.input', side_effect=[''])
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_no_name_given(self, mock_output, mock_input):
-        input_player_name()
+        new_name = input_player_name()
         actual = mock_output.getvalue()
         expected_output = "Every space captain needs a name! \n\n"
         self.assertEqual(expected_output, actual)
+        self.assertIsNone(new_name)
 
     @patch('builtins.input', side_effect=['chris'])
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_instructor_name_given(self, mock_output, mock_input):
-        input_player_name()
+        new_name = input_player_name()
         actual = mock_output.getvalue()
         expected_output = "You can be more adventurous than that! \n\n"
         self.assertEqual(expected_output, actual)
+        self.assertIsNone(new_name)
