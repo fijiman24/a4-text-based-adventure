@@ -315,7 +315,7 @@ def input_player_name():
         return name_input
 
 
-def display_player_class_menu():  # A
+def display_player_class_menu():
     """Display and prompt the choices of classes that the user may select from.
 
     :postcondition: enumerate and display classes then prompt and return the user input
@@ -326,7 +326,7 @@ def display_player_class_menu():  # A
     return input()
 
 
-def select_player_class(player):  # A
+def select_player_class(player):
     """Print class description and return class after being passed to confirm_player_class().
 
     :precondition: user enters input when prompted
@@ -444,7 +444,7 @@ def warrior_ship(player):
     return player
 
 
-def magician_ship(player):  # A
+def magician_ship(player):
     """Modify dictionary to change values to attributes of the magician ship.
 
     :param player: must be a dictionary
