@@ -1142,7 +1142,7 @@ def display_game_board(x_coordinate, y_coordinate, game_board_width, game_board)
     :precondition: x_coordinate is equal to the x-coordinate in game_board where the value is a yellow @
     :precondition: y_coordinate is any positive integer between and the highest y-coordinate in game_board
     :precondition: y_coordinate is equal to the y-coordinate in game_board where the value is a yellow @
-    :precondition: game_board_width is equal to the highest x-coordinate in game_board
+    :precondition: game_board_width is equal to the highest x-coordinate + 1 in game_board
     :precondition: game_board is a dictionary whose keys are tuples of length 2
     :precondition: the tuples in game_board are permutations of all integers between [0, 24]
     :precondition: the values in game_board are either blue asterisks or yellow at symbols
