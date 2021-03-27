@@ -307,10 +307,10 @@ def input_player_name():
     name_input = str(input(f"Enter your {Colours.blue}name{Colours.end}, captain: ")).title()
     if name_input.lower() == "chris" or name_input.lower() == "christopher" or name_input.lower() == "chris thompson":
         print(f"You can be more adventurous than that! \n")
-        return False
+        return None
     elif name_input.strip().strip() == "":
         print(f"Every space captain needs a name! \n")
-        return False
+        return None
     else:
         return name_input
 
