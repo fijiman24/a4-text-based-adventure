@@ -1085,24 +1085,42 @@ def boss_ultimate_attack_activate(boss, player):
         return player
 
 
-def game_board_coordinates(player_x_coordinate, player_y_coordinate):
+def game_board_coordinates(player_x_coordinate, player_y_coordinate, game_board_width, game_board_length):
     """Return dictionary representing game board, with unoccupied coordinates containing a blue asterisk, and occupied
        coordinates containing a yellow at symbol.
 
-    :param player_x_coordinate: any positive integer between [0, 24]
-    :param player_y_coordinate: any positive integer between [0, 24]
-    precondition: player_x_coordinate is any positive integer between [0, 24] representing current player x-coordinate
-    precondition: player_x_coordinate is any positive integer between [0, 24] representing current player y-coordinate
+    :param player_x_coordinate: any positive integer
+    :param player_y_coordinate: any positive integer
+    :param game_board_width: any positive integer
+    :param game_board_length: any positive integer
+    :precondition: player_x_coordinate is any positive integer between [0, game_board_width]
+    :precondition: player_x_coordinate is any positive integer between [0, game_board_length]
+    :precondition: game_board_width and game_board_length are positive integers
     :postcondition: generate dictionary of game board
     :postcondition: assign every key the value of a blue asterisk
     :postcondition: reassign key corresponding to current player coordinates value of a yellow at symbol
     :return: dictionary representing game board, with unoccupied coordinates containing the value of a blue asterisk,
              and key corresonding to current player location containing the value of a yellow at symbol
 
-    Trust me, it works
+    >>> player_character = make_player()
+    >>> game_board_coordinates(player_character["x-coordinate"], player_character["y-coordinate"], + \
+    0, 0) # doctest: +NORMALIZE_WHITESPACE
+    {(0, 0): '\\x1b[93m@\\x1b[0m'}
+    >>> player_character["x-coordinate"] = 3
+    >>> player_character["y-coordinate"] = 3
+    >>> game_board_coordinates(player_character["x-coordinate"], player_character["y-coordinate"], + \
+    5, 5) # doctest: +NORMALIZE_WHITESPACE
+    {(0, 0): '\\x1b[94m*\\x1b[0m', (0, 1): '\\x1b[94m*\\x1b[0m', (0, 2): '\\x1b[94m*\\x1b[0m', (0, 3):
+    '\\x1b[94m*\\x1b[0m', (0, 4): '\\x1b[94m*\\x1b[0m', (1, 0): '\\x1b[94m*\\x1b[0m', (1, 1): '\\x1b[94m*\\x1b[0m', \
+    (1, 2): '\\x1b[94m*\\x1b[0m', (1, 3): '\\x1b[94m*\\x1b[0m', (1, 4): '\\x1b[94m*\\x1b[0m', (2, 0): \
+    '\\x1b[94m*\\x1b[0m', (2, 1): '\\x1b[94m*\\x1b[0m', (2, 2): '\\x1b[94m*\\x1b[0m', (2, 3): '\\x1b[94m*\\x1b[0m', \
+    (2, 4): '\\x1b[94m*\\x1b[0m', (3, 0): '\\x1b[94m*\\x1b[0m', (3, 1): '\\x1b[94m*\\x1b[0m', (3, 2): \
+    '\\x1b[94m*\\x1b[0m', (3, 3): '\\x1b[93m@\\x1b[0m', (3, 4): '\\x1b[94m*\\x1b[0m', (4, 0): '\\x1b[94m*\\x1b[0m', \
+    (4, 1): '\\x1b[94m*\\x1b[0m', (4, 2): '\\x1b[94m*\\x1b[0m', (4, 3): '\\x1b[94m*\\x1b[0m', (4, 4): \
+    '\\x1b[94m*\\x1b[0m'}
     """
-    board_coordinates = [(x_coordinates, y_coordinates) for x_coordinates in range(0, GAME_BOARD_WIDTH[0]) for
-                         y_coordinates in range(0, GAME_BOARD_LENGTH[0])]
+    board_coordinates = [(x_coordinates, y_coordinates) for x_coordinates in range(0, game_board_width) for
+                         y_coordinates in range(0, game_board_length)]
     game_board = {coordinate: f"{Colours.blue}*{Colours.end}" for coordinate in board_coordinates}
     game_board[(player_y_coordinate, player_x_coordinate)] = f"{Colours.yellow}@{Colours.end}"
     return game_board
@@ -1667,7 +1685,8 @@ def game():
     ascii_intro()
 
     player = make_player()
-    game_board = game_board_coordinates(player['x-coordinate'], player['y-coordinate'])
+    game_board = game_board_coordinates(player['x-coordinate'], player['y-coordinate'], GAME_BOARD_WIDTH[0],
+                                        GAME_BOARD_LENGTH[0])
     player['name'] = input_player_name()
     select_player_class(player)
     achieved_goal = False
@@ -1781,7 +1800,8 @@ def game():
                             exit()
                     story_ending_text(player)
                     exit()
-                game_board = game_board_coordinates(player['x-coordinate'], player['y-coordinate'])
+                game_board = game_board_coordinates(player['x-coordinate'], player['y-coordinate'], GAME_BOARD_WIDTH[0],
+                                                    GAME_BOARD_LENGTH[0])
                 display_game_board(player['x-coordinate'], player['y-coordinate'], game_board)
             else:
                 print(f"Please move to a different coordinate.")
