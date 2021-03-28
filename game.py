@@ -540,7 +540,7 @@ def priest_ship(player: dict) -> dict:
     return player
 
 
-def special_action_selector(player: dict):
+def special_action_selector(player: dict) -> dict or int:
     """Select special move based on player ship type.
 
     :param player: must be a dictionary
