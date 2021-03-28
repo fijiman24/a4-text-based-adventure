@@ -1270,9 +1270,11 @@ def validate_move(direction, x_coordinate, y_coordinate):
     :precondition: direction is any integer
     :precondition: x_coordinate is any integer
     :precondition: y_coordinate is any integer
+    :postcondition: call confirm_move_to_boss_room() if player tries to move to ((GAME_BOARD_WIDTH[0] - 1,
+                                                                                (GAME_BOARD_LENGTH[0] - 1)))
     :postcondition: return True if direction is 1 and current y_coordinate is not 0
-    :postcondition: return True if direction is 2 and current x_coordinate is not 24
-    :postcondition: return True if direction is 3 and current y_coordinate is not 24
+    :postcondition: return True if direction is 2 and current x_coordinate is not (GAME_BOARD_WIDTH[0] - 1)
+    :postcondition: return True if direction is 3 and current y_coordinate is not (GAME_BOARD_LENGTH[0] - 1)
     :postcondition: return True if direction is 4 and current x_coordinate is not 0
     :postcondition: return False if any of the above postconditions were not satisfied
     :return: True if direction was a valid move, else False
@@ -1294,14 +1296,15 @@ def validate_move(direction, x_coordinate, y_coordinate):
     >>> validate_move(4, 0, 24)
     False
     """
-    if (direction == 2 and (x_coordinate == 23 and y_coordinate == 24)) or (direction == 3 and (x_coordinate == 24 and
-                                                                                                y_coordinate == 23)):
+    if (direction == 2 and (x_coordinate == (GAME_BOARD_WIDTH[0] - 2) and y_coordinate == (GAME_BOARD_LENGTH[0] - 1))) \
+            or (direction == 3 and (x_coordinate == (GAME_BOARD_WIDTH[0] - 1) and y_coordinate ==
+                                    (GAME_BOARD_LENGTH[0] - 2))):
         return confirm_move_to_boss_room()
     elif direction == 1 and y_coordinate != 0:
         return True
-    elif direction == 2 and x_coordinate != 24:
+    elif direction == 2 and x_coordinate != (GAME_BOARD_WIDTH[0] - 1):
         return True
-    elif direction == 3 and y_coordinate != 24:
+    elif direction == 3 and y_coordinate != (GAME_BOARD_LENGTH[0] - 1):
         return True
     elif direction == 4 and x_coordinate != 0:
         return True
