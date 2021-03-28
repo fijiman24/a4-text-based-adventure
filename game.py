@@ -1461,12 +1461,12 @@ def combat_initiative_roll(player):
     if player_roll == enemy_roll:  # checks for draws
         print(f'Draw! You both rolled a {Colours.blue}{player_roll}{Colours.end}. Rerolling....\n')
         combat_initiative_roll(player)
-    if player_roll > enemy_roll:  # checks if player attacks first1
+    elif player_roll > enemy_roll:  # checks if player attacks first1
         print(f'You rolled a {Colours.blue}{player_roll}{Colours.end} and the enemy '
               f'{Colours.red}{enemy["name"]}{Colours.end} rolled a {Colours.red}{enemy_roll}{Colours.end}. '
               f'You will attack first.\n')
         return True
-    elif player_roll < enemy_roll:  # checks if foe attacks first
+    else:  # checks if foe attacks first
         print(f'You rolled a {Colours.blue}{player_roll}{Colours.end} and the enemy '
               f'{Colours.red}{enemy["name"]}{Colours.end} rolled {Colours.red}{enemy_roll}{Colours.end}. '
               f'The enemy {Colours.red}{enemy["name"]}{Colours.end} will attack first.\n')
