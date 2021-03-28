@@ -1804,7 +1804,7 @@ def game():
                         elif player["health"] <= 0:
                             player_death_text()
                             exit()
-                        else:
+                        elif enemy["health"] == -99999:
                             print(f"The enemy {Colours.red}{enemy['name']}{Colours.end} escaped!")
                             time.sleep(1)
                     else:
