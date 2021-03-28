@@ -335,24 +335,45 @@ def select_player_class(player):
     :postcondition: print class description
     :postcondition: pass user input to confirm_player_class()
     :return: player dictionary after being passed to confirm_player_class()
+
+    No doctest, this accepts user input.
     """
     choice = display_player_class_menu()
     if choice == "1":
-        if confirm_player_class("Squire", player):
-            warrior_ship(player)
+        confirm_player_class("Squire", player)
     elif choice == "2":
-        if confirm_player_class("Sapper", player):
-            magician_ship(player)
+        confirm_player_class("Sapper", player)
     elif choice == "3":
-        if confirm_player_class("Ghost", player):
-            thief_ship(player)
+        confirm_player_class("Ghost", player)
     elif choice == "4":
-        if confirm_player_class("Cherub", player):
-            priest_ship(player)
+        confirm_player_class("Cherub", player)
     else:
         print(f"That is not a valid choice! \n")
-        select_player_class(player)
-    return player
+    return player['player_class']
+
+
+def assign_player_class(class_name, player):
+    """Call the appropriate class-assigning function, depending on class_name.
+
+    :param class_name: a string
+    :param player: a dictionary
+    :precondition: class_name is a string corresponding to a valid player class
+    :precondition: player is a dictionary representing the player character
+    :postcondition: call warrior_ship(player) if class_name == "Squire"
+    :postcondition: call magician_ship(player) if class_name == "Sapper"
+    :postcondition: call thief_ship(player) if class_name == "Ghost"
+    postcondition: call priest_ship(player) if class_name == "Cherub"
+
+    No doctest, this doesn't return or print anything.
+    """
+    if class_name == "Squire":
+        warrior_ship(player)
+    elif class_name == "Sapper":
+        magician_ship(player)
+    elif class_name == "Ghost":
+        thief_ship(player)
+    elif class_name == "Cherub":
+        priest_ship(player)
 
 
 def print_class_description(class_name):
@@ -387,7 +408,7 @@ def print_class_description(class_name):
 
 
 def confirm_player_class(class_name, player):
-    """Return class_name or call select_player_class, depending on user input.
+    """Call assign_player_class or select_player_class or return None, depending on user input.
 
     :param class_name: any string
     :param player: a dictionary
@@ -396,10 +417,13 @@ def confirm_player_class(class_name, player):
     :postcondition: call print_class_description to print class description
     :postcondition: print f"Do you pilot a {class_name}?"
     :postcondition: print a numbered list of options [(1, 'Yes'), (2, 'No')]
-    :postcondition: return class_name if input is "1"
+    :postcondition: call assign_player_class(class_name, player) if input is "1"
     :postcondition: call select_player_class() if input is "2"
-    :postcondition: print "That is not a valid choice" if input is neither "1" or "2" and recall confirm_player_class()
-    :return: class_name if input is "1", select_player_class() if input is "2"
+    :postcondition: print "That is not a valid choice" if input is neither "1" or "2", and return None
+    :return: assign_player_class(class_name, player) if input is "1", select_player_class(player) if input is "2",
+             None if input is neither
+
+    No doctest, this accepts user input.
     """
     print_class_description(class_name)
     print(f"Do you pilot a {Colours.blue}{class_name}{Colours.end}?")
@@ -407,12 +431,12 @@ def confirm_player_class(class_name, player):
 
     choice = input()
     if choice == "1":
-        return True
+        assign_player_class(class_name, player)
     elif choice == "2":
         select_player_class(player)
     else:
         print(f"That is not a valid choice! \n")
-        return confirm_player_class(class_name, player)
+        return None
 
 
 def warrior_ship(player):
@@ -1097,13 +1121,14 @@ def game_board_coordinates(player_x_coordinate, player_y_coordinate, game_board_
     :postcondition: generate dictionary of game board
     :postcondition: assign every key the value of a blue asterisk
     :postcondition: reassign key corresponding to current player coordinates value of a yellow at symbol
+    :postcondition: reassign key corresponding to ((game_board_width - 1), (game_board_length - 1)) a purple W
     :return: dictionary representing game board, with unoccupied coordinates containing the value of a blue asterisk,
              and key corresonding to current player location containing the value of a yellow at symbol
 
     >>> player_character = make_player()
     >>> game_board_coordinates(player_character["x-coordinate"], player_character["y-coordinate"], + \
     0, 0) # doctest: +NORMALIZE_WHITESPACE
-    {(0, 0): '\\x1b[93m@\\x1b[0m'}
+    {(0, 0): '\\x1b[93m@\\x1b[0m', (-1, -1): '\\x1b[95mW\\x1b[0m'}
     >>> player_character["x-coordinate"] = 3
     >>> player_character["y-coordinate"] = 3
     >>> game_board_coordinates(player_character["x-coordinate"], player_character["y-coordinate"], + \
@@ -1111,12 +1136,13 @@ def game_board_coordinates(player_x_coordinate, player_y_coordinate, game_board_
     {(0, 0): '*', (0, 1): '*', (0, 2): '*', (0, 3): '*', (0, 4): '*', (1, 0): '*', (1, 1): '*', (1, 2): '*', \
     (1, 3): '*', (1, 4): '*', (2, 0): '*', (2, 1): '*', (2, 2): '*', (2, 3): '*', (2, 4): '*', (3, 0): '*', \
     (3, 1): '*', (3, 2): '*', (3, 3): '\\x1b[93m@\\x1b[0m', (3, 4): '*', (4, 0): '*', (4, 1): '*', (4, 2): '*', \
-    (4, 3): '*', (4, 4): '*'}
+    (4, 3): '*', (4, 4): '\\x1b[95mW\\x1b[0m'}
     """
     board_coordinates = [(x_coordinates, y_coordinates) for x_coordinates in range(0, game_board_width) for
                          y_coordinates in range(0, game_board_length)]
     game_board = {coordinate: f"*" for coordinate in board_coordinates}
     game_board[(player_y_coordinate, player_x_coordinate)] = f"{Colours.yellow}@{Colours.end}"
+    game_board[((game_board_width - 1), (game_board_length - 1))] = f"{Colours.magenta}W{Colours.end}"
     return game_board
 
 
@@ -1153,13 +1179,13 @@ def display_game_board(x_coordinate, y_coordinate, game_board_width, game_board)
     >>> display_game_board(0, 0, 3, board) # doctest: +NORMALIZE_WHITESPACE
     \033[94m\033[93m@\033[0m\033[0m \033[94m*\033[0m \033[94m*\033[0m
     \033[94m*\033[0m \033[94m*\033[0m \033[94m*\033[0m
-    \033[94m*\033[0m \033[94m*\033[0m \033[94m*\033[0m
+    \033[94m*\033[0m \033[94m*\033[0m \033[94m\x1b[95mW\x1b[0m\033[0m
     You are at 0, 0.
     >>> board = game_board_coordinates(1, 1, 3, 3)
     >>> display_game_board(1, 1, 3, board) # doctest: +NORMALIZE_WHITESPACE
     \033[94m*\033[0m \033[94m*\033[0m \033[94m*\033[0m
     \033[94m*\033[0m \033[94m\033[93m@\033[0m\033[0m \033[94m*\033[0m
-    \033[94m*\033[0m \033[94m*\033[0m \033[94m*\033[0m
+    \033[94m*\033[0m \033[94m*\033[0m \033[94m\x1b[95mW\x1b[0m\033[0m
     You are at 1, 1.
     """
     unoccupied_coordinates_blue = map(turn_blue, game_board.values())
@@ -1710,7 +1736,8 @@ def game():
 
     while player['name'] is None:
         player['name'] = input_player_name()
-    select_player_class(player)
+    while player['player_class'] is None:
+        player['player_class'] = select_player_class(player)
     achieved_goal = False
     display_game_board(player['x-coordinate'], player['y-coordinate'], GAME_BOARD_WIDTH[0], game_board)
 
