@@ -86,7 +86,7 @@ def story_introduction_text():
           f"pilfered from...\n")
 
 
-def boss_fight_start_text(player):
+def boss_fight_start_text(player: dict):
     """Print text introducing the appropriate boss phase.
 
     :param player: a dictionary
@@ -128,7 +128,7 @@ def boss_fight_start_text(player):
               f" Six!\n")
 
 
-def boss_phase_death_text(player):
+def boss_phase_death_text(player: dict):
     """Print text describing the appropriate boss phase death.
 
     :param player: a dictionary
@@ -164,7 +164,7 @@ def boss_phase_death_text(player):
         print(f"You finally obliterate the {Colours.magenta}Headless Intergalactic Space Worm{Colours.end}!\n")
 
 
-def story_ending_text(player):
+def story_ending_text(player: dict):
     """Print the ending story text.
 
     :param player: a dictionary
@@ -219,7 +219,7 @@ def player_death_text():
     print(f"{Colours.red}YOU ARE DEAD{Colours.end}")
 
 
-def enemy_death_text(player):
+def enemy_death_text(player: dict):
     """Print text describing enemy death.
     :param player: a dictionary
     :precondition: player is dictionary representing the player character
@@ -249,7 +249,7 @@ def enemy_death_text(player):
     time.sleep(1)
 
 
-def check_if_player_in_boss_room(x_coordinate, y_coordinate):
+def check_if_player_in_boss_room(x_coordinate: int, y_coordinate: int) -> bool:
     """Return True if player x- and y- coordinates are both 24, else return False.
 
     :param x_coordinate: any integer
@@ -269,7 +269,7 @@ def check_if_player_in_boss_room(x_coordinate, y_coordinate):
         return False
 
 
-def make_player():
+def make_player() -> dict:
     """Create and return dictionary for player's starting values.
 
     :postcondition: Return a dictionary representing the player's health, maximum_health, their starting x-coordinate,
@@ -298,7 +298,7 @@ def make_player():
             }
 
 
-def input_player_name():
+def input_player_name() -> None or str:
     """Return player name.
 
     :postcondition: convert player's input into title case
@@ -326,7 +326,7 @@ def display_player_class_menu():
     return input()
 
 
-def select_player_class(player):
+def select_player_class(player: dict):
     """Print class description and return class after being passed to confirm_player_class().
 
     :precondition: user enters input when prompted
@@ -352,7 +352,7 @@ def select_player_class(player):
     return player['player_class']
 
 
-def assign_player_class(class_name, player):
+def assign_player_class(class_name: str, player: dict):
     """Call the appropriate class-assigning function, depending on class_name.
 
     :param class_name: a string
@@ -376,7 +376,7 @@ def assign_player_class(class_name, player):
         priest_ship(player)
 
 
-def print_class_description(class_name):
+def print_class_description(class_name: str):
     """Print description of the inputted class.
 
     :param class_name: must be a string containing either "Squire", "Sapper", "Ghost" or "Cherub"
@@ -407,7 +407,7 @@ def print_class_description(class_name):
         print(f"QuickFix™ Protocols allows this ship to repair itself during combat.")
 
 
-def confirm_player_class(class_name, player):
+def confirm_player_class(class_name: str, player: dict):
     """Call assign_player_class or select_player_class or return None, depending on user input.
 
     :param class_name: any string
@@ -439,7 +439,7 @@ def confirm_player_class(class_name, player):
         return None
 
 
-def warrior_ship(player):
+def warrior_ship(player: dict) -> dict:
     """Modify dictionary to change values to attributes of the warrior ship.
 
     :param player: must be a dictionary
@@ -468,7 +468,7 @@ def warrior_ship(player):
     return player
 
 
-def magician_ship(player):
+def magician_ship(player: dict) -> dict:
     """Modify dictionary to change values to attributes of the magician ship.
 
     :param player: must be a dictionary
@@ -493,7 +493,7 @@ def magician_ship(player):
     return player
 
 
-def thief_ship(player):
+def thief_ship(player: dict) -> dict:
     """Modify dictionary to change values to attributes of the thief ship.
 
     :param player: must be a dictionary
@@ -514,7 +514,7 @@ def thief_ship(player):
     return player
 
 
-def priest_ship(player):
+def priest_ship(player: dict) -> dict:
     """Modify dictionary to change values to attributes of the priest ship.
 
     :param player: must be a dictionary
@@ -541,7 +541,7 @@ def priest_ship(player):
     return player
 
 
-def special_action_selector(player):
+def special_action_selector(player: dict):
     """Select special move based on player ship type.
 
     :param player: must be a dictionary
@@ -604,7 +604,7 @@ def resurrect(player):
         print(f"Your passive have already been used. You will not revive if your hp hits 0.\n")
 
 
-def magic_blast(player):
+def magic_blast(player: dict) -> int:
     """Blast the enemy based on the number of counters the player has.
 
     :param player: must be a dictionary
@@ -628,7 +628,7 @@ def magic_blast(player):
     return blast_damage
 
 
-def multi_attack(player):
+def multi_attack(player: dict) -> int:
     """Split damage into 5 smaller but more powerful attacks.
 
     :param player: must be a dictionary
@@ -645,7 +645,7 @@ def multi_attack(player):
     return total_attack
 
 
-def heal_spell(player):
+def heal_spell(player: dict) -> dict:
     """Restore the player's health.
 
     :param player: must be a dictionary
@@ -681,7 +681,7 @@ def heal_spell(player):
     return player
 
 
-def make_enemy_difficulty_one():
+def make_enemy_difficulty_one() -> dict:
     """Create dictionary of the difficulty one enemy.
 
     :postcondition: generate new dictionary based on enemy attributes
@@ -698,7 +698,7 @@ def make_enemy_difficulty_one():
     }
 
 
-def make_enemy_difficulty_two():
+def make_enemy_difficulty_two() -> dict:
     """Create dictionary of the difficulty two enemy.
 
     :postcondition: generate new dictionary based on enemy attributes
@@ -715,7 +715,7 @@ def make_enemy_difficulty_two():
     }
 
 
-def make_enemy_difficulty_three():
+def make_enemy_difficulty_three() -> dict:
     """Create dictionary of the difficulty three enemy.
 
     :postcondition: generate new dictionary based on enemy attributes
@@ -733,7 +733,7 @@ def make_enemy_difficulty_three():
     }
 
 
-def make_enemy_difficulty_four():
+def make_enemy_difficulty_four() -> dict:
     """Create dictionary of the difficulty four enemy.
 
     :postcondition: generate new dictionary based on enemy attributes
@@ -750,7 +750,7 @@ def make_enemy_difficulty_four():
     }
 
 
-def make_appropriate_enemy_type(player):
+def make_appropriate_enemy_type(player: dict):
     """Return the appropriate enemy type, depending on player x- and y-coordinates.
 
     :param player: a dictionary
@@ -787,7 +787,7 @@ def make_appropriate_enemy_type(player):
         return make_enemy_difficulty_one()
 
 
-def enemy_disruptor_teleport_attack_countdown(enemy):
+def enemy_disruptor_teleport_attack_countdown(enemy: dict) -> dict:
     """Return enemy with special_ability_counter decremented by 1 if special_ability_counter > 0, else return enemy.
 
     :param enemy: a dictionary
@@ -810,7 +810,7 @@ def enemy_disruptor_teleport_attack_countdown(enemy):
     return enemy
 
 
-def enemy_disruptor_teleport_attack_activate(enemy, player):
+def enemy_disruptor_teleport_attack_activate(enemy: dict, player: dict) -> dict:
     """Teleport player to a new x- and y- coordinate.
 
     :param enemy: a dictionary
@@ -840,7 +840,7 @@ def enemy_disruptor_teleport_attack_activate(enemy, player):
         return player
 
 
-def make_enemy_boss_phase_one():
+def make_enemy_boss_phase_one() -> dict:
     """Return a dictionary representing the first phase of the boss.
 
     :postcondition: return a dictionary representing the first phase of the boss
@@ -856,7 +856,7 @@ def make_enemy_boss_phase_one():
     }
 
 
-def make_enemy_boss_phase_two():
+def make_enemy_boss_phase_two() -> dict:
     """Return a dictionary representing the second phase of the boss.
 
     :postcondition: return a dictionary representing the second phase of the boss
@@ -872,7 +872,7 @@ def make_enemy_boss_phase_two():
     }
 
 
-def make_enemy_boss_phase_three():
+def make_enemy_boss_phase_three() -> dict:
     """Return a dictionary representing the third phase of the boss.
 
     :postcondition: return a dictionary representing the third phase of the boss
@@ -889,7 +889,7 @@ def make_enemy_boss_phase_three():
     }
 
 
-def make_appropriate_boss_phase(player):
+def make_appropriate_boss_phase(player: dict):
     """Return the appropriate boss phase dictionary, according to player["boss_phase_counter"] value.
 
     :param player: a dictionary
