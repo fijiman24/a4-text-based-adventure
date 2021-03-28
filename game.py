@@ -315,7 +315,7 @@ def input_player_name() -> None or str:
         return name_input
 
 
-def display_player_class_menu():
+def display_player_class_menu() -> str:
     """Display and prompt the choices of classes that the user may select from.
 
     :postcondition: enumerate and display classes then prompt and return the user input
@@ -326,7 +326,7 @@ def display_player_class_menu():
     return input()
 
 
-def select_player_class(player: dict):
+def select_player_class(player: dict) -> str:
     """Print class description and return class after being passed to confirm_player_class().
 
     :precondition: user enters input when prompted
@@ -334,7 +334,7 @@ def select_player_class(player: dict):
                     (4, 'Cherub')]
     :postcondition: print class description
     :postcondition: pass user input to confirm_player_class()
-    :return: player dictionary after being passed to confirm_player_class()
+    :return: player['player_class'] after being passed to confirm_player_class()
 
     No doctest, this accepts user input.
     """
@@ -382,7 +382,6 @@ def print_class_description(class_name: str):
     :param class_name: must be a string containing either "Squire", "Sapper", "Ghost" or "Cherub"
     :precondition: param must be met
     :postcondition: print description of the input class type
-    :return: nothing
 
     >>> print_class_description("Squire") # doctest: +NORMALIZE_WHITESPACE
     A Lazarus Engine™ allows for this ship to repair itself after its hull integrity has been completely
@@ -407,7 +406,7 @@ def print_class_description(class_name: str):
         print(f"QuickFix™ Protocols allows this ship to repair itself during combat.")
 
 
-def confirm_player_class(class_name: str, player: dict):
+def confirm_player_class(class_name: str, player: dict) -> None:
     """Call assign_player_class or select_player_class or return None, depending on user input.
 
     :param class_name: any string
@@ -562,7 +561,7 @@ def special_action_selector(player: dict):
         heal_spell(player)
 
 
-def resurrect(player):
+def resurrect(player: dict) -> dict:
     """Resurrect player if health <= 0 and if special_action_counter == 1.
 
     :param player: must be a dictionary
@@ -750,7 +749,7 @@ def make_enemy_difficulty_four() -> dict:
     }
 
 
-def make_appropriate_enemy_type(player: dict):
+def make_appropriate_enemy_type(player: dict) -> dict:
     """Return the appropriate enemy type, depending on player x- and y-coordinates.
 
     :param player: a dictionary
@@ -919,7 +918,7 @@ def make_appropriate_boss_phase(player: dict):
         return make_enemy_boss_phase_three()
 
 
-def boss_battle_player_attack(boss, player):
+def boss_battle_player_attack(boss: dict, player: dict) -> int:
     """Return boss after being attacked by the player.
 
     :param boss: a dictionary
@@ -943,7 +942,7 @@ def boss_battle_player_attack(boss, player):
     return boss["health"]
 
 
-def combat_boss_attack_phase_one_and_three(player):
+def combat_boss_attack_phase_one_and_three(player: dict) -> int:
     """Return player after being attacked by phase one or phase three of the endgame boss.
 
     :param player: a dictionary
@@ -963,7 +962,7 @@ def combat_boss_attack_phase_one_and_three(player):
     return player['health']
 
 
-def combat_boss_attack_phase_two(player):
+def combat_boss_attack_phase_two(player: dict) -> int:
     """Return player after being attacked by phase two of the endgame boss.
 
     :param player: a dictionary
@@ -987,7 +986,7 @@ def combat_boss_attack_phase_two(player):
     return player['health']
 
 
-def combat_boss_attack(player):
+def combat_boss_attack(player: dict) -> int:
     """Return player after being attacked by the appropriate the endgame boss phase.
 
     :param player: a dictionary
@@ -1006,7 +1005,7 @@ def combat_boss_attack(player):
         return combat_boss_attack_phase_two(player)
 
 
-def boss_battle_print_health_values(player, boss):
+def boss_battle_print_health_values(player: dict, boss: dict):
     """Print text describing the health values of the player and the boss.
 
     :param player: a dictionary
@@ -1030,7 +1029,7 @@ def boss_battle_print_health_values(player, boss):
           f"{Colours.magenta}{boss['health']}{Colours.end} more points of damage.\n")
 
 
-def boss_ultimate_attack_countdown(boss):
+def boss_ultimate_attack_countdown(boss: dict) -> dict:
     """Return boss with special_ability_counter decremented by 1 if special_ability_counter > 0, else return boss.
 
     :param boss: a dictionary
@@ -1053,7 +1052,7 @@ def boss_ultimate_attack_countdown(boss):
     return boss
 
 
-def boss_ultimate_attack_activate(boss, player):
+def boss_ultimate_attack_activate(boss: dict, player: dict) -> dict:
     """Return player with player["health"] decremented by 99999 if boss["special_ability_counter"] <= 0, else return
        player.
 
@@ -1106,7 +1105,8 @@ def boss_ultimate_attack_activate(boss, player):
         return player
 
 
-def game_board_coordinates(player_x_coordinate, player_y_coordinate, game_board_width, game_board_length):
+def game_board_coordinates(player_x_coordinate: int, player_y_coordinate: int, game_board_width: int,
+                           game_board_length: int) -> dict:
     """Return dictionary representing game board, with unoccupied coordinates containing a blue asterisk, and occupied
        coordinates containing a yellow at symbol.
 
@@ -1145,18 +1145,18 @@ def game_board_coordinates(player_x_coordinate, player_y_coordinate, game_board_
     return game_board
 
 
-def turn_blue(string):
+def turn_blue(word: str) -> str:
     """Turn a string blue.
 
-    :param string: any string
+    :param word: any string
     :precondition: string is any string
     :postcondition: turn string blue
     :return: string turned blue
     """
-    return f"{Colours.blue}{string}{Colours.end}"
+    return f"{Colours.blue}{word}{Colours.end}"
 
 
-def display_game_board(x_coordinate, y_coordinate, game_board_width, game_board):
+def display_game_board(x_coordinate: int, y_coordinate: int, game_board_width: int, game_board: dict):
     """Return the values in game_board visualized in a 25 by 25 size grid.
 
     :param x_coordinate: any positive integer
@@ -1171,8 +1171,7 @@ def display_game_board(x_coordinate, y_coordinate, game_board_width, game_board)
     :precondition: game_board is a dictionary whose keys are tuples of length 2
     :precondition: the tuples in game_board are permutations of all integers between [0, 24]
     :precondition: the values in game_board are either blue asterisks or yellow at symbols
-    :postcondition: return the values in game_board visualized in a 25 by 25 size grid
-    :return: the values in game_board visualized in a 25 by 25 size grid
+    :postcondition: print the values in game_board visualized in a 25 by 25 size grid
 
     >>> board = game_board_coordinates(0, 0, 3, 3)
     >>> display_game_board(0, 0, 3, board) # doctest: +NORMALIZE_WHITESPACE
@@ -1198,7 +1197,7 @@ def display_game_board(x_coordinate, y_coordinate, game_board_width, game_board)
     print(f"You are at {x_coordinate}, {y_coordinate}.")
 
 
-def display_main_menu():
+def display_main_menu() -> str:
     """Return user input after printing a numbered list.
 
     :postcondition: print a numbered list [(1, 'Move'), (2, 'Status Report'), (3, 'Quit Game')]
@@ -1211,7 +1210,7 @@ def display_main_menu():
     return input()
 
 
-def check_player_statistics(player):
+def check_player_statistics(player: dict):
     """Print values of player name, health, level, experience points, class, and class special action.
 
     :param player: a dictionary
@@ -1238,7 +1237,7 @@ def check_player_statistics(player):
           f"{Colours.blue}ship upgrade{Colours.end}.\n")
 
 
-def cardinal_direction():
+def cardinal_direction() -> int or bool:
     """Return player directional input.
 
     :postcondition: display a list of cardinal directions
@@ -1260,7 +1259,7 @@ def cardinal_direction():
         return False
 
 
-def validate_move(direction, x_coordinate, y_coordinate):
+def validate_move(direction: int, x_coordinate: int, y_coordinate: int) -> bool:
     """Return True if direction would keep player within the bounds of the map given x_coordinate and y_coordinate, else
        return False.
 
@@ -1312,7 +1311,7 @@ def validate_move(direction, x_coordinate, y_coordinate):
         return False
 
 
-def confirm_move_to_boss_room():
+def confirm_move_to_boss_room() -> bool:
     """Return True if the user wishes to proceed to the boss room, else return False.
 
     :postcondition: print a warning to the player that this is a point of no return
@@ -1337,7 +1336,7 @@ def confirm_move_to_boss_room():
         return False
 
 
-def move_x_axis(direction, x_coordinate):
+def move_x_axis(direction: int, x_coordinate: int) -> int:
     """Increment or decrement x_coordinate.
 
     :param direction: an integer
@@ -1361,7 +1360,7 @@ def move_x_axis(direction, x_coordinate):
     return x_coordinate
 
 
-def move_y_axis(direction, y_coordinate):
+def move_y_axis(direction: int, y_coordinate: int) -> int:
     """Increment or decrement x_coordinate.
 
     :param direction: an integer
@@ -1386,7 +1385,7 @@ def move_y_axis(direction, y_coordinate):
         return y_coordinate
 
 
-def regen_health(player_health, maximum_health):
+def regen_health(player_health: int, maximum_health: int) -> int:
     """Restore player health by up to 4 points.
 
     :param player_health: any integer less than or equal to maximum_health
@@ -1420,7 +1419,7 @@ def regen_health(player_health, maximum_health):
         return player_health
 
 
-def backstab(player_health):
+def backstab(player_health: int) -> int:
     """Roll for shiv chance and damage.
 
     :param player_health: any integer
@@ -1444,7 +1443,7 @@ def backstab(player_health):
     return player_health
 
 
-def combat_initiative_roll(player):
+def combat_initiative_roll(player: dict) -> bool:
     """Check to see if player or enemy attacks first.
 
     :param player: must be a dictionary
@@ -1477,7 +1476,7 @@ def combat_initiative_roll(player):
         return False
 
 
-def combat_player_attack(enemy_health, player):
+def combat_player_attack(enemy_health: int, player: dict) -> int:
     """Return enemy's health value after being attacked by player.
 
     :param enemy_health: a positive integer
@@ -1496,7 +1495,7 @@ def combat_player_attack(enemy_health, player):
     return enemy_health
 
 
-def combat_enemy_attack(player):
+def combat_enemy_attack(player: dict) -> int:
     """Return player's health value after being attacked by enemy.
 
     :param player: a positive integer
@@ -1514,7 +1513,7 @@ def combat_enemy_attack(player):
     return player['health']
 
 
-def combat_enemy_flee():
+def combat_enemy_flee() -> bool:
     """Roll to see if enemy will flee.
 
     :postcondition: randomly rolls between [1,5], if roll == 1, return True else False
@@ -1527,7 +1526,7 @@ def combat_enemy_flee():
         return False
 
 
-def combat_choice():
+def combat_choice() -> str:
     """Present menu of combat options.
     """
     options = list(enumerate(["Normal Attack", "Special Ability", "Flee"], start=1))
@@ -1535,7 +1534,7 @@ def combat_choice():
     return input()
 
 
-def combat_print_health_values(player, enemy):
+def combat_print_health_values(player: dict, enemy: dict):
     """Print health values of player and enemy.
 
     :param player: must be a dictionary
@@ -1545,7 +1544,6 @@ def combat_print_health_values(player, enemy):
     :precondition: enemy dictionary must contain key "name"
     :precondition: enemy dictionary must contain key "health
     :postcondition: print out statements that show player class and health and enemy name and health
-    :return: nothing
 
     >>> combat_print_health_values({"player_class": "Squire", "health": 10}, {"name": "Dinghy", "health": 5})
     Your \033[94mSquire\033[0m can take \033[94m10\033[0m more points of damage.
@@ -1563,7 +1561,7 @@ def combat_print_health_values(player, enemy):
           f"{Colours.red}{enemy['health']}{Colours.end} more points of damage.\n")
 
 
-def gain_experience_points(player):
+def gain_experience_points(player: dict) -> dict:
     """Add experience points for player if not max level.
 
     :param player: must be a dictionary
@@ -1630,7 +1628,7 @@ def gain_experience_points(player):
         return player
 
 
-def level_system(player):
+def level_system(player: dict) -> dict:
     """Level up the player if they reach a certain amount of experience points.
 
     :param player: must be a dictionary
@@ -1682,7 +1680,7 @@ def level_system(player):
     return player
 
 
-def class_upgrade(player):
+def class_upgrade(player: dict) -> dict:
     """Upgrade player class based on level and ship type.
 
     :param player: must be a dictionary
@@ -1712,7 +1710,7 @@ def class_upgrade(player):
     return player
 
 
-def spawn_enemy():
+def spawn_enemy() -> bool:
     """Roll to check if an enemy will be spawned.
 
     :postcondition: generate a random integer between [1, 5]

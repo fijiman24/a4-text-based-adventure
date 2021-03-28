@@ -21,5 +21,4 @@
 | Map                     | 1190                   |
 | Filter                  | N/A                    |
 | Random module           | 1434-1435, 1524        |
-| Function Annotations    | 252        |
 #### ** Add any comments for me above this line **
