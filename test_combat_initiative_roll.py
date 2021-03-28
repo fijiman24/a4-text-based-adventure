@@ -5,6 +5,7 @@ import io
 from game import combat_initiative_roll
 from game import make_player
 
+
 class TestCombatInitiativeRoll(TestCase):
     @patch('random.randint', side_effect=["50", "50", "1", "2"])
     @patch('sys.stdout', new_callable=io.StringIO)

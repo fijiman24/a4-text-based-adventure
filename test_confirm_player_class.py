@@ -13,12 +13,10 @@ class TestConfirmPlayerClass(TestCase):
         actual = confirm_player_class("Squire", make_player())
         actual_output = mock_output.getvalue()
 
-        expected_output = "A Lazarus Engine™ allows for this ship to repair itself after" \
-                          " its hull integrity has been completely breached for the first time.\n" \
-                          "Do you pilot a \033[94mSquire\033[0m?\n" \
+        expected_output = "A Lazarus Engine™ allows for this ship to repair itself after its hull integrity has " \
+                          "been completely breached for the first time.\nDo you pilot a [94mSquire[0m?\n" \
                           "[(1, 'Yes'), (2, 'No')]\n"
-
-        self.assertTrue(actual)
+        self.assertIsNone(actual)
         self.assertEqual(actual_output, expected_output)
 
     @patch('builtins.input', side_effect=['2', '1', '1'])
@@ -46,14 +44,8 @@ class TestConfirmPlayerClass(TestCase):
         confirm_player_class("Squire", make_player())
         actual = mock_output.getvalue()
 
-        expected = "A Lazarus Engine™ allows for this ship to repair itself after" \
-                   " its hull integrity has been completely breached for the first time.\n" \
-                   "Do you pilot a \033[94mSquire\033[0m?\n" \
-                   "[(1, 'Yes'), (2, 'No')]\n" \
-                   "That is not a valid choice! \n\n" \
-                   "A Lazarus Engine™ allows for this ship to repair itself after" \
-                   " its hull integrity has been completely breached for the first time.\n" \
-                   "Do you pilot a \033[94mSquire\033[0m?\n" \
-                   "[(1, 'Yes'), (2, 'No')]\n"
+        expected = "A Lazarus Engine™ allows for this ship to repair itself after its hull integrity has " \
+                   "been completely breached for the first time.\nDo you pilot a [94mSquire[0m?\n" \
+                   "[(1, 'Yes'), (2, 'No')]\nThat is not a valid choice! \n\n"
 
         self.assertEqual(actual, expected)
