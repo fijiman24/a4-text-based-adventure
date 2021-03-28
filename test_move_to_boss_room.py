@@ -46,7 +46,7 @@ class TestMoveToBossRoom(TestCase):
                           "This is a point of no return. You've almost escaped Sector Six with your treasure," \
                           " but you have a feeling you\nmay face some final resistance...\n" \
                           "Are you sure you wish to proceed?\n" \
-                          "[(1, 'Yes'), (2, 'No')]\n"
+                          "[(1, 'Yes'), (2, 'No')]\nThat is not a valid choice!\n"
 
-        self.assertIsNone(actual_return)
+        self.assertFalse(actual_return)
         self.assertEqual(actual_output, expected_output)
