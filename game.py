@@ -1439,7 +1439,6 @@ def backstab(player_health):
             print(f"The enemy shot you for {Colours.red}{backstab_damage}{Colours.end} damage as you fled!")
         else:
             player_death_text()
-            exit()
     else:
         print(f"You successfully escape back into darkness of space.")
     return player_health
