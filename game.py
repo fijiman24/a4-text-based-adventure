@@ -1328,7 +1328,10 @@ def confirm_move_to_boss_room():
     choice = input()
     if choice == "1":
         return True
-    if choice == "2":
+    elif choice == "2":
+        return False
+    else:
+        print("That is not a valid choice!")
         return False
 
 
@@ -1432,12 +1435,12 @@ def backstab(player_health):
         player_health -= backstab_damage
         if player_health > 0:
             print(f"The enemy shot you for {Colours.red}{backstab_damage}{Colours.end} damage as you fled!")
-            return player_health
         else:
             player_death_text()
+            exit()
     else:
         print(f"You successfully escape back into darkness of space.")
-        return player_health
+    return player_health
 
 
 def combat_initiative_roll(player):
