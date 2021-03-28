@@ -555,8 +555,7 @@ def special_action_selector(player):
     if player["ship"] == "Warrior":
         resurrect(player)
     elif player["ship"] == "Magician":
-        blast_damage = magic_blast(player)
-        return blast_damage
+        return magic_blast(player)
     elif player["ship"] == "Thief":
         return multi_attack(player)
     elif player["ship"] == "Priest":
