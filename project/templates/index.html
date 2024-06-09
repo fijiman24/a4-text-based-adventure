@@ -1,0 +1,27 @@
+<!--
+Game template for the Coordinate Game.
+-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Coordinate Game</title>
+  </head>
+  <body>
+    <h1>Coordinate Game</h1>
+    <p>Current Coordinates: {{ curr_coords }}</p>
+    <p>Goal Coordinates: {{ goal_corrds }}</p>
+    {% if error_message %}
+      <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+    {% if game_over %}
+      <p style="color: green;">Congratulations! You have reached the goal.</p>
+    {% else %}
+      <form action="/move" method="post">
+        <input type="submit" name="direction" value="north">
+        <input type="submit" name="direction" value="east">
+        <input type="submit" name="direction" value="south">
+        <input type="submit" name="direction" value="west">
+      </form>
+    {% endif %}
+  </body>
+</html>
