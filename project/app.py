@@ -1,6 +1,9 @@
 """This is the main Flask application file. It imports the game logic from
-the game.py file and uses it to update the game state. It also handles user
-input and displays the game state in the browser."""
+the simple_game.py file and uses it to update the game state. It also handles user
+input and displays the game state in the browser.
+
+Rename to app.py to run.
+"""
 
 from flask import Flask, render_template, request
 from simple_game import game
